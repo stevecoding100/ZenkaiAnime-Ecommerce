@@ -1,4 +1,4 @@
-# ZenkaiAnime: Your Ultimate Destination for Anime Streaming and Merchandise
+#ZenkaiAnime: Your Ultimate Destination for Anime Streaming and Merchandise
 
 Welcome to ZenkaiAnime, the premier e-commerce platform where anime enthusiasts can indulge in their passion for both watching their favorite anime series and shopping for exclusive clothing and accessories.
 
