@@ -32,7 +32,13 @@ const HambugerMenu = ({ pageType }) => {
                 }`}
             ></div>
             {isOpen && (
-                <div className="absolute bg-slate-200 top-[4rem]  w-[350px] h-[200px] rounded-md">
+                <div
+                    className={`absolute ${
+                        pageType === "streaming"
+                            ? "bg-slate-800"
+                            : "bg-slate-200"
+                    } top-[4rem]  w-[350px] h-[200px] rounded-md`}
+                >
                     <ul
                         className={`${
                             pageType === "streaming"
