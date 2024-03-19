@@ -1,5 +1,14 @@
+import { Routes, Route } from "react-router-dom";
+import StreamingHomePage from "./pages/StreamingHomePage";
+import MerchandiseHomePage from "./pages/MerchandiseHomePage";
+
 const App = () => {
-    return <div className="text-3xl font-bold underline">App</div>;
+    return (
+        <Routes>
+            <Route path="/streaming" element={<StreamingHomePage />} />
+            <Route path="/shop" element={<MerchandiseHomePage />} />
+        </Routes>
+    );
 };
 
 export default App;
