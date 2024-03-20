@@ -15,11 +15,7 @@ const Navbar = ({ pageType }) => {
                                     ? "text-white"
                                     : "text-black"
                             }`}
-                            to={
-                                pageType === "streaming"
-                                    ? "/streaming"
-                                    : "/shop"
-                            }
+                            to={pageType === "streaming" ? "/" : "/shop"}
                         >
                             ZenKaiAnime
                         </Link>
@@ -47,7 +43,7 @@ const Navbar = ({ pageType }) => {
                         >
                             {pageType === "streaming" ? (
                                 <>
-                                    <Link to="/streaming">Home</Link>
+                                    <Link to="/">Home</Link>
                                     <Link to="/shop">Shop</Link>
                                     <Link to="/news">News</Link>
                                 </>
