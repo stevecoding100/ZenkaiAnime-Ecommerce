@@ -1,12 +1,13 @@
 require("dotenv").config();
+const fs = require("fs");
 const pg = require("pg");
-const client =
-  new pg.Client(process.env.DATABASE_URL) || "postgres://localhost/zenkai_db";
-
+const url = require("url");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const JWT_CLIENT_SECRET = process.env.JWT_CLIENT_SECRET;
 const JWT_ADMIN_SECRET = process.env.JWT_ADMIN_SECRET;
+
+const client = new pg.Client(process.env.DATABASE_URL);
 
 const createTable = async () => {
   const SQL = `
@@ -28,6 +29,7 @@ const createTable = async () => {
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             first_name VARCHAR(50) NOT NULL,
             last_name VARCHAR(50) NOT NULL,
+            username VARCHAR(50) UNIQUE,
             email VARCHAR(255) UNIQUE,
             password VARCHAR(255),
             billing_info JSON,
@@ -91,4 +93,42 @@ const createTable = async () => {
   await client.query(SQL);
 };
 
-module.exports = { client, createTable };
+const createUser = async ({
+  first_name,
+  last_name,
+  email,
+  password,
+  billing_info,
+}) => {
+  const SALT_COUNT = 10;
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
+  const SQL = `INSERT INTO users (first_name, last_name, email, password, billing_info) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const response = await client.query(SQL, [
+    first_name,
+    last_name,
+    email,
+    hashedPassword,
+    billing_info,
+  ]);
+  return response.rows[0];
+};
+
+const createProduct = async (
+  name,
+  descriptions,
+  price,
+  stock_quantity,
+  image_url
+) => {
+  const SQL = `INSERT INTO products (name, descriptions, price, stock_quantity, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const response = await client.query(SQL, [
+    name,
+    descriptions,
+    price,
+    stock_quantity,
+    image_url,
+  ]);
+  return response.rows[0];
+};
+
+module.exports = { client, createTable, createUser, createProduct };
