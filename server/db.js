@@ -1,7 +1,5 @@
 require("dotenv").config();
-const fs = require("fs");
 const pg = require("pg");
-const url = require("url");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const JWT_CLIENT_SECRET = process.env.JWT_CLIENT_SECRET;
@@ -96,16 +94,18 @@ const createTable = async () => {
 const createUser = async ({
   first_name,
   last_name,
+  username,
   email,
   password,
   billing_info,
 }) => {
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-  const SQL = `INSERT INTO users (first_name, last_name, email, password, billing_info) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const SQL = `INSERT INTO users (first_name, last_name, username, email, password, billing_info) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
   const response = await client.query(SQL, [
     first_name,
     last_name,
+    username,
     email,
     hashedPassword,
     billing_info,
