@@ -5,7 +5,7 @@ import MerchandiseHomePage from "./pages/MerchandiseHomePage";
 const App = () => {
     return (
         <Routes>
-            <Route path="/streaming" element={<StreamingHomePage />} />
+            <Route path="/" element={<StreamingHomePage />} />
             <Route path="/shop" element={<MerchandiseHomePage />} />
         </Routes>
     );
