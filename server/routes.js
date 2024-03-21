@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { createUser, createProduct, createCart } = require("./db");
+const {
+  createUser,
+  createProduct,
+  createCart,
+  createCartItems,
+} = require("./db");
 
 router.post("/api/register", async (req, res) => {
   try {
@@ -24,6 +29,17 @@ router.post("/api/user/:user_id/cart", async (req, res) => {
   try {
     const cart = await createCart(req.params);
     res.status(201).json(cart);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.post("/api/cart/:cart_id", async (req, res) => {
+  try {
+    const { product_id, quantity } = req.body;
+    const { cart_id } = req.params;
+    const item = await createCartItems(cart_id, product_id, quantity);
+    res.status(201).json(item);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

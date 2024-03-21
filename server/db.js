@@ -114,6 +114,19 @@ const createUser = async ({
   return response.rows[0];
 };
 
+const createCart = async ({ user_id }) => {
+  const SQL = `INSERT INTO carts (user_id) VALUES ($1) RETURNING *`;
+  const response = await client.query(SQL, [user_id]);
+  return response.rows[0];
+};
+
+const createCartItems = async (cart_id, product_id, quantity) => {
+  console.log({ cart_id, product_id, quantity });
+  const SQL = `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *`;
+  const response = await client.query(SQL, [cart_id, product_id, quantity]);
+  return response.rows[0];
+};
+
 // Admin User
 const createProduct = async ({
   name,
@@ -133,10 +146,11 @@ const createProduct = async ({
   return response.rows[0];
 };
 
-const createCart = async ({ user_id }) => {
-  const SQL = `INSERT INTO carts (user_id) VALUES ($1) RETURNING *`;
-  const response = await client.query(SQL, [user_id]);
-  return response.rows[0];
+module.exports = {
+  client,
+  createTable,
+  createUser,
+  createProduct,
+  createCart,
+  createCartItems,
 };
-
-module.exports = { client, createTable, createUser, createProduct, createCart };
