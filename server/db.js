@@ -10,8 +10,9 @@ const client = new pg.Client(process.env.DATABASE_URL);
 const createTable = async () => {
   const SQL = `
         -- Zenkai DB
-       
+        
         DROP TABLE IF EXISTS watchlists;
+       
         DROP TABLE IF EXISTS favorites;
         DROP TABLE IF EXISTS cart_items;
         DROP TABLE IF EXISTS order_items;
@@ -19,9 +20,9 @@ const createTable = async () => {
         DROP TABLE IF EXISTS products;
         DROP TABLE IF EXISTS orders;
         DROP TABLE IF EXISTS users;
-
+        DROP TYPE IF EXISTS watch_status;
         CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-        CREATE TYPE watch_status_enum AS ENUM ('watching', 'completed', 'on-hold', 'dropped', 'plan-to-watch');
+        CREATE TYPE watch_status AS ENUM ('watching', 'completed', 'on-hold', 'dropped', 'plan-to-watch');
         -- Table users 
         CREATE TABLE users (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -39,7 +40,7 @@ const createTable = async () => {
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             user_id UUID REFERENCES users(id),
             anime_name VARCHAR(255), 
-            status watch_status_enum DEFAULT 'plan-to-watch',
+            status watch_status DEFAULT 'plan-to-watch',
             progress INT, 
             rating INT
         );
@@ -53,7 +54,7 @@ const createTable = async () => {
         -- Ecommerce
         CREATE TABLE products (
             id SERIAL PRIMARY KEY,
-            name VARCHAR(50),
+            name TEXT,
             descriptions TEXT,
             price DECIMAL(10,2),
             stock_quantity INT, 
@@ -113,13 +114,14 @@ const createUser = async ({
   return response.rows[0];
 };
 
-const createProduct = async (
+// Admin User
+const createProduct = async ({
   name,
   descriptions,
   price,
   stock_quantity,
-  image_url
-) => {
+  image_url,
+}) => {
   const SQL = `INSERT INTO products (name, descriptions, price, stock_quantity, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
   const response = await client.query(SQL, [
     name,
@@ -131,4 +133,10 @@ const createProduct = async (
   return response.rows[0];
 };
 
-module.exports = { client, createTable, createUser, createProduct };
+const createCart = async ({ user_id }) => {
+  const SQL = `INSERT INTO carts (user_id) VALUES ($1) RETURNING *`;
+  const response = await client.query(SQL, [user_id]);
+  return response.rows[0];
+};
+
+module.exports = { client, createTable, createUser, createProduct, createCart };

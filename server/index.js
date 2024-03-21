@@ -9,8 +9,10 @@ app.use(express.json());
 (async () => {
   try {
     await client.connect();
+
+    // -- Uncomment the following line to seed the database This will drop all tables and recreate them
     // await createTable();
-    console.log("Tables created!");
+    // console.log("Tables created!");
 
     app.use(router);
 
