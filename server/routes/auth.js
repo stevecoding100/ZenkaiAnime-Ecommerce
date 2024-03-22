@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const { client } = require("../db");
+const { authenticateUser } = require("./authMiddleware");
 
 // TODO: Import the createUser function
 // TODO: Create authentication routes
@@ -27,36 +29,6 @@ const createUser = async ({
     billing_info,
   ]);
   return response.rows[0];
-};
-
-const authenticateUser = async (username, password) => {
-  const SQL = `SELECT * FROM users WHERE username=$1`;
-  const response = await client.query(SQL, [username]);
-  const user = response.rows[0];
-  if (!user) {
-    throw new Error("User not found");
-  }
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) {
-    throw new Error("Invalid password");
-  }
-
-  const token = jwt.sign(
-    { user_id: user.id },
-    user.is_admin ? JWT_ADMIN_SECRET : JWT_CLIENT_SECRET
-  );
-  return { token, user };
-};
-
-const findUserByToken = async (token) => {
-  try {
-    const payload = jwt.verify(token, JWT_CLIENT_SECRET);
-    const SQL = `SELECT * FROM users WHERE id=$1`;
-    const response = await client.query(SQL, [payload.user_id]);
-    return response.rows[0];
-  } catch (error) {
-    throw new Error("Invalid token");
-  }
 };
 
 // <--- Routes --->

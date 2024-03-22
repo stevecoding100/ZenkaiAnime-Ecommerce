@@ -1,9 +1,4 @@
-require("dotenv").config();
 const pg = require("pg");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const JWT_CLIENT_SECRET = process.env.JWT_SECRET_CLIENT_KEY;
-const JWT_ADMIN_SECRET = process.env.JWT_SECRET_ADMIN_KEY;
 
 const client = new pg.Client(process.env.DATABASE_URL);
 
