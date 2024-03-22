@@ -2,8 +2,8 @@ require("dotenv").config();
 const pg = require("pg");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const JWT_CLIENT_SECRET = process.env.JWT_CLIENT_SECRET;
-const JWT_ADMIN_SECRET = process.env.JWT_ADMIN_SECRET;
+const JWT_CLIENT_SECRET = process.env.JWT_SECRET_CLIENT_KEY;
+const JWT_ADMIN_SECRET = process.env.JWT_SECRET_ADMIN_KEY;
 
 const client = new pg.Client(process.env.DATABASE_URL);
 
@@ -118,9 +118,9 @@ const createUser = async ({
   return response.rows[0];
 };
 
-const authenticateUser = async ({ email, password }) => {
-  const SQL = `SELECT * FROM users WHERE email = $1`;
-  const response = await client.query(SQL, [email]);
+const authenticateUser = async (username, password) => {
+  const SQL = `SELECT * FROM users WHERE username=$1`;
+  const response = await client.query(SQL, [username]);
   const user = response.rows[0];
   if (!user) {
     throw new Error("User not found");
@@ -129,9 +129,10 @@ const authenticateUser = async ({ email, password }) => {
   if (!isPasswordValid) {
     throw new Error("Invalid password");
   }
+
   const token = jwt.sign(
     { user_id: user.id },
-    user.isAdmin ? JWT_ADMIN_SECRET : JWT_CLIENT_SECRET
+    user.is_admin ? JWT_ADMIN_SECRET : JWT_CLIENT_SECRET
   );
   return { token };
 };
@@ -202,4 +203,5 @@ module.exports = {
   addItemsToCart,
   createOrder,
   createOrderItems,
+  authenticateUser,
 };
