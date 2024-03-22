@@ -20,10 +20,10 @@ const orderRoutes = require("./routes/order");
     // await createTable();
     // console.log("Tables created!");
 
-    app.use("/auth", authRoutes);
-    app.use("/products", productRoutes);
-    app.use("/cart", cartRoutes);
-    app.use("/orders", orderRoutes);
+    app.use("/api/auth", authRoutes);
+    app.use("/api/products", productRoutes);
+    app.use("/api/cart", cartRoutes);
+    app.use("/api/orders", orderRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);

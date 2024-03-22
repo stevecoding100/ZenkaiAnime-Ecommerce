@@ -1,6 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const { createProduct } = require("../db");
+const { client } = require("../db");
+
+// <-------- Database Queries -------->
+
+// Create a new product
+const createProduct = async ({
+  name,
+  descriptions,
+  price,
+  stock_quantity,
+  image_url,
+}) => {
+  const SQL = `INSERT INTO products (name, descriptions, price, stock_quantity, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  const response = await client.query(SQL, [
+    name,
+    descriptions,
+    price,
+    stock_quantity,
+    image_url,
+  ]);
+  return response.rows[0];
+};
+
+// <-------- Routes -------->
 
 router.post("/products", async (req, res) => {
   try {
