@@ -29,7 +29,13 @@ const getAllProducts = async () => {
   return response.rows;
 };
 
+const deleteProduct = async (id) => {
+  const SQL = `DELETE FROM products WHERE id = $1`;
+  await client.query(SQL, [id]);
+};
+
 // <-------- Routes -------->
+
 router.get("/", async (req, res) => {
   try {
     const products = await getAllProducts();
@@ -42,6 +48,14 @@ router.post("/", async (req, res) => {
   try {
     const product = await createProduct(req.body);
     res.status(201).json(product);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+router.delete("/:id", async (req, res) => {
+  try {
+    await deleteProduct(req.params.id);
+    res.status(204).json({ message: "Product deleted successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
