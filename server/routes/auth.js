@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { client } = require("../db");
-const { authenticateUser } = require("./authMiddleware");
+const { authenticateUser, isAdmin } = require("./authMiddleware");
 
 // TODO: Import the createUser function
 // TODO: Create authentication routes
@@ -30,6 +30,11 @@ const createUser = async ({
   ]);
   return response.rows[0];
 };
+const getAllUsers = async () => {
+  const SQL = `SELECT * FROM users`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
 
 // <--- Routes --->
 // Register a new user
@@ -48,6 +53,19 @@ router.post("/login", async (req, res) => {
     const { username, password } = req.body;
     const user = await authenticateUser(username, password);
     res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Get user information
+
+// <--- ADMIN ONLY ROUTES --->
+
+// Get user information
+router.get("/users", isAdmin, async (req, res) => {
+  try {
+    res.status(200).json(await getAllUsers());
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

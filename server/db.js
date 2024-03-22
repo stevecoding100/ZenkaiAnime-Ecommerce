@@ -1,5 +1,5 @@
 const pg = require("pg");
-
+require("dotenv").config();
 const client = new pg.Client(process.env.DATABASE_URL);
 
 const createTable = async () => {
@@ -90,8 +90,6 @@ const createTable = async () => {
             `;
   await client.query(SQL);
 };
-
-// Admin User
 
 module.exports = {
   client,
