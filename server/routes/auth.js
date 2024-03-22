@@ -41,6 +41,23 @@ const deleteUser = async (id) => {
   await client.query(SQL, [id]);
 };
 
+const updateUser = async (
+  id,
+  { first_name, last_name, username, email, password, billing_info }
+) => {
+  const SQL = `UPDATE users SET first_name=$1, last_name=$2, username=$3, email=$4, password=$5, billing_info=$6 WHERE id=$7 RETURNING *`;
+  const response = await client.query(SQL, [
+    first_name,
+    last_name,
+    username,
+    email,
+    password,
+    billing_info,
+    id,
+  ]);
+  return response.rows[0];
+};
+
 // <--- Routes --->
 // Register a new user
 router.post("/register", async (req, res) => {
@@ -80,6 +97,16 @@ router.delete("/delete/:id", isAdmin, async (req, res) => {
   try {
     await deleteUser(req.params.id);
     res.status(200).json({ message: "User deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Update a user
+router.put("/update/:id", isAdmin, async (req, res) => {
+  try {
+    const user = await updateUser(req.params.id, req.body);
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

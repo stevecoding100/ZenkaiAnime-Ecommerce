@@ -18,7 +18,7 @@ const orderRoutes = require("./routes/order");
 
     // -- Uncomment the following line to seed the database This will drop all tables and recreate them
     // await createTable();
-    console.log("Tables created!");
+    // console.log("Tables created!");
 
     app.use("/api/auth", authRoutes);
     app.use("/api/products", productRoutes);
