@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { client } = require("../database/db");
+const { isAdmin } = require("../middlewares/authMiddleware");
 
 // <-------- Database Queries -------->
 
@@ -44,7 +45,7 @@ router.get("/", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-router.post("/", async (req, res) => {
+router.post("/", isAdmin, async (req, res) => {
   try {
     const product = await createProduct(req.body);
     res.status(201).json(product);
@@ -52,7 +53,7 @@ router.post("/", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isAdmin, async (req, res) => {
   try {
     await deleteProduct(req.params.id);
     res.status(204).json({ message: "Product deleted successfully" });
