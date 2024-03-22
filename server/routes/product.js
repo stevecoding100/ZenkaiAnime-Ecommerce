@@ -23,9 +23,22 @@ const createProduct = async ({
   return response.rows[0];
 };
 
-// <-------- Routes -------->
+const getAllProducts = async () => {
+  const SQL = `SELECT * FROM products`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
 
-router.post("/products", async (req, res) => {
+// <-------- Routes -------->
+router.get("/", async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+router.post("/", async (req, res) => {
   try {
     const product = await createProduct(req.body);
     res.status(201).json(product);
