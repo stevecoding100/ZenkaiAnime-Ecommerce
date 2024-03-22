@@ -7,6 +7,6 @@ const {
   createCartItems,
   createOrder,
   createOrderItems,
-} = require("./db");
+} = require("./database/db");
 
 module.exports = router;

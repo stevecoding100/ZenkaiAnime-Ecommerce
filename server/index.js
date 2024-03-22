@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const { client, seedData, createTable } = require("./db");
+const { client, seedData, createTable } = require("./database/db");
 const router = require("./routes");
 
 app.use(express.json());
@@ -18,7 +18,7 @@ const orderRoutes = require("./routes/order");
 
     // -- Uncomment the following line to seed the database This will drop all tables and recreate them
     // await createTable();
-    // console.log("Tables created!");
+    console.log("Tables created!");
 
     app.use("/api/auth", authRoutes);
     app.use("/api/products", productRoutes);

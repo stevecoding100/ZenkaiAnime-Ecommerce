@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { client } = require("../db");
-const { authenticateUser, isAdmin } = require("./authMiddleware");
+const { client } = require("../database/db");
+const { authenticateUser, isAdmin } = require("../middlewares/authMiddleware");
 
 // TODO: Import the createUser function
 // TODO: Create authentication routes

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const JWT_CLIENT_SECRET = process.env.JWT_SECRET_CLIENT_KEY;
 const JWT_ADMIN_SECRET = process.env.JWT_SECRET_ADMIN_KEY;
-const { client } = require("../db");
+const { client } = require("../database/db");
 
 // <-- Database Queries -->
 const authenticateUser = async (username, password) => {
