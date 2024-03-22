@@ -21,8 +21,12 @@ const createTable = async () => {
         DROP TABLE IF EXISTS orders;
         DROP TABLE IF EXISTS users;
         DROP TYPE IF EXISTS watch_status;
+        DROP TYPE IF EXISTS order_status;
+
+
         CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
         CREATE TYPE watch_status AS ENUM ('watching', 'completed', 'on-hold', 'dropped', 'plan-to-watch');
+        CREATE TYPE order_status AS ENUM ('pending', 'shipped', 'delivered', 'cancelled');
         -- Table users 
         CREATE TABLE users (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -38,7 +42,7 @@ const createTable = async () => {
         -- Anime Service
         CREATE TABLE watchlists (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            user_id UUID REFERENCES users(id),
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE,
             anime_name VARCHAR(255), 
             status watch_status DEFAULT 'plan-to-watch',
             progress INT, 
@@ -47,7 +51,7 @@ const createTable = async () => {
 
         CREATE TABLE favorites (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            user_id UUID REFERENCES users(id),
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE, 
             anime_name VARCHAR(255)
         );
 
@@ -63,28 +67,28 @@ const createTable = async () => {
 
         CREATE TABLE carts (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            user_id UUID REFERENCES users(id)
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE 
         );
 
         CREATE TABLE cart_items (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            cart_id UUID REFERENCES carts(id),
-            product_id INT REFERENCES products(id),
+            cart_id UUID REFERENCES carts(id) ON DELETE CASCADE,
+            product_id INT REFERENCES products(id) ON DELETE CASCADE ,
             quantity INT 
         );
 
         CREATE TABLE orders (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            user_id UUID REFERENCES users(id),
+            user_id UUID REFERENCES users(id) ON DELETE CASCADE,
             total_price DECIMAL,
             order_date DATE DEFAULT CURRENT_DATE,
-            status VARCHAR(50)
+            status order_status DEFAULT 'pending'
         );
 
         CREATE TABLE order_items (
             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            order_id UUID REFERENCES orders(id),
-            product_id INT REFERENCES products(id),
+            order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
+            product_id INT REFERENCES products(id) ON DELETE CASCADE,
             quantity INT,
             price DECIMAL
         );
@@ -114,16 +118,60 @@ const createUser = async ({
   return response.rows[0];
 };
 
-const createCart = async ({ user_id }) => {
-  const SQL = `INSERT INTO carts (user_id) VALUES ($1) RETURNING *`;
-  const response = await client.query(SQL, [user_id]);
+const authenticateUser = async ({ email, password }) => {
+  const SQL = `SELECT * FROM users WHERE email = $1`;
+  const response = await client.query(SQL, [email]);
+  const user = response.rows[0];
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    throw new Error("Invalid password");
+  }
+  const token = jwt.sign(
+    { user_id: user.id },
+    user.isAdmin ? JWT_ADMIN_SECRET : JWT_CLIENT_SECRET
+  );
+  return { token };
+};
+
+const addItemsToCart = async (user_id, product_id, quantity) => {
+  // Check if user has a cart
+  const cart = await client.query(`SELECT * FROM carts WHERE user_id = $1`, [
+    user_id,
+  ]);
+
+  let cart_id;
+
+  // If user has no cart, create a cart
+  if (cart.rows.length === 0) {
+    const SQL = `INSERT INTO carts (id) VALUES ($1) RETURNING *`;
+    const response = await client.query(SQL, [user_id]);
+    cart_id = response.rows[0].id;
+  } else {
+    cart_id = cart.rows[0].id;
+  }
+
+  const SQL = `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *`;
+  const response = await client.query(SQL, [cart_id, product_id, quantity]);
   return response.rows[0];
 };
 
-const createCartItems = async (cart_id, product_id, quantity) => {
-  console.log({ cart_id, product_id, quantity });
-  const SQL = `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *`;
-  const response = await client.query(SQL, [cart_id, product_id, quantity]);
+const createOrder = async ({ user_id, total_price, status }) => {
+  const SQL = `INSERT INTO orders (user_id, total_price, status) VALUES ($1, $2, $3) RETURNING *`;
+  const response = await client.query(SQL, [user_id, total_price, status]);
+  return response.rows[0];
+};
+
+const createOrderItems = async (order_id, product_id, quantity, price) => {
+  const SQL = `INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *`;
+  const response = await client.query(SQL, [
+    order_id,
+    product_id,
+    quantity,
+    price,
+  ]);
   return response.rows[0];
 };
 
@@ -151,6 +199,7 @@ module.exports = {
   createTable,
   createUser,
   createProduct,
-  createCart,
-  createCartItems,
+  addItemsToCart,
+  createOrder,
+  createOrderItems,
 };

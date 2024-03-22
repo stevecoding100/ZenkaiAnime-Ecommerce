@@ -6,6 +6,12 @@ const router = require("./routes");
 
 app.use(express.json());
 
+//Routes
+const authRoutes = require("./routes/auth");
+const productRoutes = require("./routes/product");
+const cartRoutes = require("./routes/cart");
+const orderRoutes = require("./routes/order");
+
 (async () => {
   try {
     await client.connect();
@@ -14,7 +20,10 @@ app.use(express.json());
     // await createTable();
     // console.log("Tables created!");
 
-    app.use(router);
+    app.use("/auth", authRoutes);
+    app.use("/products", productRoutes);
+    app.use("/cart", cartRoutes);
+    app.use("/orders", orderRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
