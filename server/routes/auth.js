@@ -36,6 +36,11 @@ const getAllUsers = async () => {
   return response.rows;
 };
 
+const deleteUser = async (id) => {
+  const SQL = `DELETE FROM users WHERE id = $1`;
+  await client.query(SQL, [id]);
+};
+
 // <--- Routes --->
 // Register a new user
 router.post("/register", async (req, res) => {
@@ -66,6 +71,15 @@ router.post("/login", async (req, res) => {
 router.get("/users", isAdmin, async (req, res) => {
   try {
     res.status(200).json(await getAllUsers());
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+// Delete a user
+router.delete("/delete/:id", isAdmin, async (req, res) => {
+  try {
+    await deleteUser(req.params.id);
+    res.status(200).json({ message: "User deleted" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
