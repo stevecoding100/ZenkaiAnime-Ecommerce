@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const { client, seedData, createTable } = require("./database/db");
-const router = require("./routes");
 
 app.use(express.json());
 
@@ -24,7 +23,9 @@ const orderRoutes = require("./routes/order");
     app.use("/api/products", productRoutes);
     app.use("/api/cart", cartRoutes);
     app.use("/api/orders", orderRoutes);
-
+    app.use("/", (req, res) => {
+      res.send("Welcome to the Ecommerce API");
+    });
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
     });
