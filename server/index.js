@@ -28,8 +28,9 @@ const orderRoutes = require("./routes/order");
     app.use("/api/products", productRoutes);
     app.use("/api/cart", cartRoutes);
     app.use("/api/orders", orderRoutes);
-    app.get("/", (req, res) => {
-      res.send("Welcome to the E-commerce API");
+    app.use("/", (req, res) => {
+      res.send("Welcome to the Ecommerce API");
+
     });
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
