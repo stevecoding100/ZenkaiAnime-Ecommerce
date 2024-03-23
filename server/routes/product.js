@@ -24,17 +24,18 @@ const createProduct = async ({
   return response.rows[0];
 };
 
+// Get all products
 const getAllProducts = async () => {
   const SQL = `SELECT * FROM products`;
   const response = await client.query(SQL);
   return response.rows;
 };
-
+// Delete a product
 const deleteProduct = async (id) => {
   const SQL = `DELETE FROM products WHERE id = $1`;
   await client.query(SQL, [id]);
 };
-
+// Update a product
 const updateProduct = async (
   id,
   { name, descriptions, price, stock_quantity, image_url }
@@ -53,6 +54,7 @@ const updateProduct = async (
 
 // <-------- Routes -------->
 
+//Base route /api/products
 router.get("/", async (req, res) => {
   try {
     const products = await getAllProducts();
@@ -61,6 +63,10 @@ router.get("/", async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+// <-- Admin Routes  -->
+
+// <!-- Create a new product
 router.post("/", isAdmin, async (req, res) => {
   try {
     const product = await createProduct(req.body);
@@ -69,6 +75,9 @@ router.post("/", isAdmin, async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+// <!-- Delete a product
+
 router.delete("/:id", isAdmin, async (req, res) => {
   try {
     await deleteProduct(req.params.id);
@@ -78,6 +87,7 @@ router.delete("/:id", isAdmin, async (req, res) => {
   }
 });
 
+// <!-- Update a product
 router.put("/:id", isAdmin, async (req, res) => {
   try {
     const product = await updateProduct(req.params.id, req.body);

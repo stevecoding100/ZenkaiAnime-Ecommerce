@@ -24,6 +24,7 @@ const addItemsToCart = async (user_id, product_id, quantity) => {
   return response.rows[0];
 };
 
+// <--- Routes --->
 // Add an item to a cart
 router.post("/add", async (req, res) => {
   try {

@@ -55,6 +55,8 @@ const updateUser = async (
 };
 
 // <--- Routes --->
+// Base route /api/auth
+
 // Register a new user
 router.post("/register", async (req, res) => {
   try {
