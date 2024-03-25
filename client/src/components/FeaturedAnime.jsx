@@ -1,23 +1,22 @@
-const dummyData = {
-    id: "one-piece",
-    title: "One Piece",
-    image: "https://gogocdn.net/cover/one-piece-1708412053.png",
-    url: "https://gogoanime3.co/category/one-piece",
-    genres: [
-        "Action",
-        "Adventure",
-        "Comedy",
-        "Fantasy",
-        "Shounen",
-        "Super Power",
-    ],
-    episodeId: "one-piece-episode-1098",
-    episodeNumber: 1098,
-};
+// const dummyData = {
+//     id: "one-piece",
+//     title: "One Piece",
+//     image: "https://gogocdn.net/cover/one-piece-1708412053.png",
+//     url: "https://gogoanime3.co/category/one-piece",
+//     genres: [
+//         "Action",
+//         "Adventure",
+//         "Comedy",
+//         "Fantasy",
+//         "Shounen",
+//         "Super Power",
+//     ],
+//     episodeId: "one-piece-episode-1098",
+//     episodeNumber: 1098,
+// };
 
 const FeaturedAnime = ({ data }) => {
-    const anime = data[Math.floor(Math.random() * data.length)];
-    console.log(anime);
+    const randomAnimeImg = data[Math.floor(Math.random() * data.length)];
 
     // This function reduces the number of character in the anime description
     const truncateString = (str, num) => {
@@ -33,7 +32,7 @@ const FeaturedAnime = ({ data }) => {
             <div className="w-full h-full">
                 <div className="absolute w-full h-[600px]  bg-gradient-to-r from-black"></div>
                 <img
-                    src={anime?.image}
+                    src={randomAnimeImg?.image}
                     alt={data.title}
                     key={data.id}
                     className="w-full h-full object-cover"

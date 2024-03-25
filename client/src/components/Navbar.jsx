@@ -14,7 +14,7 @@ const Navbar = ({ pageType }) => {
                                 ? "text-white"
                                 : "text-black"
                         }`}
-                        to={pageType === "streaming" ? "/" : "/shop"}
+                        to={pageType === "streaming" ? "/streaming" : "/shop"}
                     >
                         ZenKaiAnime
                     </Link>
@@ -24,7 +24,7 @@ const Navbar = ({ pageType }) => {
                     <div>
                         <input
                             type="text"
-                            className="w-[350px] mt-6 md:mt-0 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                            className="w-[280px] md:ml-[6rem]  lg:ml-0 lg:mt-2 md:mt-0 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
                             placeholder={`${
                                 pageType === "streaming"
                                     ? "Search movies..."
@@ -42,7 +42,7 @@ const Navbar = ({ pageType }) => {
                     >
                         {pageType === "streaming" ? (
                             <>
-                                <Link to="/">Home</Link>
+                                <Link to="/streaming">Home</Link>
                                 <Link to="/shop">Shop</Link>
                                 <Link to="/news">News</Link>
                             </>
@@ -56,16 +56,18 @@ const Navbar = ({ pageType }) => {
                     </ul>
                 </div>
                 <ul className="md:flex items-center space-x-4 md:diplay w-[250px] hidden">
-                    <button
-                        className={`px-4 py-2  hover:text-blue-300 ${
-                            pageType === "streaming"
-                                ? "text-white"
-                                : "text-gray-800"
-                        } text-white rounded-md transition duration-300`}
-                    >
-                        Sign in
-                    </button>
-                    <Link to="/register">
+                    <Link to="/login">
+                        <button
+                            className={`px-4 py-2  hover:text-blue-300 ${
+                                pageType === "streaming"
+                                    ? "text-gray-200"
+                                    : "text-white"
+                            } rounded-md transition duration-300`}
+                        >
+                            Sign in
+                        </button>
+                    </Link>
+                    <Link to="/signup">
                         {" "}
                         <button
                             className={`px-4 py-2  bg-blue-700 hover:bg-blue-600 ${
