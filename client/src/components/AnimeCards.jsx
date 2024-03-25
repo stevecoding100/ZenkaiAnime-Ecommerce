@@ -1,26 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { MdChevronLeft, MdChevronRight } from "react-icons/md";
-
-// const dummyData = {
-//     id: "one-piece",
-//     title: "One Piece",
-//     image: "https://gogocdn.net/cover/one-piece-1708412053.png",
-//     url: "https://gogoanime3.co/category/one-piece",
-//     genres: [
-//         "Action",
-//         "Adventure",
-//         "Comedy",
-//         "Fantasy",
-//         "Shounen",
-//         "Super Power",
-//     ],
-//     episodeId: "one-piece-episode-1098",
-//     episodeNumber: 1098,
-// };
-
-const AnimeRow = ({ title, rowID }) => {
+const AnimeCards = ({ title }) => {
     const url = "https://zenkai-api.vercel.app/anime/gogoanime/top-airing";
     const [animeList, setAnimeList] = useState([]);
     const [like, setLike] = useState(false);
@@ -46,36 +27,18 @@ const AnimeRow = ({ title, rowID }) => {
         getAnimeList();
     }, []);
 
-    const slideLeft = () => {
-        let slider = document.getElementById("slider" + rowID);
-        slider.scrollLeft = slider.scrollLeft - 500;
-    };
-
-    const slideRight = () => {
-        let slider = document.getElementById("slider" + rowID);
-        slider.scrollLeft = slider.scrollLeft + 500;
-    };
-
     return (
         <>
             <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>
             <div className="relative flex items-center group">
-                <MdChevronLeft
-                    className="bg-white left-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"
-                    size={40}
-                    onClick={slideLeft}
-                />
-                <div
-                    id={"slider" + rowID}
-                    className="w-full h-full overflow-x-scroll whitespace-nowrap scroll scroll-smooth srollbar-hide relative"
-                >
+                <div className="w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-6 md:gap-y-6 md:gap-0 mb-8 lg:p-2 relative">
                     {animeList.map((item, id) => (
                         <div
                             key={id}
-                            className="w-[185px] md:w-[224px] lg:w-[220px] inline-block cursor-pointer relative p-2"
+                            className=" w-[185px] md:w-[228px]  mx-auto cursor-pointer relative"
                         >
                             <img
-                                className="w-full h-[280px] md:h-[338px] object-cover block rounded-sm"
+                                className="w-full h-[280px] md:h-[360px] object-cover rounded-sm"
                                 src={item.image}
                                 alt={item.title}
                             />
@@ -94,14 +57,9 @@ const AnimeRow = ({ title, rowID }) => {
                         </div>
                     ))}
                 </div>
-                <MdChevronRight
-                    className="bg-white right-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"
-                    size={40}
-                    onClick={slideRight}
-                />
             </div>
         </>
     );
 };
 
-export default AnimeRow;
+export default AnimeCards;
