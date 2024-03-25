@@ -1,131 +1,152 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 const SignUpPage = () => {
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const BASEURL = "https://zenkaianime-ecommerce.onrender.com/";
+    const [email, setEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [error, setError] = useState("");
+    const BASEURL = "https://zenkaianime-ecommerce.onrender.com/";
+    const navigate = useNavigate();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    const formData = {
-      email,
-      first_name: firstName,
-      last_name: lastName,
-      password,
-      username,
+        try {
+            // Handle form submission logic here
+            const formData = {
+                email,
+                first_name: firstName,
+                last_name: lastName,
+                password,
+                username,
+            };
+            const result = await axios.post(
+                `${BASEURL}api/auth/register`,
+                formData
+            );
+            console.log("User registered", result);
+            navigate("/streaming");
+        } catch (error) {
+            console.error("Error signing up", error);
+            setError("Error during sign-up. Please try again.");
+        }
     };
-    try {
-      const result = await axios.post(`${BASEURL}api/auth/register`, formData);
-      console.log("User registered", result);
-    } catch (error) {
-      console.error("Error signing up", error);
-    }
-  };
 
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-        >
-          <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="firstName"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              First Name
-            </label>
-            <input
-              type="text"
-              id="firstName"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="lastName"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="lastName"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+    return (
+        <>
+            <div className="w-full h-screen">
+                <img
+                    className="sm:block absolute w-full h-full object-cover"
+                    src={
+                        "https://i.pinimg.com/originals/cc/e7/a5/cce7a5640b94bfdb6ab53ea610eb657d.jpg"
+                    }
+                    alt="popular anime show"
+                />
+                <div className="bg-black/60 fixed top-0 left-0 w-full h-screen"></div>
+                <div className="fixed w-full px-4 py-16 z-50">
+                    <div className="max-w-[450px] h-[710px] mx-auto bg-black/75 text-white rounded-md">
+                        <div className="max-w-[320px] mx-auto py-16">
+                            <h1 className="text-3xl font-bold font-sans">
+                                Sign Up
+                            </h1>
+                            <form
+                                className="w-full flex flex-col py-4 font-sans"
+                                onSubmit={handleSubmit}
+                            >
+                                <input
+                                    className="p-3 my-2 bg-gray-700 rounded"
+                                    type="firstname"
+                                    name="firstname"
+                                    id="firstname"
+                                    placeholder="First Name"
+                                    value={firstName}
+                                    onChange={(e) =>
+                                        setFirstName(e.target.value)
+                                    }
+                                    required
+                                />
+                                <input
+                                    className="p-3 my-2 bg-gray-700 rounded"
+                                    type="lastname"
+                                    name="lastname"
+                                    id="lastname"
+                                    placeholder="Last Name"
+                                    value={lastName}
+                                    onChange={(e) =>
+                                        setLastName(e.target.value)
+                                    }
+                                    required
+                                />
+                                <input
+                                    className="p-3 my-2 bg-gray-700 rounded"
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                                <input
+                                    className="p-3 my-2 bg-gray-700 rounded"
+                                    type="username"
+                                    name="username"
+                                    id="username"
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
+                                    required
+                                />
+                                <input
+                                    className="p-3 my-2 bg-gray-700 rounded"
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    required
+                                />
+                                <button
+                                    className="bg-blue-700 py-3 my-6 rounded font-bold"
+                                    type="submit"
+                                >
+                                    Sign Up
+                                </button>
+                                <div className="flex justify-between items-center text-sm text-gray-600 font-sans">
+                                    <p>
+                                        <input
+                                            className="mr-2"
+                                            type="checkbox"
+                                        />
+                                        Remember me
+                                    </p>
+                                    <p>Need Help?</p>
+                                </div>
+                                <p className="py-8 font-sans">
+                                    <span className="text-gray-600">
+                                        Already subscribed to ZenKaiAnime?
+                                    </span>
+                                    <Link to="/login"> Sign In</Link>
+                                </p>
+                            </form>
+                            {error && (
+                                <p className="text-red-500 text-sm font-sans">
+                                    {error}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default SignUpPage;
