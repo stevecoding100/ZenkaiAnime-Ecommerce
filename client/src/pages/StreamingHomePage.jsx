@@ -25,11 +25,11 @@ const StreamingHomePage = () => {
     // console.log(animeList);
 
     return (
-        <div className="bg-[#000000] min-h-screen w-full">
+        <div className="bg-[#000000] min-h-screen w-full p-2">
             <Navbar pageType="streaming" />
             <FeaturedAnime data={animeList} />
-            <AnimeRow rowID="1" title="Popular" />
-            <AnimeCards title="Recent Episodes" />
+            <AnimeRow rowID="1" title="Popular" data={animeList} />
+            <AnimeCards title="Recent Episodes" data={animeList} />
             <Footer pageType="streaming" />
         </div>
     );

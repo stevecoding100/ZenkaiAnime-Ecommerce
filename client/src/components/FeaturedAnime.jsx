@@ -1,19 +1,4 @@
-// const dummyData = {
-//     id: "one-piece",
-//     title: "One Piece",
-//     image: "https://gogocdn.net/cover/one-piece-1708412053.png",
-//     url: "https://gogoanime3.co/category/one-piece",
-//     genres: [
-//         "Action",
-//         "Adventure",
-//         "Comedy",
-//         "Fantasy",
-//         "Shounen",
-//         "Super Power",
-//     ],
-//     episodeId: "one-piece-episode-1098",
-//     episodeNumber: 1098,
-// };
+import { Link } from "react-router-dom";
 
 const FeaturedAnime = ({ data }) => {
     const randomAnimeImg = data[Math.floor(Math.random() * data.length)];
@@ -42,9 +27,11 @@ const FeaturedAnime = ({ data }) => {
                         {data.title}
                     </h1>
                     <div className="my-4">
-                        <button className="border bg-gray-300 text-black border-gray-300 py-2 px-5 rounded-sm">
-                            Play
-                        </button>
+                        <Link to={`/series/${randomAnimeImg?.id}`}>
+                            <button className="border bg-gray-300 text-black border-gray-300 py-2 px-5 rounded-sm">
+                                Play
+                            </button>
+                        </Link>
                         <button className="border text-white  border-gray-300 py-2 px-5 rounded-sm  ml-4">
                             Watch Later
                         </button>
