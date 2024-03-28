@@ -1,19 +1,17 @@
-import { Link } from "react-router-dom";
+const EpisodeCard = ({ episode }) => {
+    const { number, image } = episode;
 
-const EpisodeCard = ({ episode, animeId }) => {
-    const { id, number, url } = episode;
     return (
-        <Link
-            to={`/${animeId}/watch/${episode.id}`}
-            className="block bg-black rounded-md p-4 hover:bg-blue-500 h-[8vh] md:h-[10vh]"
-        >
-            <div className="flex flex-row justify-between border-b-2">
-                <h2 className="text-xl  text-white font-bold">
-                    Episode {number}
-                </h2>
-            </div>
-            {/* Add more episode details */}
-        </Link>
+        <div className="flex flex-row justify-between  mx-6 lg:mx-12 items-center border-b-2">
+            <img
+                src={image}
+                alt="#"
+                className="w-[220px] h-[150px] object-cover p-4"
+            />
+            <h2 className="text-xl  text-white font-bold mr-4 md:mr-10">
+                Episode {number}
+            </h2>
+        </div>
     );
 };
 
