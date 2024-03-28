@@ -68,55 +68,59 @@ const AnimeDetailsPage = () => {
                                     className="w-[260px] md:w-[420px] h-auto mx-auto lg:mx-16 rounded-md m-10"
                                 />
                                 <Link to="/">
-                                    <div className="absolute -top-10 lg:top-0 right-6 md:right-28 lg:right-12">
+                                    <div className="absolute -top-10 lg:top-0 right-6 md:right-28 lg:right-24">
                                         <IoIosCloseCircleOutline size={34} />
                                     </div>
                                 </Link>
                             </div>
 
-                            <div className="w-[80%] lg:w-full text-center mx-auto lg:text-start">
-                                <h1 className="text-2xl md:text-4xl mb-4 m-2">
+                            <div className="w-[90%] lg:w-full text-center mx-auto lg:text-start">
+                                <h1 className="text-2xl md:text-4xl mb-4 md:m-2">
                                     {animeDetails.id}
                                 </h1>
-                                <h4 className="text-sm md:text-lg text-slate-400 mb-4 md:mb-8 leading-6 m-1">
+                                <h4 className="text-[.8rem] md:text-lg text-slate-400 mb-4 md:mb-8 leading-6 m-1">
                                     {animeDetails.description}
                                 </h4>
-                                <div className="flex items-center justify-around mb-4  md:mb-10  w-[100%] md:w-[65%] lg:mx-0 mx-auto">
-                                    <span className="text-sm md:text-lg ">
-                                        Genres:
-                                    </span>
-                                    {animeDetails.genres.map((genre) => (
-                                        <p
-                                            key={genre}
-                                            className="text-blue-400 text-[.70rem] md:text-[1rem] lg:text-[1.2rem]"
-                                        >
-                                            {genre}
-                                        </p>
-                                    ))}
-                                </div>
-                                <div className="mt-6 mb-6">
-                                    <ul className="text-[.80rem] flex justify-around w-[85%] md:w-[65%] md:pr-[6rem] mx-auto lg:mx-0 md:text-[1rem] lg:text-[1.2rem]">
-                                        <li>
+                                <div className="container w-full h-full flex flex-col lg:m-2">
+                                    <div className="flex mx-auto lg:mx-0">
+                                        <h4 className="text-sm md:text-lg">
+                                            Genres:{" "}
+                                        </h4>
+                                        <ul className="ml-2 flex justify-around md:w-[90%] lg:w-[65%] text-blue-400">
+                                            {animeDetails.genres.map(
+                                                (genre) => (
+                                                    <li
+                                                        key={genre}
+                                                        className="text-[.8rem] md:text-lg ml-2"
+                                                    >
+                                                        {genre}
+                                                    </li>
+                                                )
+                                            )}
+                                        </ul>
+                                    </div>
+                                    <div className="flex flex-row text-start w-[70%] justify-between mx-auto  lg:mx-0 md:w-[55%] lg:w-[54%] mt-4">
+                                        <h5 className="text-[.8rem] md:text-lg">
                                             Season:{" "}
-                                            <span className=" text-orange-400">
+                                            <span className="ml-[.2rem] md:ml-2 text-orange-400 t">
                                                 {animeDetails.type}
                                             </span>
-                                        </li>
-                                        <li>
-                                            Released:{" "}
-                                            <span className=" text-orange-400">
+                                        </h5>
+                                        <h5 className="text-[.8rem] md:text-lg">
+                                            Release:{" "}
+                                            <span className="ml-[.2rem] md:ml-2 text-orange-400 t">
                                                 {animeDetails.releaseDate}
                                             </span>
-                                        </li>
-                                        <li>
+                                        </h5>
+                                        <h5 className="text-[.8rem] md:text-lg">
                                             Status:{" "}
-                                            <span className=" text-orange-400">
+                                            <span className="ml-[.2rem] md:ml-2 text-orange-400 t">
                                                 {animeDetails.status}
                                             </span>
-                                        </li>
-                                    </ul>
+                                        </h5>
+                                    </div>
                                 </div>
-                                <div className="flex justify-around items-center m-8 mt-20 w-[90%] md:w-[50%] lg:mx-0 lg:w-[45%] mx-auto font-sans text-slate-200">
+                                <div className="flex justify-around items-center m-8 mt-12 w-[85%] md:w-[50%] lg:mx-0 lg:w-[45%] mx-auto font-sans text-slate-200">
                                     <p className="flex justify-around w-[32%] lg:w-full mx-auto">
                                         Favorite
                                         {like ? (
