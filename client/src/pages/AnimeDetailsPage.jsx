@@ -60,6 +60,9 @@ const AnimeDetailsPage = () => {
                     </div>
                 ) : (
                     <div className="text-white pt-[12rem] md:pt-[8rem] flex flex-col w-full h-full">
+                        <div className="text-white flex items-center justify-center p-32 mb-24">
+                            Movie Trailer
+                        </div>
                         <div className="lg:flex lg:items-center lg:w-full">
                             <div className="relative w-full h-full">
                                 <img
@@ -86,7 +89,7 @@ const AnimeDetailsPage = () => {
                                         <h4 className="text-sm md:text-lg">
                                             Genres:{" "}
                                         </h4>
-                                        <ul className="ml-2 flex justify-around md:w-[90%] lg:w-[65%] text-blue-400">
+                                        <ul className="ml-2 flex justify-around md:w-[90%] lg:w-[70%] text-blue-400">
                                             {animeDetails.genres.map(
                                                 (genre) => (
                                                     <li
@@ -99,7 +102,7 @@ const AnimeDetailsPage = () => {
                                             )}
                                         </ul>
                                     </div>
-                                    <div className="flex flex-row text-start w-[70%] justify-between mx-auto  lg:mx-0 md:w-[55%] lg:w-[54%] mt-4">
+                                    <div className="flex flex-row text-start w-[70%] justify-between mx-auto  lg:mx-0 md:w-[55%] lg:w-[65%] mt-4">
                                         <h5 className="text-[.8rem] md:text-lg">
                                             Season:{" "}
                                             <span className="ml-[.2rem] md:ml-2 text-orange-400 t">
