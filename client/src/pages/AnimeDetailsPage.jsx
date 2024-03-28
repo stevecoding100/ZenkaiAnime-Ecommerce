@@ -9,31 +9,42 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import EpisodeCard from "../components/EpisodeCard";
 import AnimeRow from "../components/AnimeRow";
 import Footer from "../components/Footer";
-import apiRoutes from "../../api/apiRoutes";
+import apiRoutes from "../../api/apiRoutes.jsx";
+import useAnimeStore from "../../store/store";
 const AnimeDetailsPage = () => {
+  const { addAnimeList, animeList } = useAnimeStore();
   const [animeDetails, setAnimeDetails] = useState([]);
-  const [streamingLinks, setStreamingLinks] = useState([]);
+  const [episodeList, setEpisodeList] = useState([]);
   const [like, setLike] = useState(false);
   const { animeId } = useParams();
   const [loading, setLoading] = useState(true);
   const [recommendationList, setRecommendationList] = useState([]);
 
-  useEffect(() => {
-    async function getAnimeDetails() {
-      try {
-        const { data } = await axios.get(apiRoutes.getAnimeInfo(animeId));
-        console.log("Anime Details", data);
-        setAnimeDetails(data);
-        setStreamingLinks(data.episodes);
-        setRecommendationList(data.recommendations);
-        setLoading(false);
-      } catch (error) {
-        throw new Error(error.message);
-      }
+  const getAnimeDetails = async () => {
+    try {
+      const { data } = await axios.get(apiRoutes.getAnimeInfo(animeId), {});
+      setAnimeDetails(data);
+      setEpisodeList(data.episodes);
+      addAnimeList(data); // Pass the data object to addAnimeList
+      setRecommendationList(data.recommendations);
+      setLoading(false);
+    } catch (error) {
+      throw new Error(error.message);
     }
-    getAnimeDetails();
-  }, []);
+  };
+  useEffect(() => {
+    const animeData = animeList.find((anime) => anime.id === animeId);
+    console.log("animeList", animeList);
 
+    if (animeData) {
+      setAnimeDetails(animeData);
+      setEpisodeList(animeData.episodes);
+      setRecommendationList(animeData.recommendations);
+      setLoading(false);
+    } else {
+      getAnimeDetails();
+    }
+  }, [animeId, animeList]);
   return (
     <div className="bg-black w-full min-h-screen pt-4">
       <div>
@@ -64,9 +75,12 @@ const AnimeDetailsPage = () => {
                 <h1 className="text-2xl md:text-4xl mb-4 m-2">
                   {animeDetails.title.english}
                 </h1>
-                <h4 className="text-sm md:text-lg text-slate-400 mb-4 md:mb-8 leading-6 m-1">
-                  {animeDetails.description}
-                </h4>
+                <h4
+                  className="text-sm md:text-lg text-slate-400 mb-4 md:mb-8 leading-6 m-1"
+                  dangerouslySetInnerHTML={{
+                    __html: animeDetails.description,
+                  }}
+                ></h4>
                 <div className="flex items-center justify-around mb-4  md:mb-10  w-[100%] md:w-[65%] lg:mx-0 mx-auto">
                   <span className="text-sm md:text-lg ">Genres:</span>
                   {animeDetails.genres.map((genre) => (
@@ -119,7 +133,7 @@ const AnimeDetailsPage = () => {
               Watch Episodes
             </h2>
             <div className="h-[40vh] overflow-scroll w-[85%] md:w-[70%] mx-auto">
-              {streamingLinks.map((episode) => (
+              {episodeList.map((episode) => (
                 <EpisodeCard
                   className
                   key={episode.number}
