@@ -5,18 +5,21 @@ import AnimeRow from "../components/AnimeRow";
 import FeaturedAnime from "../components/FeaturedAnime";
 import Footer from "../components/Footer";
 import AnimeCards from "../components/AnimeCards";
-import apiRoutes from "../../api/apiRoutes";
+import apiRoutes from "../../api/apiRoutes.jsx";
+import useAnimeStore from "../../store/store";
 
 const StreamingHomePage = () => {
-  const [animeList, setAnimeList] = useState([]);
+  const { addAnimeList, animeList } = useAnimeStore();
+  const [trendingList, setTrendingList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getAnimeList() {
       try {
-        const { data } = await axios.get(apiRoutes.getTrendingAnime());
-        console.log(data);
-        setAnimeList(data.results);
+        const { data } = await axios.get(apiRoutes.getTrendingAnime(), {
+          proxy: apiRoutes.proxyConfig,
+        });
+        setTrendingList(data.results);
         setIsLoading(false);
       } catch (err) {
         throw new Error(err.message);
@@ -25,8 +28,6 @@ const StreamingHomePage = () => {
     getAnimeList();
   }, []);
 
-  // console.log(animeList);
-
   return (
     <div className="bg-[#000000] min-h-screen w-full p-2">
       <Navbar pageType="streaming" />
@@ -34,9 +35,9 @@ const StreamingHomePage = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <FeaturedAnime data={animeList} />
-          <AnimeRow rowID="1" title="Popular" data={animeList} />
-          <AnimeCards title="Recent Episodes" data={animeList} />
+          <FeaturedAnime data={trendingList} />
+          <AnimeRow rowID="1" title="Popular" data={trendingList} />
+          <AnimeCards title="Recent Episodes" data={trendingList} />
         </>
       )}
       <Footer pageType="streaming" />
