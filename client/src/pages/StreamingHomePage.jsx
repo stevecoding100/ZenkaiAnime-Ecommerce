@@ -5,34 +5,43 @@ import AnimeRow from "../components/AnimeRow";
 import FeaturedAnime from "../components/FeaturedAnime";
 import Footer from "../components/Footer";
 import AnimeCards from "../components/AnimeCards";
+import apiRoutes from "../../api/apiRoutes";
 
 const StreamingHomePage = () => {
-    const url = "https://zenkai-api.vercel.app/anime/gogoanime/top-airing";
-    const [animeList, setAnimeList] = useState([]);
+  const [animeList, setAnimeList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function getAnimeList() {
-            try {
-                const { data } = await axios.get(url, { params: { page: 1 } });
-                setAnimeList(data.results);
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        }
-        getAnimeList();
-    }, []);
+  useEffect(() => {
+    async function getAnimeList() {
+      try {
+        const { data } = await axios.get(apiRoutes.getTrendingAnime());
+        console.log(data);
+        setAnimeList(data.results);
+        setIsLoading(false);
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    }
+    getAnimeList();
+  }, []);
 
-    // console.log(animeList);
+  // console.log(animeList);
 
-    return (
-        <div className="bg-[#000000] min-h-screen w-full p-2">
-            <Navbar pageType="streaming" />
-            <FeaturedAnime data={animeList} />
-            <AnimeRow rowID="1" title="Popular" data={animeList} />
-            <AnimeCards title="Recent Episodes" data={animeList} />
-            <Footer pageType="streaming" />
-        </div>
-    );
+  return (
+    <div className="bg-[#000000] min-h-screen w-full p-2">
+      <Navbar pageType="streaming" />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <FeaturedAnime data={animeList} />
+          <AnimeRow rowID="1" title="Popular" data={animeList} />
+          <AnimeCards title="Recent Episodes" data={animeList} />
+        </>
+      )}
+      <Footer pageType="streaming" />
+    </div>
+  );
 };
 
 export default StreamingHomePage;
