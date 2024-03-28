@@ -1,28 +1,9 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
-// const dummyData = {
-//     id: "one-piece",
-//     title: "One Piece",
-//     image: "https://gogocdn.net/cover/one-piece-1708412053.png",
-//     url: "https://gogoanime3.co/category/one-piece",
-//     genres: [
-//         "Action",
-//         "Adventure",
-//         "Comedy",
-//         "Fantasy",
-//         "Shounen",
-//         "Super Power",
-//     ],
-//     episodeId: "one-piece-episode-1098",
-//     episodeNumber: 1098,
-// };
-
-const AnimeRow = ({ title, rowID }) => {
-    const url = "https://zenkai-api.vercel.app/anime/gogoanime/top-airing";
-    const [animeList, setAnimeList] = useState([]);
+const AnimeRow = ({ title, rowID, data }) => {
     const [like, setLike] = useState(false);
 
     // This function reduces the number of character in the anime title
@@ -33,18 +14,6 @@ const AnimeRow = ({ title, rowID }) => {
             return str;
         }
     };
-
-    useEffect(() => {
-        async function getAnimeList() {
-            try {
-                const { data } = await axios.get(url, { params: { page: 1 } });
-                setAnimeList(data.results);
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        }
-        getAnimeList();
-    }, []);
 
     const slideLeft = () => {
         let slider = document.getElementById("slider" + rowID);
@@ -69,28 +38,32 @@ const AnimeRow = ({ title, rowID }) => {
                     id={"slider" + rowID}
                     className="w-full h-full overflow-x-scroll whitespace-nowrap scroll scroll-smooth srollbar-hide relative"
                 >
-                    {animeList.map((item, id) => (
+                    {data.map((anime, id) => (
                         <div
                             key={id}
-                            className="w-[185px] md:w-[224px] lg:w-[220px] inline-block cursor-pointer relative p-2"
+                            className="w-[185px] md:w-[216px] lg:w-[220px] inline-block cursor-pointer relative p-2"
                         >
-                            <img
-                                className="w-full h-[280px] md:h-[338px] object-cover block rounded-sm"
-                                src={item.image}
-                                alt={item.title}
-                            />
-                            <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white font-sans">
-                                <p className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full font-sans text-center">
-                                    {truncateString(item.title, 25)}
-                                </p>
-                                <p>
-                                    {like ? (
-                                        <FaHeart className="absolute top-4 left-4 text-gray-300" />
-                                    ) : (
-                                        <FaRegHeart className="absolute top-4 left-4 text-gray-300" />
-                                    )}
-                                </p>
-                            </div>
+                            {/* Takes user to AnimeDetail component */}
+                            <Link to={`/series/${anime.id}`}>
+                                <img
+                                    className="w-full h-[280px] md:h-[340px] object-cover block rounded-sm"
+                                    src={anime.image}
+                                    alt={anime.title}
+                                />
+
+                                <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white font-sans">
+                                    <p className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full font-sans text-center">
+                                        {truncateString(anime.title, 25)}
+                                    </p>
+                                    <p>
+                                        {like ? (
+                                            <FaHeart className="absolute top-4 left-4 text-gray-300" />
+                                        ) : (
+                                            <FaRegHeart className="absolute top-4 left-4 text-gray-300" />
+                                        )}
+                                    </p>
+                                </div>
+                            </Link>
                         </div>
                     ))}
                 </div>

@@ -42,14 +42,14 @@ const Navbar = ({ pageType }) => {
                     >
                         {pageType === "streaming" ? (
                             <>
-                                <Link to="/streaming">Home</Link>
+                                <Link to="/">Home</Link>
                                 <Link to="/shop">Shop</Link>
                                 <Link to="/news">News</Link>
                             </>
                         ) : (
                             <>
                                 <Link to="/shop">Home</Link>
-                                <Link to="/streaming">Anime Shows</Link>
+                                <Link to="/">Anime Shows</Link>
                                 <Link to="/news">Contact Us</Link>
                             </>
                         )}
