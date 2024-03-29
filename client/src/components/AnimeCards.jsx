@@ -32,7 +32,13 @@ const AnimeCards = ({ title, data }) => {
                 />
                 <div className="absolute top-0 left-0 w-full h-full hover:bg-black/80 opacity-0 hover:opacity-100 text-white font-sans">
                   <p className="white-space-normal text-xs md:text-sm font-bold flex justify-center items-center h-full font-sans text-center">
-                    {truncateString(anime.title.english, 25)}
+                    {truncateString(
+                      anime.title?.english ||
+                        anime.title?.romaji ||
+                        anime.title?.userPreferred ||
+                        anime.title?.native,
+                      25
+                    )}
                   </p>
                   <p>
                     {like ? (
