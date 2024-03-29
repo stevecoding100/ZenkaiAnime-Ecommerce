@@ -1,4 +1,3 @@
-
 const ShopMerchCard = ({ productData }) => {
     return (
         <div className="mx-auto max-w-screen-xl px-4 mb-24 mt-40">

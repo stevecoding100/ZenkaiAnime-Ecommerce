@@ -3,7 +3,6 @@ import merch from "../../assets/shop/one-piece-shorts.webp";
 import pokemanCup from "../../assets/shop/pokeman-shop.webp";
 import tees from "../../assets/shop/shop-tees.webp";
 
-
 const HeroData = [
     {
         id: 1,
@@ -63,6 +62,5 @@ const ShopHeroSection = () => {
         </div>
     );
 };
-
 
 export default ShopHeroSection;

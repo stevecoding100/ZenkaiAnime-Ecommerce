@@ -5,7 +5,6 @@ import onePieceVarsity from "../../assets/shop/one-piece-varsity.webp";
 import pokemanFavorite from "../../assets/shop/pokeman-favorite.webp";
 import manga from "../../assets/shop/manga-shop.webp";
 
-
 const CategoryData = [
     {
         id: 1,

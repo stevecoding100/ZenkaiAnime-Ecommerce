@@ -4,12 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import ecomAPI from "../../../api/ecomAPI";
 
 const LoginPage = () => {
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    // const BASEURL = "https://zenkaianime-ecommerce.onrender.com/";
+    const BASEURL = "https://zenkaianime-ecommerce.onrender.com/";
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
