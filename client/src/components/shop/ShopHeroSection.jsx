@@ -3,11 +3,7 @@ import merch from "../../assets/shop/one-piece-shorts.webp";
 import pokemanCup from "../../assets/shop/pokeman-shop.webp";
 import tees from "../../assets/shop/shop-tees.webp";
 
-<<<<<<< HEAD
 const HeroData = [
-=======
-const HeroDummyData = [
->>>>>>> 76e3204 (deleted unused file)
     {
         id: 1,
         image: merch,
@@ -33,22 +29,14 @@ const HeroDummyData = [
 
 const ShopHeroSection = () => {
     return (
-<<<<<<< HEAD
         <div className="container mx-auto py-16 mb-24">
-=======
-        <div className="container mx-auto py-16">
->>>>>>> 76e3204 (deleted unused file)
             <h1 className="text-center text-2xl md:text-4xl lg:text-5xl font-bold mb-12 p-2">
                 Embrace Your Passion for Anime{" "}
                 <span className="hidden md:inline-block">-</span>{" "}
                 <br className="lg:hidden" /> Dive into Our Exclusive Collection
             </h1>
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 p-2 lg:p-0">
-<<<<<<< HEAD
                 {HeroData.map((collection) => (
-=======
-                {HeroDummyData.map((collection) => (
->>>>>>> 76e3204 (deleted unused file)
                     <div
                         key={collection.id}
                         className="flex flex-col text-center justify-center items-center bg-white shadow-lg rounded-lg overflow-hidden"
@@ -56,11 +44,7 @@ const ShopHeroSection = () => {
                         <img
                             src={collection.image}
                             alt={collection.title}
-<<<<<<< HEAD
                             className="w-full h-64 lg:h-72 object-cover"
-=======
-                            className="w-full h-64 object-cover"
->>>>>>> 76e3204 (deleted unused file)
                         />
                         <div className="p-6">
                             <h2 className="text-xl font-semibold mb-4">
