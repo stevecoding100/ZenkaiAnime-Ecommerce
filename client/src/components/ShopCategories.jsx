@@ -49,7 +49,7 @@ const ShopCategories = () => {
             <h1 className="text-center text-3xl lg:text-4xl font-bold mb-8">
                 Categories
             </h1>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-4 lg:gap-8">
                 {CategoryDummyData.map((category) => (
                     <Link key={category.id} to={category.link}>
                         <div className="flex flex-col items-center justify-center p-4 bg-white border border-gray-200 rounded-lg shadow-lg transition duration-300 hover:bg-gray-50">
