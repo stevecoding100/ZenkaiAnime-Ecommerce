@@ -9,8 +9,8 @@ const SignInSingnUpBtn = ({ pageType }) => {
                     <button
                         className={`px-4 py-2  hover:text-blue-300 ${
                             pageType === "streaming"
-                                ? "text-gray-300"
-                                : "text-white"
+                                ? "text-gray-200"
+                                : "text-gray-800"
                         } rounded-md transition duration-300`}
                     >
                         Sign in
