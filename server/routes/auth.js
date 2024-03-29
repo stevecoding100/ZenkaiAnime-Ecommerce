@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const { client } = require("../database/db");
-const { authenticateUser, isAdmin } = require("../middlewares/authMiddleware");
+const {
+  authenticateUser,
+  isAdmin,
+  isLoggedIn,
+} = require("../middlewares/authMiddleware");
 
 // <--- Database Queries --->
 const createUser = async ({
@@ -102,7 +106,7 @@ router.delete("/delete/:id", isAdmin, async (req, res) => {
 });
 
 // Update a user
-router.put("/update/:id", isAdmin, async (req, res) => {
+router.put("/update/:id", isLoggedIn, async (req, res) => {
   try {
     const user = await updateUser(req.params.id, req.body);
     res.status(200).json(user);
