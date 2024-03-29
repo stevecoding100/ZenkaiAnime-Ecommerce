@@ -27,7 +27,7 @@ const AnimeRow = ({ title, rowID, data }) => {
 
     return (
         <>
-            <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>
+            <h2 className="text-white font-bold md:text-xl p-6">{title}</h2>
             <div className="relative flex items-center group">
                 <MdChevronLeft
                     className="bg-white left-0 rounded-full absolute opacity-50 hover:opacity-100 cursor-pointer z-10 hidden group-hover:block"
