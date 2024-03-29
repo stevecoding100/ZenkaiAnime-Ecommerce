@@ -14,7 +14,6 @@ const MerchandiseHomePage = () => {
         async function getProducts() {
             try {
                 const products = await ecomAPI.products.getProducts();
-                console.log("Line 23 Data: ", products);
                 setProducts(products.data);
             } catch (err) {
                 throw new Error(err.message);

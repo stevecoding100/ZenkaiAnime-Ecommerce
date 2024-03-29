@@ -9,6 +9,7 @@ import apiRoutes from "../../../api/apiRoutes.jsx";
 import useAnimeStore from "../../../store/store.jsx";
 
 const StreamingHomePage = () => {
+
     const { addAnimeList, animeList } = useAnimeStore();
     const [trendingList, setTrendingList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

@@ -1,5 +1,5 @@
+
 const ShopMerchCard = ({ productData }) => {
-    console.log("line 47 :", productData);
     return (
         <div className="mx-auto max-w-screen-xl px-4 mb-24 mt-40">
             <h1 className="text-center text-3xl lg:text-4xl font-bold mb-2">
