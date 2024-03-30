@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import Navbar from "../../components/Navbar";
 const CartDropdown = ({ cart, addToCart, removeItem, checkOut }) => {
   return (
@@ -42,6 +43,9 @@ const CartDropdown = ({ cart, addToCart, removeItem, checkOut }) => {
     </div>
   );
 };
+=======
+
+>>>>>>> e7afdfc (add conditional if product already exist in the cart)
 const ProductCart = ({ product, addToCart }) => {
   return (
     <div className="flex justify-between items-center border-b-2 p-2">
@@ -67,6 +71,7 @@ const Test = () => {
   const userID = localStorage.getItem("userID");
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+<<<<<<< HEAD
   const [filteredProducts, setFilteredProducts] = useState([products]);
 
   const searchProducts = (e) => {
@@ -76,10 +81,13 @@ const Test = () => {
     );
     setFilteredProducts(filteredProducts);
   };
+=======
+>>>>>>> e7afdfc (add conditional if product already exist in the cart)
 
   const getProducts = async () => {
     try {
       const products = await axios.get("http://localhost:3000/api/products");
+<<<<<<< HEAD
       const [p1, p2, p3, p4, p5] = products.data;
       setProducts([p1, p2, p3, p4, p5]);
       setFilteredProducts([p1, p2, p3, p4, p5]);
@@ -87,11 +95,24 @@ const Test = () => {
       throw new Error("Error getting products", error);
     }
   };
+=======
+      const [p1, p2, p3] = products.data;
+      setProducts([p1, p2, p3]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+>>>>>>> e7afdfc (add conditional if product already exist in the cart)
   const addToCart = async (product_id) => {
     try {
       const quantity = 1;
       const user_id = userID;
+<<<<<<< HEAD
       const response = await axios.post(
+=======
+      const item = await axios.post(
+>>>>>>> e7afdfc (add conditional if product already exist in the cart)
         "http://localhost:3000/api/cart/add",
         {
           product_id,
@@ -104,6 +125,7 @@ const Test = () => {
           },
         }
       );
+<<<<<<< HEAD
       const updatedItem = response.data;
 
       if (updatedItem.quantity === 1) {
@@ -194,11 +216,17 @@ const Test = () => {
       }
     } catch (error) {
       throw new Error("Error checking out", error);
+=======
+      console.log(item);
+    } catch (error) {
+      console.log(error);
+>>>>>>> e7afdfc (add conditional if product already exist in the cart)
     }
   };
 
   useEffect(() => {
     getProducts();
+<<<<<<< HEAD
     getCart();
   }, []);
 
@@ -213,6 +241,13 @@ const Test = () => {
         cart={cart}
       />
       {filteredProducts.map((product) => (
+=======
+  }, []);
+  return (
+    <div className="container mx-auto">
+      <h1>Products</h1>
+      {products.map((product) => (
+>>>>>>> e7afdfc (add conditional if product already exist in the cart)
         <ProductCart key={product.id} addToCart={addToCart} product={product} />
       ))}
     </div>
