@@ -21,12 +21,18 @@ const authenticateUser = async (username, password) => {
     { user_id: user.id },
     user.is_admin ? JWT_ADMIN_SECRET : JWT_CLIENT_SECRET
   );
-  return { token };
+
+  return { token, id: user.id };
 };
 
 const findUserByToken = async (token) => {
   try {
-    const payload = jwt.verify(token, JWT_CLIENT_SECRET);
+    let payload;
+    try {
+      payload = jwt.verify(token, JWT_CLIENT_SECRET);
+    } catch (error) {
+      payload = jwt.verify(token, JWT_ADMIN_SECRET);
+    }
     const SQL = `SELECT * FROM users WHERE id=$1`;
     const response = await client.query(SQL, [payload.user_id]);
     return response.rows[0];
@@ -36,10 +42,10 @@ const findUserByToken = async (token) => {
 };
 
 // <-- Middleware -->
-const isLoggedIn = (req, res, next) => {
+const isLoggedIn = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    const user = findUserByToken(token);
+    const user = await findUserByToken(token);
     if (!user) {
       throw new Error("User not found");
     }

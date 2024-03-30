@@ -4,6 +4,7 @@ import MerchandiseHomePage from "./pages/shop/MerchandiseHomePage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import AnimeDetailsPage from "./pages/streaming/AnimeDetailsPage";
 import LoginPage from "./pages/auth/LoginPage";
+import Test from "./pages/streaming/test";
 const App = () => {
   return (
     <>
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/series/:animeId" element={<AnimeDetailsPage />} />
+        <Route path="/cart" element={<Test />} />
       </Routes>
     </>
   );
