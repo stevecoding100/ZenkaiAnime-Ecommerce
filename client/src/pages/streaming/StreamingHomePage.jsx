@@ -9,7 +9,6 @@ import apiRoutes from "../../../api/apiRoutes.jsx";
 import useAnimeStore from "../../../store/store.jsx";
 
 const StreamingHomePage = () => {
-
     const { addAnimeList, animeList } = useAnimeStore();
     const [trendingList, setTrendingList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -17,9 +16,7 @@ const StreamingHomePage = () => {
     useEffect(() => {
         async function getAnimeList() {
             try {
-                const { data } = await axios.get(apiRoutes.getTrendingAnime(), {
-                    proxy: apiRoutes.proxyConfig,
-                });
+                const { data } = await axios.get(apiRoutes.getTrendingAnime());
                 setTrendingList(data.results);
                 setIsLoading(false);
             } catch (err) {
