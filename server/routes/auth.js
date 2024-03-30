@@ -15,18 +15,16 @@ const createUser = async ({
   username,
   email,
   password,
-  billing_info,
 }) => {
   const SALT_COUNT = 10;
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
-  const SQL = `INSERT INTO users (first_name, last_name, username, email, password, billing_info) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+  const SQL = `INSERT INTO users (first_name, last_name, username, email, password) VALUES ($1, $2, $3, $4, $5) RETURNING first_name, last_name, username, email`;
   const response = await client.query(SQL, [
     first_name,
     last_name,
     username,
     email,
     hashedPassword,
-    billing_info,
   ]);
   return response.rows[0];
 };
@@ -63,10 +61,12 @@ const updateUser = async (
 
 // Register a new user
 router.post("/register", async (req, res) => {
+  console.log(req.body);
   try {
     const user = await createUser(req.body);
-
-    res.status(201).json(user);
+    const { token } = await authenticateUser(user.username, req.body.password);
+    const userWithToken = { ...user, token };
+    res.status(201).json(userWithToken);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
