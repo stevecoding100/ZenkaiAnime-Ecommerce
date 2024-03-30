@@ -27,7 +27,7 @@ const StreamingHomePage = () => {
     }, []);
 
     return (
-        <div className="bg-[#000000] min-h-screen w-full p-2">
+        <div className="bg-[#000000] min-h-screen w-full">
             <Navbar pageType="streaming" />
             {isLoading ? (
                 <div>Loading...</div>
