@@ -9,6 +9,7 @@ import apiRoutes from "../../../api/apiRoutes.jsx";
 import useAnimeStore from "../../../store/store.jsx";
 
 const StreamingHomePage = () => {
+<<<<<<< HEAD
     const { addAnimeList, animeList } = useAnimeStore();
     const [trendingList, setTrendingList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +44,43 @@ const StreamingHomePage = () => {
             <Footer pageType="streaming" />
         </div>
     );
+=======
+  const { addAnimeList, animeList } = useAnimeStore();
+  const [trendingList, setTrendingList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function getAnimeList() {
+      try {
+        const { data } = await axios.get(apiRoutes.getTrendingAnime(), {
+          proxy: apiRoutes.proxyConfig,
+        });
+        console.log("Line 22 Data: ", data.results);
+        setTrendingList(data.results);
+        setIsLoading(false);
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    }
+    getAnimeList();
+  }, []);
+
+  return (
+    <div className="bg-[#000000] min-h-screen w-full p-2">
+      <Navbar pageType="streaming" />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <FeaturedAnime data={trendingList} />
+          <AnimeRow rowID="1" title="Popular" data={trendingList} />
+          <AnimeCards title="Recent Episodes" data={trendingList} />
+        </>
+      )}
+      <Footer pageType="streaming" />
+    </div>
+  );
+>>>>>>> 76e3204 (deleted unused file)
 };
 
 export default StreamingHomePage;
