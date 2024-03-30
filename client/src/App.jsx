@@ -4,6 +4,7 @@ import MerchandiseHomePage from "./pages/shop/MerchandiseHomePage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import AnimeDetailsPage from "./pages/streaming/AnimeDetailsPage";
 import LoginPage from "./pages/auth/LoginPage";
+import Test from "./pages/streaming/test";
 const App = () => {
     return (
         <>
