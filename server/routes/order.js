@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { client } = require("../database/db");
 const { isLoggedIn } = require("../middlewares/authMiddleware");
 
 // <--- Database Queries --->
@@ -10,9 +11,9 @@ const getAllOrders = async () => {
   return response.rows;
 };
 
-const createOrder = async ({ user_id, total_price, status }) => {
-  const SQL = `INSERT INTO orders (user_id, total_price, status) VALUES ($1, $2, $3) RETURNING *`;
-  const response = await client.query(SQL, [user_id, total_price, status]);
+const createOrder = async ({ user_id, total_price }) => {
+  const SQL = `INSERT INTO orders (user_id, total_price) VALUES ($1, $2) RETURNING *`;
+  const response = await client.query(SQL, [user_id, total_price]);
   return response.rows[0];
 };
 
@@ -29,7 +30,7 @@ const createOrderItems = async (order_id, product_id, quantity, price) => {
 
 // <--- Routes --->
 
-router.get("/api/orders", async (req, res) => {
+router.get("/orders", async (req, res) => {
   try {
     const orders = await getAllOrders();
     res.status(200).json(orders);
@@ -39,7 +40,8 @@ router.get("/api/orders", async (req, res) => {
 });
 
 // Create a new order
-router.post("/api/user/:user_id/order", async (req, res) => {
+router.post("/user/add", async (req, res) => {
+  const { user_id, total_price } = req.body;
   try {
     const order = await createOrder(req.body);
     res.status(201).json(order);
@@ -49,7 +51,7 @@ router.post("/api/user/:user_id/order", async (req, res) => {
 });
 
 // Create a new order item
-router.post("/api/order/:order_id/item", async (req, res) => {
+router.post("/order/:order_id/item", async (req, res) => {
   try {
     const orderItem = await createOrderItems(req.body);
     res.status(201).json(orderItem);
