@@ -87,7 +87,7 @@ router.post("/login", async (req, res) => {
 // <--- ADMIN ONLY ROUTES --->
 
 // Get user information
-router.get("/users", isAdmin, async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     res.status(200).json(await getAllUsers());
   } catch (error) {
