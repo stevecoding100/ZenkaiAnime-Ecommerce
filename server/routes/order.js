@@ -23,6 +23,7 @@ const deleteOrder = async ({ id }) => {
   return response.rows[0];
 };
 
+// Order Items
 const createOrderItems = async (order_id, product_id, quantity, price) => {
   const SQL = `INSERT INTO order_items (order_id, product_id, quantity, price) VALUES ($1, $2, $3, $4) RETURNING *`;
   const response = await client.query(SQL, [
@@ -32,6 +33,13 @@ const createOrderItems = async (order_id, product_id, quantity, price) => {
     price,
   ]);
   return response.rows[0];
+};
+
+// Get all Order Items from an Order
+const getOrderItems = async ({ order_id }) => {
+  const SQL = `SELECT * FROM order_items WHERE order_id = $1`;
+  const response = await client.query(SQL, [order_id]);
+  return response.rows;
 };
 
 // <--- Routes --->
@@ -70,9 +78,27 @@ router.delete("/delete", async (req, res) => {
 
 // ORDER ITEMS
 // Create a new order item
-router.post("/order/:order_id/item", async (req, res) => {
+//Base route /api/orders
+router.get("/:order_id/item", async (req, res) => {
   try {
-    const orderItem = await createOrderItems(req.body);
+    const orderItems = await getOrderItems(req.params);
+    res.status(200).json(orderItems);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.post("/:order_id/item", async (req, res) => {
+  const { product_id, quantity, price } = req.body;
+  const { order_id } = req.params;
+  console.log({ product_id, quantity, price, order_id });
+  try {
+    const orderItem = await createOrderItems(
+      order_id,
+      product_id,
+      quantity,
+      price
+    );
     res.status(201).json(orderItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
