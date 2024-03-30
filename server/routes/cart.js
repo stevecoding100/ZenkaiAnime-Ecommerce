@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const { isLoggedIn } = require("../middlewares/authMiddleware");
 // <--- Database Queries --->
 const addItemsToCart = async (user_id, product_id, quantity) => {
   // Check if user has a cart
@@ -24,13 +24,30 @@ const addItemsToCart = async (user_id, product_id, quantity) => {
   return response.rows[0];
 };
 
+const getCart = async (user_id) => {
+  const SQL = `SELECT * FROM cart_items WHERE user_id = $1`;
+  const response = await client.query(SQL, [user_id]);
+  return response.rows;
+};
+
 // <--- Routes --->
 // Add an item to a cart
-router.post("/add", async (req, res) => {
+router.post("/add", isLoggedIn, async (req, res) => {
   try {
     const { product_id, quantity, user_id } = req.body;
     const item = await addItemsToCart(user_id, product_id, quantity);
     res.status(201).json(item);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Get a user's cart
+router.get("/get", isLoggedIn, async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    const cart = await getCart(user_id);
+    res.status(200).json(cart);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
