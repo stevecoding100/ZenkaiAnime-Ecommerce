@@ -94,9 +94,23 @@ const getCartItems = async (user_id) => {
 };
 
 const deleteItemFromCart = async (user_id, product_id) => {
-  const SQL = `DELETE FROM cart_items WHERE user_id = $1 AND product_id = $2`;
-  await client.query(SQL, [user_id, product_id]);
-  return;
+  const cart = await findCartByUserId(user_id);
+
+  const item = await getCartItemByProductId(cart.id, product_id);
+
+  try {
+    if (item.quantity > 1) {
+      const newQuantity = item.quantity - 1;
+      await updateCartItem(cart.id, product_id, newQuantity);
+      return;
+    } else {
+      const SQL = `DELETE FROM cart_items WHERE cart_id = $1 AND product_id = $2`;
+      await client.query(SQL, [cart.id, product_id]);
+      return;
+    }
+  } catch (error) {
+    throw new Error("Error deleting item from cart", error);
+  }
 };
 
 // <--- Routes --->
@@ -132,9 +146,9 @@ router.put("/update", isLoggedIn, async (req, res) => {
 });
 
 // Delete an item from a cart
-router.delete("/delete", isLoggedIn, async (req, res) => {
+router.delete("/delete/:product_id/:user_id", isLoggedIn, async (req, res) => {
   try {
-    const { product_id, user_id } = req.body;
+    const { product_id, user_id } = req.params;
     await deleteItemFromCart(user_id, product_id);
     res.status(200).json({ message: "Item deleted" });
   } catch (error) {
