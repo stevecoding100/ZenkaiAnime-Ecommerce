@@ -29,7 +29,7 @@ const HeroData = [
 
 const ShopHeroSection = () => {
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto p-5">
             <h1 className="text-center text-2xl md:text-4xl lg:text-5xl font-bold mb-12 p-2">
                 Embrace Your Passion for Anime{" "}
                 <span className="hidden md:inline-block">-</span>{" "}

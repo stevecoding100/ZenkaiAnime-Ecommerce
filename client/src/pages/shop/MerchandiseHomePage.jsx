@@ -24,7 +24,7 @@ const MerchandiseHomePage = () => {
 
     return (
         <>
-            <div className="grid grid-rows-[auto,1fr,auto] min-h-screen">
+            <div className="min-h-screen w-full">
                 <Navbar pageType="merchandise" />
                 <div className="h-full w-full mt-28">
                     <ShopHeroSection productData={products} />
