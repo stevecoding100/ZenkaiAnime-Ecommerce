@@ -96,17 +96,22 @@ const Test = () => {
       );
       const updatedItem = response.data;
 
-      // Update the cart state with the updated quantity
-      const updatedCart = cart.map((item) => {
-        if (item.id === updatedItem.id) {
-          return {
-            ...item,
-            quantity: updatedItem.quantity,
-          };
-        }
-        return item;
-      });
-      setCart(updatedCart);
+      if (updatedItem.quantity === 1) {
+        const product = products.find((product) => product.id === product_id);
+        setCart([...cart, { ...product, quantity }]);
+      } else {
+        // Update the cart state with the updated quantity
+        const updatedCart = cart.map((item) => {
+          if (item.id === updatedItem.id) {
+            return {
+              ...item,
+              quantity: updatedItem.quantity,
+            };
+          }
+          return item;
+        });
+        setCart(updatedCart);
+      }
     } catch (error) {
       throw new Error("Error adding item to cart", error);
     }
