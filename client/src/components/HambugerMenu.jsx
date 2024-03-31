@@ -73,19 +73,19 @@ const HambugerMenu = ({ pageType }) => {
                             <>
                                 <Link
                                     to="/shop"
-                                    className="border-b-2 border-gray-900 w-64  h-16 py-6 text-center hover:bg-gray-900"
+                                    className="border-b-2 border-gray-900 hover:text-white w-64  h-16 py-6 text-center hover:bg-gray-900"
                                 >
                                     Home
                                 </Link>
                                 <Link
                                     to="/"
-                                    className="border-b-2 border-gray-900 w-64  h-16 py-6 text-center hover:bg-gray-900"
+                                    className="border-b-2 border-gray-900  hover:text-white w-64  h-16 py-6 text-center hover:bg-gray-900"
                                 >
                                     Anime Shows
                                 </Link>
                                 <Link
                                     to="/contactus"
-                                    className="border-b-2 border-gray-900 w-64  h-16 py-6 text-center hover:bg-gray-900"
+                                    className="border-b-2 border-gray-900  hover:text-white w-64  h-16 py-6 text-center hover:bg-gray-900"
                                 >
                                     Contact Us
                                 </Link>

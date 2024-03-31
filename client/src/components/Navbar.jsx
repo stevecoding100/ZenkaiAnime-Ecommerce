@@ -45,7 +45,7 @@ const Navbar = ({ pageType }) => {
                     />
 
                     <ul
-                        className={`md:flex items-center space-x-6 md:pr-12 lg:pr-32 ${
+                        className={`md:flex items-center space-x-4 md:pr-6 lg:pr-32 ${
                             pageType === "streaming"
                                 ? "text-white"
                                 : "text-black"
@@ -53,15 +53,33 @@ const Navbar = ({ pageType }) => {
                     >
                         {pageType === "streaming" ? (
                             <>
-                                <Link to="/">Home</Link>
-                                <Link to="/shop">Shop</Link>
-                                <Link to="/news">News</Link>
+                                <Link to="/" className="text-sm lg:text-lg">
+                                    Home
+                                </Link>
+                                <Link to="/shop" className="text-sm lg:text-lg">
+                                    Shop
+                                </Link>
+                                <Link
+                                    to="/news"
+                                    className="text-sm  lg:text-lg"
+                                >
+                                    News
+                                </Link>
                             </>
                         ) : (
                             <>
-                                <Link to="/shop">Home</Link>
-                                <Link to="/">Anime Shows</Link>
-                                <Link to="/contactus">Contact Us</Link>
+                                <Link to="/shop" className="text-sm lg:text-lg">
+                                    Home
+                                </Link>
+                                <Link to="/" className="text-sm lg:text-lg">
+                                    Anime Shows
+                                </Link>
+                                <Link
+                                    to="/contactus"
+                                    className="text-sm lg:text-lg"
+                                >
+                                    Contact Us
+                                </Link>
                             </>
                         )}
                     </ul>
