@@ -14,7 +14,12 @@ const updateCartItem = async (cartId, productId, quantity) => {
   const query =
     "UPDATE cart_items SET quantity = $1 WHERE cart_id = $2 AND product_id = $3 RETURNING *";
   const { rows } = await client.query(query, [quantity, cartId, productId]);
-  return rows[0];
+  const updatedItem = {
+    id: productId,
+    quantity: rows[0].quantity,
+  };
+
+  return updatedItem;
 };
 
 const createCart = async (userId) => {
@@ -37,26 +42,28 @@ const addItemToCart = async (cartId, productId, quantity) => {
   return rows[0];
 };
 
-const addItemsToCart = async ({ userId, productId, quantity }) => {
+const addItemsToCart = async ({ user_id, product_id, quantity }) => {
+  console.log({ user_id, product_id, quantity });
   try {
-    let cart = await findCartByUserId(userId);
+    let cart = await findCartByUserId(user_id);
 
     if (!cart) {
-      cart = await createCart(userId);
+      cart = await createCart(user_id);
     }
 
-    const cartItem = await getCartItemByProductId(cart.id, productId);
+    const cartItem = await getCartItemByProductId(cart.id, product_id);
 
     if (cartItem) {
       const newQuantity = cartItem.quantity + quantity;
       const updatedCartItem = await updateCartItem(
         cart.id,
-        productId,
+        product_id,
         newQuantity
       );
+      // console.log("Line 77", { updatedCartItem });
       return updatedCartItem;
     } else {
-      const newCartItem = await addItemToCart(cart.id, productId, quantity);
+      const newCartItem = await addItemToCart(cart.id, product_id, quantity);
       return newCartItem;
     }
   } catch (error) {
@@ -69,19 +76,20 @@ const getCartItems = async (user_id) => {
   const SQL = `SELECT * FROM cart_items WHERE cart_id = $1`;
   const response = await client.query(SQL, [cart.id]);
 
-  // Get the product details for each item in the cart
   const items = await Promise.all(
     response.rows.map(async (item) => {
       const SQL = `SELECT * FROM products WHERE id = $1`;
       const response = await client.query(SQL, [item.product_id]);
       const product = response.rows[0];
       return {
-        product,
+        id: item.product_id,
+        name: product.name,
+        price: product.price,
+        image_url: product.image_url,
         quantity: item.quantity,
       };
     })
   );
-  console.log({ items });
   return items;
 };
 
@@ -104,10 +112,8 @@ router.post("/add", isLoggedIn, async (req, res) => {
 
 // Get a user's cart
 router.get("/:user_id", async (req, res) => {
-  console.log("line 78 get cart", req.params);
   try {
     const cart = await getCartItems(req.params.user_id);
-    console.log({ cart });
     res.status(200).json(cart);
   } catch (error) {
     res.status(400).json({ error: error.message });
