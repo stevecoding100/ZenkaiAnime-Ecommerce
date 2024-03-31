@@ -7,6 +7,11 @@ const { isLoggedIn } = require("../middlewares/authMiddleware");
 const findCartByUserId = async (userId) => {
   const query = "SELECT * FROM carts WHERE user_id = $1";
   const { rows } = await client.query(query, [userId]);
+
+  if (rows.length === 0) {
+    return null;
+  }
+
   return rows[0];
 };
 
@@ -43,7 +48,6 @@ const addItemToCart = async (cartId, productId, quantity) => {
 };
 
 const addItemsToCart = async ({ user_id, product_id, quantity }) => {
-  console.log({ user_id, product_id, quantity });
   try {
     let cart = await findCartByUserId(user_id);
 
@@ -60,7 +64,6 @@ const addItemsToCart = async ({ user_id, product_id, quantity }) => {
         product_id,
         newQuantity
       );
-      // console.log("Line 77", { updatedCartItem });
       return updatedCartItem;
     } else {
       const newCartItem = await addItemToCart(cart.id, product_id, quantity);
@@ -73,6 +76,11 @@ const addItemsToCart = async ({ user_id, product_id, quantity }) => {
 };
 const getCartItems = async (user_id) => {
   const cart = await findCartByUserId(user_id);
+
+  if (!cart) {
+    return [];
+  }
+
   const SQL = `SELECT * FROM cart_items WHERE cart_id = $1`;
   const response = await client.query(SQL, [cart.id]);
 
