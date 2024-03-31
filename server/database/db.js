@@ -2,6 +2,7 @@ const pg = require("pg");
 require("dotenv").config();
 pg.types.setTypeParser(pg.types.builtins.INT4, parseInt);
 pg.types.setTypeParser(pg.types.builtins.INT8, parseInt);
+pg.types.setTypeParser(pg.types.builtins.NUMERIC, parseFloat);
 const client = new pg.Client(process.env.DATABASE_URL);
 
 const createTable = async () => {
