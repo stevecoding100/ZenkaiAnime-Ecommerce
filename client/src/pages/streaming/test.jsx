@@ -36,7 +36,6 @@ const Test = () => {
       console.log(error);
     }
   };
-
   const addToCart = async (product_id) => {
     try {
       const quantity = 1;
@@ -60,8 +59,23 @@ const Test = () => {
     }
   };
 
+  const getCart = async () => {
+    try {
+      const cart = await axios.get(`http://localhost:3000/api/cart/${userID}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      console.log(cart);
+      setCart(cart.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getProducts();
+    getCart();
   }, []);
   return (
     <div className="container mx-auto">
