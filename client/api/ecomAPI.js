@@ -9,6 +9,7 @@ const ecomAPI = {
         const user = await axios.post(`${baseURL}/auth/register`, formData);
         console.log("User registered", user);
         localStorage.setItem("token", user.token);
+        localStorage.setItem("userID", user.id);
         return user;
       } catch (error) {
         throw new Error("Error registering user", error);
@@ -19,6 +20,7 @@ const ecomAPI = {
         const user = await axios.post(`${baseURL}/auth/login`, formData);
         console.log("User logged in", user);
         localStorage.setItem("token", user.data.token);
+        localStorage.setItem("userID", user.data.id);
         return user;
       } catch (error) {
         throw new Error("Error logging in user", error);
