@@ -3,7 +3,6 @@ import merch from "../../assets/shop/one-piece-shorts.webp";
 import pokemanCup from "../../assets/shop/pokeman-shop.webp";
 import tees from "../../assets/shop/shop-tees.webp";
 
-
 const HeroData = [
     {
         id: 1,
@@ -30,7 +29,7 @@ const HeroData = [
 
 const ShopHeroSection = () => {
     return (
-        <div className="container mx-auto py-16 mb-24">
+        <div className="container mx-auto">
             <h1 className="text-center text-2xl md:text-4xl lg:text-5xl font-bold mb-12 p-2">
                 Embrace Your Passion for Anime{" "}
                 <span className="hidden md:inline-block">-</span>{" "}
@@ -63,6 +62,5 @@ const ShopHeroSection = () => {
         </div>
     );
 };
-
 
 export default ShopHeroSection;

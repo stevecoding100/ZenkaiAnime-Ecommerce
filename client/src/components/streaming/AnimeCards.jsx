@@ -18,15 +18,15 @@ const AnimeCards = ({ title, data }) => {
         <>
             <h2 className="text-white font-bold md:text-xl p-4">{title}</h2>
             <div className="relative flex items-center group">
-                <div className="w-full h-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-4  mb-8 lg:p-2 relative">
+                <div className="w-full h-full grid grid-cols-3 lg:grid-cols-6 gap-y-6  mb-8">
                     {data.map((anime, id) => (
                         <div
                             key={id}
-                            className=" w-[176px] md:w-[238px]  lg:w-[218px] mx-auto cursor-pointer relative"
+                            className=" w-[90%] mx-auto cursor-pointer relative"
                         >
                             <Link to={`/series/${anime.id}`}>
                                 <img
-                                    className="w-full h-[260px] md:h-[348px]  object-cover rounded-sm"
+                                    className="h-[175px] md:h-[340px] object-cover rounded-sm"
                                     src={anime.image}
                                     alt={anime.title.english}
                                 />
