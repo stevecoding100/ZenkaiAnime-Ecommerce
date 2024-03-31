@@ -4,56 +4,66 @@ const { client } = require("../database/db");
 const { isLoggedIn } = require("../middlewares/authMiddleware");
 // <--- Database Queries --->
 
-const findCartByUserId = async (user_id) => {
-  const SQL = `SELECT * FROM carts WHERE user_id = $1`;
-  const response = await client.query(SQL, [user_id]);
-  return response.rows[0];
+const findCartByUserId = async (userId) => {
+  const query = "SELECT * FROM carts WHERE user_id = $1";
+  const { rows } = await client.query(query, [userId]);
+  return rows[0];
 };
 
-const addItemsToCart = async ({ user_id, product_id, quantity }) => {
-  // Check if user has a cart
-  const cart = await findCartByUserId(user_id);
-  let cart_id;
-
-  // If user has no cart, create a cart
-  if (!cart) {
-    try {
-      const SQL = `INSERT INTO carts (user_id) VALUES ($1) RETURNING *`;
-      const response = await client.query(SQL, [user_id]);
-      cart_id = response.rows[0].id;
-    } catch (error) {
-      console.error("Error creating cart:", error);
-    }
-  } else {
-    cart_id = cart.id;
-  }
-  // Check if item is already in cart
-  const item = await client.query(
-    `SELECT * FROM cart_items WHERE cart_id = $1 AND product_id = $2`,
-    [cart_id, product_id]
-  );
-  console.log("item", typeof item.rows[0].quantity);
-  // If item is already in cart, update the quantity
-  if (item.rows.length > 0) {
-    try {
-      const newQuantity = Number(item.rows[0].quantity) + quantity;
-      const SQL = `UPDATE cart_items SET quantity = $1 WHERE cart_id = $2 AND product_id = $3 RETURNING *`;
-      const response = await client.query(SQL, [
-        newQuantity,
-        cart_id,
-        product_id,
-      ]);
-      return response.rows[0];
-    } catch (error) {
-      console.error("Error updating quantity:", error);
-    }
-  }
-
-  const SQL = `INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *`;
-  const response = await client.query(SQL, [cart_id, product_id, quantity]);
-  return response.rows[0];
+const updateCartItem = async (cartId, productId, quantity) => {
+  const query =
+    "UPDATE cart_items SET quantity = $1 WHERE cart_id = $2 AND product_id = $3 RETURNING *";
+  const { rows } = await client.query(query, [quantity, cartId, productId]);
+  return rows[0];
 };
 
+const createCart = async (userId) => {
+  const query = "INSERT INTO carts (user_id) VALUES ($1) RETURNING *";
+  const { rows } = await client.query(query, [userId]);
+  return rows[0];
+};
+
+const getCartItemByProductId = async (cartId, productId) => {
+  const query =
+    "SELECT * FROM cart_items WHERE cart_id = $1 AND product_id = $2";
+  const { rows } = await client.query(query, [cartId, productId]);
+  return rows[0];
+};
+
+const addItemToCart = async (cartId, productId, quantity) => {
+  const query =
+    "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *";
+  const { rows } = await client.query(query, [cartId, productId, quantity]);
+  return rows[0];
+};
+
+const addItemsToCart = async ({ userId, productId, quantity }) => {
+  try {
+    let cart = await findCartByUserId(userId);
+
+    if (!cart) {
+      cart = await createCart(userId);
+    }
+
+    const cartItem = await getCartItemByProductId(cart.id, productId);
+
+    if (cartItem) {
+      const newQuantity = cartItem.quantity + quantity;
+      const updatedCartItem = await updateCartItem(
+        cart.id,
+        productId,
+        newQuantity
+      );
+      return updatedCartItem;
+    } else {
+      const newCartItem = await addItemToCart(cart.id, productId, quantity);
+      return newCartItem;
+    }
+  } catch (error) {
+    console.error("Error adding items to cart:", error);
+    throw error;
+  }
+};
 const getCartItems = async (user_id) => {
   const cart = await findCartByUserId(user_id);
   const SQL = `SELECT * FROM cart_items WHERE cart_id = $1`;
