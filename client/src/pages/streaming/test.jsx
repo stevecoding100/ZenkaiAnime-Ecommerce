@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const CartDropdown = ({ cart }) => {
+const CartDropdown = ({ cart, addToCart, removeItem }) => {
   return (
     <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
       <div className="px-4 py-2 border-b border-gray-200">
@@ -22,6 +22,10 @@ const CartDropdown = ({ cart }) => {
                 <h3 className="text-sm font-semibold">{item.name}</h3>
                 <p className="text-gray-500">Quantity: {item.quantity}</p>
                 <p className="text-gray-700">Price: ${item.price}</p>
+                <div className="space-x-6 text-xl">
+                  <span onClick={() => removeItem(item.id)}> - </span>
+                  <span onClick={() => addToCart(item.id)}> + </span>
+                </div>
               </div>
             </div>
           ))
@@ -118,6 +122,40 @@ const Test = () => {
     }
   };
 
+  const removeItem = async (product_id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/cart/delete/${product_id}/${userID}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        const findItem = cart.find((item) => item.id === product_id);
+
+        if (findItem.quantity > 1) {
+          const updatedCart = cart.map((item) => {
+            if (item.id === product_id) {
+              return {
+                ...item,
+                quantity: item.quantity - 1,
+              };
+            }
+            return item;
+          });
+          setCart(updatedCart);
+        } else {
+          const updatedCart = cart.filter((item) => item.id !== product_id);
+          setCart(updatedCart);
+        }
+      }
+    } catch (error) {
+      throw new Error("Error removing item from cart", error);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     getCart();
@@ -126,7 +164,7 @@ const Test = () => {
   return (
     <div className="container mx-auto">
       <h1>Products</h1>
-      <CartDropdown cart={cart} />
+      <CartDropdown removeItem={removeItem} addToCart={addToCart} cart={cart} />
       {products.map((product) => (
         <ProductCart key={product.id} addToCart={addToCart} product={product} />
       ))}
