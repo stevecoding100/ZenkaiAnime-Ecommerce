@@ -64,7 +64,7 @@ const createTable = async () => {
 
             CREATE TABLE carts (
                 id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                user_id UUID REFERENCES users(id) ON DELETE CASCADE
+                user_id UUID REFERENCES users(id) ON DELETE CASCADE 
             );
 
             CREATE TABLE cart_items (
@@ -77,7 +77,7 @@ const createTable = async () => {
             CREATE TABLE orders (
                 id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-                total_price DECIMAL,
+                total_price DECIMAL NOT NULL,
                 order_date DATE DEFAULT CURRENT_DATE,
                 status order_status DEFAULT 'pending'
             );
