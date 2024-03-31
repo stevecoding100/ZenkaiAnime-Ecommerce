@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const CartDropdown = ({ cart, addToCart, removeItem }) => {
+const CartDropdown = ({ cart, addToCart, removeItem, checkOut }) => {
   return (
     <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
       <div className="px-4 py-2 border-b border-gray-200">
@@ -32,7 +32,10 @@ const CartDropdown = ({ cart, addToCart, removeItem }) => {
         )}
       </div>
       <div className="px-4 py-2 border-t border-gray-200">
-        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+        <button
+          onClick={checkOut}
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+        >
           Checkout
         </button>
       </div>
@@ -64,7 +67,7 @@ const Test = () => {
   const userID = localStorage.getItem("userID");
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-
+  console.log(cart);
   const getProducts = async () => {
     try {
       const products = await axios.get("http://localhost:3000/api/products");
@@ -156,6 +159,29 @@ const Test = () => {
     }
   };
 
+  const handleCheckOut = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/orders/add",
+        {
+          user_id: userID,
+          cart,
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      if (response.status === 201) {
+        setCart([]);
+      }
+    } catch (error) {
+      throw new Error("Error checking out", error);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     getCart();
@@ -164,7 +190,12 @@ const Test = () => {
   return (
     <div className="container mx-auto">
       <h1>Products</h1>
-      <CartDropdown removeItem={removeItem} addToCart={addToCart} cart={cart} />
+      <CartDropdown
+        checkOut={handleCheckOut}
+        removeItem={removeItem}
+        addToCart={addToCart}
+        cart={cart}
+      />
       {products.map((product) => (
         <ProductCart key={product.id} addToCart={addToCart} product={product} />
       ))}
