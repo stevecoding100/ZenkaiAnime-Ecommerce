@@ -13,6 +13,15 @@ router.get("/trending", async (req, res) => {
   }
 });
 
+router.get("/popular", async (req, res) => {
+  try {
+    const response = await axios.get(`${baseURL}/popular`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.get("/info/:id", async (req, res) => {
   const provider = ["gogoanime", "anify", "zoro"];
   try {
