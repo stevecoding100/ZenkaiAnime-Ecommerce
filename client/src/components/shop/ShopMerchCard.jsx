@@ -1,4 +1,15 @@
-const ShopMerchCard = ({ productData }) => {
+const ShopMerchCard = ({ productData, addToCart }) => {
+    // const getProducts = async () => {
+    //     try {
+    //         const products = await axios.get(
+    //             "http://localhost:3000/api/products"
+    //         );
+    //         const [p1, p2, p3, p4, p5] = products.data;
+    //         setProducts([p1, p2, p3, p4, p5]);
+    //     } catch (error) {
+    //         throw new Error("Error getting products", error);
+    //     }
+    // };
     return (
         <div className="mx-auto max-w-screen-xl p-6 mb-24 mt-40">
             <h1 className="text-center text-3xl lg:text-4xl font-bold mb-2">
@@ -37,7 +48,9 @@ const ShopMerchCard = ({ productData }) => {
             <div>
                 {/* Results and Filter Option */}
                 <div className="flex justify-between mb-4">
-                    <h5 className="text-gray-600">140,304 results</h5>
+                    <h5 className="text-gray-600">
+                        {productData.length} results
+                    </h5>
                     <h5 className="text-gray-600">
                         Sort by: <b className="text-black">Featured</b>
                     </h5>
@@ -68,6 +81,14 @@ const ShopMerchCard = ({ productData }) => {
                                 <p className="text-red-600 font-semibold">
                                     20% off
                                 </p>
+                                <div className="flex items-center float-right h-150px w-[200]">
+                                    <button
+                                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                        onClick={() => addToCart(product.id)}
+                                    >
+                                        Add to cart
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
