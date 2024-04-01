@@ -13,4 +13,26 @@ router.get("/trending", async (req, res) => {
   }
 });
 
+router.get("/info/:id", async (req, res) => {
+  const provider = ["gogoanime", "anify", "zoro"];
+  try {
+    const id = req.params.id;
+    const promises = provider.map(async (p) => {
+      try {
+        const response = await axios.get(`${baseURL}/info/${id}?provider=${p}`);
+        return response.data;
+      } catch (error) {
+        throw error;
+      }
+    });
+
+    const response = await Promise.any(promises);
+    console.log(response);
+
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
