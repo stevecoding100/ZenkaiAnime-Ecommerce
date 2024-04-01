@@ -43,4 +43,13 @@ router.get("/watch/:id", async (req, res) => {
   }
 });
 
+router.get("/airing-schedule", async (req, res) => {
+  console.log("airing-schedule");
+  try {
+    const response = await axios.get(`${baseURL}/airing-schedule`);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
