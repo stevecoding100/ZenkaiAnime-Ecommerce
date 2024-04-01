@@ -1,7 +1,6 @@
-
 const ShopMerchCard = ({ productData }) => {
     return (
-        <div className="mx-auto max-w-screen-xl px-4 mb-24 mt-40">
+        <div className="mx-auto max-w-screen-xl p-6 mb-24 mt-40">
             <h1 className="text-center text-3xl lg:text-4xl font-bold mb-2">
                 Products
             </h1>

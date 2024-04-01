@@ -1,5 +1,8 @@
 const pg = require("pg");
 require("dotenv").config();
+pg.types.setTypeParser(pg.types.builtins.INT4, parseInt);
+pg.types.setTypeParser(pg.types.builtins.INT8, parseInt);
+pg.types.setTypeParser(pg.types.builtins.NUMERIC, parseFloat);
 const client = new pg.Client(process.env.DATABASE_URL);
 
 const createTable = async () => {
@@ -61,7 +64,7 @@ const createTable = async () => {
 
             CREATE TABLE carts (
                 id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-                user_id UUID REFERENCES users(id) ON DELETE CASCADE
+                user_id UUID REFERENCES users(id) ON DELETE CASCADE 
             );
 
             CREATE TABLE cart_items (
@@ -74,7 +77,7 @@ const createTable = async () => {
             CREATE TABLE orders (
                 id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                 user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-                total_price DECIMAL,
+                total_price DECIMAL NOT NULL,
                 order_date DATE DEFAULT CURRENT_DATE,
                 status order_status DEFAULT 'pending'
             );

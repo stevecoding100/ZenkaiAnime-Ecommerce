@@ -5,7 +5,6 @@ import onePieceVarsity from "../../assets/shop/one-piece-varsity.webp";
 import pokemanFavorite from "../../assets/shop/pokeman-favorite.webp";
 import manga from "../../assets/shop/manga-shop.webp";
 
-
 const CategoryData = [
     {
         id: 1,
@@ -47,7 +46,7 @@ const CategoryData = [
 
 const ShopCategories = () => {
     return (
-        <div className="container mx-auto py-12 p-4 lg:p-0 mt-12">
+        <div className="container mx-auto py-12 p-6 mt-12 ">
             <h1 className="text-center text-3xl lg:text-4xl font-bold mb-8">
                 Categories
             </h1>
