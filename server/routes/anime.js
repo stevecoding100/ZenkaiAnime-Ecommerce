@@ -27,8 +27,6 @@ router.get("/info/:id", async (req, res) => {
     });
 
     const response = await Promise.any(promises);
-    console.log(response);
-
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -1,8 +1,8 @@
-const baseURL = import.meta.env.VITE_API_URL;
+const baseURL = "http://localhost:3000/api/anime";
 const apiRoutes = {
   searchAnime: (q) => `https://cors-anywhere.herokuapp.com/${baseURL}/${q}`,
-  getAnimeInfo: (id) => `${baseURL}/info/${id}?provider=gogoanime`, // must provide gogoanime as provider [params]
-  getTrendingAnime: (page = 1) => `${baseURL}/trending?page=${page}&perPage=30`,
+  getAnimeInfo: (id) => `${baseURL}/info/${id}`, // must provide gogoanime as provider [params]
+  getTrendingAnime: (page = 1) => `${baseURL}/trending`,
   getPopularAnime: () =>
     `$https://cors-anywhere.herokuapp.com/{baseURL}/popular`,
   getStreamingLink: (id) =>
