@@ -4,6 +4,16 @@ const router = express.Router();
 
 const baseURL = "https://zenkai-api.vercel.app/meta/anilist";
 
+router.get("/search/:q", async (req, res) => {
+  try {
+    const q = req.params.q;
+    const response = await axios.get(`${baseURL}/${q}`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.get("/trending", async (req, res) => {
   try {
     const response = await axios.get(`${baseURL}/trending`);
