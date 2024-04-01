@@ -16,7 +16,7 @@ router.get("/search/:q", async (req, res) => {
 
 router.get("/trending", async (req, res) => {
   try {
-    const response = await axios.get(`${baseURL}/trending`);
+    const response = await axios.get(`${baseURL}/trending?perPage=15`);
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ error: error.message });

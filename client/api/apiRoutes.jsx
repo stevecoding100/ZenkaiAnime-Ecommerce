@@ -3,8 +3,7 @@ const apiRoutes = {
   searchAnime: (q) => `https://cors-anywhere.herokuapp.com/${baseURL}/${q}`,
   getAnimeInfo: (id) => `${baseURL}/info/${id}`, // must provide gogoanime as provider [params]
   getTrendingAnime: (page = 1) => `${baseURL}/trending`,
-  getPopularAnime: () =>
-    `$https://cors-anywhere.herokuapp.com/{baseURL}/popular`,
+  getPopularAnime: () => `${baseURL}/popular`,
   getStreamingLink: (id) =>
     `https://cors-anywhere.herokuapp.com/${baseURL}/watch/${id}`,
   proxyConfig: {
