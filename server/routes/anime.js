@@ -33,4 +33,14 @@ router.get("/info/:id", async (req, res) => {
   }
 });
 
+router.get("/watch/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const response = await axios.get(`${baseURL}/watch/${id}`);
+    res.json(response.data.sources);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
