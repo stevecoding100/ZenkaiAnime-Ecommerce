@@ -11,6 +11,7 @@ const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/order");
+const animeRoutes = require("./routes/anime");
 
 (async () => {
   try {
@@ -24,6 +25,8 @@ const orderRoutes = require("./routes/order");
         origin: "http://localhost:5173",
       })
     );
+
+    app.use("/api/anime", animeRoutes);
     app.use("/api/auth", authRoutes);
     app.use("/api/products", productRoutes);
     app.use("/api/cart", cartRoutes);
