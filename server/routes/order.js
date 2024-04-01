@@ -48,6 +48,11 @@ const ordersQuery = {
             item.quantity,
             item.price
           );
+          // update quantity of product
+          await client.query(
+            `UPDATE products SET stock_quantity = stock_quantity - $1 WHERE id = $2`,
+            [item.quantity, item.id]
+          );
           return orderItem;
         })
       );
