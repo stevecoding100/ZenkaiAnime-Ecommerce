@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import Navbar from "../../components/Navbar";
 const CartDropdown = ({ cart, addToCart, removeItem, checkOut }) => {
   return (
     <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
@@ -67,12 +67,22 @@ const Test = () => {
   const userID = localStorage.getItem("userID");
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
-  console.log(cart);
+  const [filteredProducts, setFilteredProducts] = useState([products]);
+
+  const searchProducts = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchValue)
+    );
+    setFilteredProducts(filteredProducts);
+  };
+
   const getProducts = async () => {
     try {
       const products = await axios.get("http://localhost:3000/api/products");
       const [p1, p2, p3, p4, p5] = products.data;
       setProducts([p1, p2, p3, p4, p5]);
+      setFilteredProducts([p1, p2, p3, p4, p5]);
     } catch (error) {
       throw new Error("Error getting products", error);
     }
@@ -194,6 +204,7 @@ const Test = () => {
 
   return (
     <div className="container mx-auto">
+      <Navbar searchProducts={searchProducts} />
       <h1>Products</h1>
       <CartDropdown
         checkOut={handleCheckOut}
@@ -201,7 +212,7 @@ const Test = () => {
         addToCart={addToCart}
         cart={cart}
       />
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <ProductCart key={product.id} addToCart={addToCart} product={product} />
       ))}
     </div>
