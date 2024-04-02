@@ -1,4 +1,4 @@
-const ShopMerchCard = ({ productData }) => {
+const ShopMerchCard = ({ productData, addToCart }) => {
     return (
         <div className="mx-auto max-w-screen-xl p-6 mb-24 mt-40">
             <h1 className="text-center text-3xl lg:text-4xl font-bold mb-2">
@@ -37,7 +37,9 @@ const ShopMerchCard = ({ productData }) => {
             <div>
                 {/* Results and Filter Option */}
                 <div className="flex justify-between mb-4">
-                    <h5 className="text-gray-600">140,304 results</h5>
+                    <h5 className="text-gray-600">
+                        {productData.length} results
+                    </h5>
                     <h5 className="text-gray-600">
                         Sort by: <b className="text-black">Featured</b>
                     </h5>
@@ -68,6 +70,14 @@ const ShopMerchCard = ({ productData }) => {
                                 <p className="text-red-600 font-semibold">
                                     20% off
                                 </p>
+                            </div>
+                            <div className="relative w-full h-full">
+                                <button
+                                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 absolute bottom-0 right-0 m-12"
+                                    onClick={() => addToCart(product.id)}
+                                >
+                                    Add To Cart
+                                </button>
                             </div>
                         </div>
                     ))}
