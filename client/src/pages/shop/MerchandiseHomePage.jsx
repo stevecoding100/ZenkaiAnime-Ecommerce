@@ -45,26 +45,27 @@ const MerchandiseHomePage = () => {
             );
             const updatedItem = response.data;
 
-            if (updatedItem.quantity === 1) {
-                const product = products.find(
-                    (product) => product.id === product_id
+            // Update the cart state based on the previous state
+            setCart((prevCart) => {
+                // Check if the item already exists in the cart
+                const existingItemIndex = prevCart.findIndex(
+                    (item) => item.id === updatedItem.id
                 );
-                setCart([...cart, { ...product, quantity }]);
-            } else {
-                // Update the cart state with the updated quantity
-                const updatedCart = cart.map((item) => {
-                    if (item.id === updatedItem.id) {
-                        return {
-                            ...item,
-                            quantity: updatedItem.quantity,
-                        };
-                    }
-                    return item;
-                });
-                setCart(updatedCart);
-            }
+                if (existingItemIndex !== -1) {
+                    // If the item exists, update its quantity
+                    const updatedCart = [...prevCart];
+                    updatedCart[existingItemIndex].quantity += 1;
+                    return updatedCart;
+                } else {
+                    // If the item doesn't exist, add it to the cart
+                    const product = products.find(
+                        (product) => product.id === product_id
+                    );
+                    return [...prevCart, { ...product, quantity }];
+                }
+            });
         } catch (error) {
-            throw new Error("Error adding item to cart", error);
+            console.error("Error adding item to cart", error);
         }
     };
 
