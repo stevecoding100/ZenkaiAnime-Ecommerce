@@ -1,22 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const Cart = ({ addToCart, removeItem, checkOut }) => {
-    const cart = ["p2", "p4", "p5"];
+const Cart = ({ cart, addToCart, removeItem, checkOut }) => {
     const [totalPrice, setTotalPrice] = useState(0);
 
-    // useEffect(() => {
-    //     // Calculate total price whenever cart changes
-    //     calculateTotalPrice();
-    // }, [cart]);
+    useEffect(() => {
+        // Calculate total price whenever cart changes
+        calculateTotalPrice();
+    }, [cart]);
 
-    // const calculateTotalPrice = () => {
-    //     let total = 0;
-    //     cart.forEach((item) => {
-    //         total += item.price * item.quantity;
-    //     });
-    //     setTotalPrice(total);
-    // };
+    const calculateTotalPrice = () => {
+        let total = 0;
+        cart.forEach((item) => {
+            total += item.price * item.quantity;
+        });
+        setTotalPrice(total);
+    };
 
     return (
         <div className="p-4">
