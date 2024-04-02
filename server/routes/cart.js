@@ -137,12 +137,6 @@ const updateCart = async (user_id, product_id, quantity) => {
     return response.rows[0];
 };
 
-const deleteItemFromCart = async (user_id, product_id) => {
-    const SQL = `DELETE FROM cart_items WHERE user_id = $1 AND product_id = $2`;
-    await client.query(SQL, [user_id, product_id]);
-    return;
-};
-
 // <--- Routes --->
 // Add an item to a cart
 router.post("/add", isLoggedIn, async (req, res) => {
