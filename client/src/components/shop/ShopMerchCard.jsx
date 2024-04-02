@@ -37,7 +37,9 @@ const ShopMerchCard = ({ productData }) => {
             <div>
                 {/* Results and Filter Option */}
                 <div className="flex justify-between mb-4">
-                    <h5 className="text-gray-600">140,304 results</h5>
+                    <h5 className="text-gray-600">
+                        {productData.length} results
+                    </h5>
                     <h5 className="text-gray-600">
                         Sort by: <b className="text-black">Featured</b>
                     </h5>
