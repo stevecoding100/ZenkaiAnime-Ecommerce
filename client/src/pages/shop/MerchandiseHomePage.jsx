@@ -15,12 +15,6 @@ const MerchandiseHomePage = () => {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        // Fetch cart data from localStorage when component mounts
-        const storedCart = JSON.parse(localStorage.getItem("cart"));
-        if (storedCart) {
-            setCart(storedCart);
-        }
-
         async function getProducts() {
             try {
                 const products = await ecomAPI.products.getProducts();
@@ -51,31 +45,24 @@ const MerchandiseHomePage = () => {
             );
             const updatedItem = response.data;
 
-            // Create a copy of the current cart state
-            const updatedCart = [...cart];
-
-            // Find if the item already exists in the cart
-            const existingItemIndex = updatedCart.findIndex(
-                (item) => item.id === updatedItem.id
-            );
-
-            // If item exists, update its quantity
-            if (existingItemIndex !== -1) {
-                updatedCart[existingItemIndex].quantity = updatedItem.quantity;
-            } else {
-                // Otherwise, add the item to the cart
+            if (updatedItem.quantity === 1) {
                 const product = products.find(
                     (product) => product.id === product_id
                 );
-                updatedCart.push({
-                    ...product,
-                    quantity: updatedItem.quantity,
+                setCart([...cart, { ...product, quantity }]);
+            } else {
+                // Update the cart state with the updated quantity
+                const updatedCart = cart.map((item) => {
+                    if (item.id === updatedItem.id) {
+                        return {
+                            ...item,
+                            quantity: updatedItem.quantity,
+                        };
+                    }
+                    return item;
                 });
+                setCart(updatedCart);
             }
-
-            // Update the cart state and save it to localStorage
-            setCart(updatedCart);
-            localStorage.setItem("cart", JSON.stringify(updatedCart));
         } catch (error) {
             throw new Error("Error adding item to cart", error);
         }
