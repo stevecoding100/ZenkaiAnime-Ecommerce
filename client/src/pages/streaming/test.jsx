@@ -49,7 +49,7 @@ const CartDropdown = ({ cart, addToCart, removeItem, checkOut }) => {
             <div className="px-4 py-2 border-t border-gray-200">
                 <button
                     onClick={checkOut}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                    className="wx-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
                 >
                     Checkout
                 </button>
