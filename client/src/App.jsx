@@ -4,20 +4,20 @@ import MerchandiseHomePage from "./pages/shop/MerchandiseHomePage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import AnimeDetailsPage from "./pages/streaming/AnimeDetailsPage";
 import LoginPage from "./pages/auth/LoginPage";
-import Test from "./pages/streaming/test";
+import Cart from "./components/shop/Cart";
 const App = () => {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<StreamingHomePage />} />
-        <Route path="/shop" element={<MerchandiseHomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/series/:animeId" element={<AnimeDetailsPage />} />
-        <Route path="/cart" element={<Test />} />
-      </Routes>
-    </>
-  );
+    return (
+        <>
+            <Routes>
+                <Route path="/" element={<StreamingHomePage />} />
+                <Route path="/shop" element={<MerchandiseHomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/series/:animeId" element={<AnimeDetailsPage />} />
+                <Route path="/cart" element={<Cart />} />
+            </Routes>
+        </>
+    );
 };
 
 export default App;

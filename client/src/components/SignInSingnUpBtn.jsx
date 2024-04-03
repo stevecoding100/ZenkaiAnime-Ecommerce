@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
-
+import { FaShoppingCart } from "react-icons/fa";
 const SignInSingnUpBtn = ({ pageType }) => {
     return (
         <div>
-            {" "}
+            <div>
+                {pageType === "merchandise" && (
+                    <>
+                        <Link to="/cart" className="text-black hidden">
+                            <FaShoppingCart size={24} />
+                        </Link>
+                    </>
+                )}
+            </div>{" "}
             <ul className="flex items-center space-x-4 md:hidden">
                 <Link to="/login">
                     <button
