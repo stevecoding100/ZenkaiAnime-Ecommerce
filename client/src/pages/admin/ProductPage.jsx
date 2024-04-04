@@ -30,7 +30,6 @@ const ProductPage = () => {
 
   const onSubmit = async (id) => {
     const result = await ecomAPI.products.updateProduct(id, product);
-    console.log("Product updated", result);
   };
 
   const onChange = (e) => {
