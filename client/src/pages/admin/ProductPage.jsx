@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import ecomAPI from "../../../api/ecomAPI";
 import { Image } from "@nextui-org/react";
 import { Textarea, Input } from "@nextui-org/react";
@@ -17,7 +18,7 @@ const ProductPage = () => {
       try {
         const product = await ecomAPI.products.getProductById(id);
         console.log("Product", product);
-
+        setProductImage(product.data.image_url);
         setProductName(product.data.name);
         setProduct(product.data);
       } catch (error) {
@@ -26,6 +27,11 @@ const ProductPage = () => {
     };
     fetchProduct();
   }, [id]);
+
+  const onSubmit = async (id) => {
+    const result = await ecomAPI.products.updateProduct(id, product);
+    console.log("Product updated", result);
+  };
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -46,11 +52,11 @@ const ProductPage = () => {
 
   return (
     <div className="">
-      <h1 className="text-center">{productName}</h1>
+      <h1 className="text-center text-2xl mb-4">{productName}</h1>
       <div className="flex flex-col items-center gap-8">
         <Image
           name="image_url"
-          src={product.image_url}
+          src={productImage}
           alt={product.name}
           fallbackSrc="https://via.placeholder.com/350"
           width={350}
@@ -111,7 +117,7 @@ const ProductPage = () => {
         <div className="mt-4">
           <div className="flex items-center space-x-1">
             <MdSystemUpdateAlt className="text-yellow-600" />
-            <button>Update Product</button>
+            <button onClick={() => onSubmit(id)}>Update Product</button>
             <MdDeleteOutline className="text-red-600" />
             <button>Delete Product</button>
           </div>

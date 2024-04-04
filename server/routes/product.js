@@ -106,6 +106,7 @@ router.delete("/:id", isAdmin, async (req, res) => {
 
 // <!-- Update a product
 router.put("/:id", isAdmin, async (req, res) => {
+  console.log(req.body);
   try {
     const product = await updateProduct(req.params.id, req.body);
     res.status(200).json(product);

@@ -73,7 +73,7 @@ const ecomAPI = {
       try {
         const product = await axios.put(`${baseURL}/products/${id}`, formData, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         });
         return product;
