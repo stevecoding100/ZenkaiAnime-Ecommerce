@@ -9,6 +9,7 @@ import AdminPage from "./pages/admin/AdminPage";
 import Layout from "./components/admin/Layout";
 import Products from "./components/admin/Products";
 import Orders from "./components/admin/Orders";
+import ProductPage from "./pages/admin/ProductPage";
 const App = () => {
   return (
     <>
@@ -21,7 +22,8 @@ const App = () => {
         {/* <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<AdminPage />} />
-          <Route path="products" element={<Products />} />
+          <Route path="products" element={<Products />}></Route>
+          <Route path="products/:id" element={<ProductPage />} />
           <Route path="orders" element={<Orders />} />
         </Route>
 

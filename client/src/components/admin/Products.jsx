@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import ecomAPI from "../../../api/ecomAPI";
 import { Image, Pagination } from "@nextui-org/react";
 import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
-
+import { Link } from "react-router-dom";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 5;
+  const productsPerPage = 8;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,7 +33,7 @@ const Products = () => {
   };
 
   return (
-    <div className="shadow-md sm:rounded-lg">
+    <div className="shadow-md sm:rounded-lg mt-10">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -69,13 +69,16 @@ const Products = () => {
               <td className="px-6 py-4">{product.name}</td>
               <td className="px-6 py-4">{product.price}</td>
               <td className="px-6 py-4">{product.stock_quantity}</td>
-              <td className="px-6 py-4 text-right">
-                <button className=" text-blue-600 dark:text-blue-500 mr-2">
+              <td className="px-6 py-4 justify-end flex">
+                <Link
+                  to={`${product.id}`}
+                  className=" text-blue-600 dark:text-blue-500 mr-2"
+                >
                   <MdOutlineModeEdit className="text-2xl" />
-                </button>
-                <button className=" text-red-600 dark:text-red-500">
+                </Link>
+                <Link className=" text-red-600 dark:text-red-500">
                   <MdOutlineDeleteOutline className="text-2xl" />
-                </button>
+                </Link>
               </td>
             </tr>
           ))}

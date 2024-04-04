@@ -4,8 +4,8 @@ import { Outlet } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 const Layout = () => {
   return (
-    <div>
-      <main className="flex flex-row">
+    <div className="">
+      <main className="flex flex-row n">
         <Navbar />
         <section className="w-screen">
           <div className="flex justify-between">
