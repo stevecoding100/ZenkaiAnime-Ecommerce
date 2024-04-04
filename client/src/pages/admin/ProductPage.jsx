@@ -53,6 +53,7 @@ const ProductPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex justify-center">
           <Image
+            isZoomed
             isBlurred
             name="image_url"
             src={productImage}
