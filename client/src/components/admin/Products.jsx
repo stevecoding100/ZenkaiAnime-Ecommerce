@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import ecomAPI from "../../../api/ecomAPI";
 import { Image, Pagination } from "@nextui-org/react";
+import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -48,9 +49,7 @@ const Products = () => {
             <th scope="col" className="px-6 py-3">
               Stock
             </th>
-            <th scope="col" className="px-6 py-3">
-              Actions
-            </th>
+            <th scope="col" className="px-6 py-3"></th>
           </tr>
         </thead>
         <tbody>
@@ -71,11 +70,11 @@ const Products = () => {
               <td className="px-6 py-4">{product.price}</td>
               <td className="px-6 py-4">{product.stock_quantity}</td>
               <td className="px-6 py-4 text-right">
-                <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-2">
-                  Edit
+                <button className=" text-blue-600 dark:text-blue-500 mr-2">
+                  <MdOutlineModeEdit className="text-2xl" />
                 </button>
-                <button className="font-medium text-red-600 dark:text-red-500 hover:underline">
-                  Delete
+                <button className=" text-red-600 dark:text-red-500">
+                  <MdOutlineDeleteOutline className="text-2xl" />
                 </button>
               </td>
             </tr>
