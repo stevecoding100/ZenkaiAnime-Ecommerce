@@ -7,7 +7,6 @@ const ecomAPI = {
     register: async (formData) => {
       try {
         const user = await axios.post(`${baseURL}/auth/register`, formData);
-        console.log("User registered", user);
         localStorage.setItem("token", user.token);
         localStorage.setItem("userID", user.id);
         return user;
@@ -18,7 +17,6 @@ const ecomAPI = {
     login: async (formData) => {
       try {
         const user = await axios.post(`${baseURL}/auth/login`, formData);
-        console.log("User logged in", user);
         localStorage.setItem("token", user.data.token);
         localStorage.setItem("userID", user.data.id);
         return user;
@@ -49,7 +47,7 @@ const ecomAPI = {
       try {
         const product = await axios.post(`${baseURL}/products`, formData, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         });
         return product;
@@ -61,7 +59,7 @@ const ecomAPI = {
       try {
         const product = await axios.delete(`${baseURL}/products/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         });
         return product;
@@ -88,7 +86,7 @@ const ecomAPI = {
       try {
         const cart = await axios.get(`${baseURL}/cart/add${user_id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `${localStorage.getItem("token")}`,
           },
         });
         return cart;
