@@ -4,13 +4,17 @@ import MerchandiseHomePage from "./pages/shop/MerchandiseHomePage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import AnimeDetailsPage from "./pages/streaming/AnimeDetailsPage";
 import LoginPage from "./pages/auth/LoginPage";
+
+
 import Cart from "./components/shop/Cart";
+
 import AdminPage from "./pages/admin/AdminPage";
 import Layout from "./components/admin/Layout";
 import Products from "./components/admin/Products";
 import Orders from "./components/admin/Orders";
 import ProductPage from "./pages/admin/ProductPage";
 const App = () => {
+
   return (
     <>
       <Routes>
@@ -30,6 +34,7 @@ const App = () => {
       </Routes>
     </>
   );
+
 };
 
 export default App;
