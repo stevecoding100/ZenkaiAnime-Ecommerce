@@ -36,9 +36,9 @@ const Products = () => {
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6">
-      <div className="overflow-x-auto">
-        <table className="w-full table-auto">
+    <div className="mt-20 bg-white shadow-lg rounded-lg p-6">
+      <div className="">
+        <table className="w-full h-full table-auto">
           <thead>
             <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
               <th className="py-3 px-6 text-left">Product</th>
