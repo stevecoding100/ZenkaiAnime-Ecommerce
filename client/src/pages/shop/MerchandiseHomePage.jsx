@@ -82,6 +82,13 @@ const MerchandiseHomePage = () => {
             console.error("Error adding item to cart", error);
         }
     };
+
+    const logout = () => {
+        // Remove token from localStorage
+        localStorage.removeItem("token");
+        // Clear token state
+        setToken(null);
+    };
     const decreaseQuantity = async (product_id) => {
         try {
             const response = await axios.delete(
@@ -174,6 +181,7 @@ const MerchandiseHomePage = () => {
                     pageType="merchandise"
                     token={token}
                     setShowCart={setShowCart}
+                    logout={logout}
                 />
                 <div className="h-full w-full mt-28">
                     {showCart && (
