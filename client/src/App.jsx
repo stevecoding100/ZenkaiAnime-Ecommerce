@@ -4,7 +4,7 @@ import MerchandiseHomePage from "./pages/shop/MerchandiseHomePage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import AnimeDetailsPage from "./pages/streaming/AnimeDetailsPage";
 import LoginPage from "./pages/auth/LoginPage";
-import Test from "./pages/streaming/test";
+import Cart from "./components/shop/Cartt";
 import AdminPage from "./pages/admin/AdminPage";
 import Layout from "./components/admin/Layout";
 import Products from "./components/admin/Products";
@@ -26,7 +26,7 @@ const App = () => {
                     <Route path="orders" element={<Orders />} />
                 </Route>
 
-                <Route path="/cart" element={<Test />} />
+                <Route path="/cart" element={<Cart />} />
             </Routes>
         </>
     );
