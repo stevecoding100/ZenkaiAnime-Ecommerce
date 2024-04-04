@@ -5,6 +5,7 @@ import { Image, Pagination } from "@nextui-org/react";
 import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +20,7 @@ const Products = () => {
         console.log("Error fetching products", error);
       }
     };
+
     fetchProducts();
   }, []);
 
@@ -34,62 +36,69 @@ const Products = () => {
   };
 
   return (
-    <div className="shadow-md sm:rounded-lg mt-10">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Product
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Name
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Price
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Stock
-            </th>
-            <th scope="col" className="px-6 py-3"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentProducts.map((product) => (
-            <tr
-              key={product.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            >
-              <td className="px-6 py-4">
-                <Image
-                  src={product.image_url}
-                  alt={product.name}
-                  width={75}
-                  height={75}
-                />
-              </td>
-              <td className="px-6 py-4">{product.name}</td>
-              <td className="px-6 py-4">{product.price}</td>
-              <td className="px-6 py-4">{product.stock_quantity}</td>
-              <td className="px-6 py-4 justify-end flex">
-                <Link
-                  to={`${product.id}`}
-                  className=" text-blue-600 dark:text-blue-500 mr-2"
-                >
-                  <MdOutlineModeEdit className="text-2xl" />
-                </Link>
-                <Link className=" text-red-600 dark:text-red-500">
-                  <MdOutlineDeleteOutline className="text-2xl" />
-                </Link>
-              </td>
+    <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="overflow-x-auto">
+        <table className="w-full table-auto">
+          <thead>
+            <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+              <th className="py-3 px-6 text-left">Product</th>
+              <th className="py-3 px-6 text-left">Name</th>
+              <th className="py-3 px-6 text-left">Price</th>
+              <th className="py-3 px-6 text-left">Stock</th>
+              <th className="py-3 px-6 text-center">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="flex justify-center mt-4">
+          </thead>
+          <tbody className="text-gray-600 text-sm font-light">
+            {currentProducts.map((product) => (
+              <tr
+                key={product.id}
+                className="border-b border-gray-200 hover:bg-gray-100"
+              >
+                <td className="py-3 px-6 text-left whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className="mr-2">
+                      <Image
+                        src={product.image_url}
+                        alt={product.name}
+                        width={50}
+                        height={50}
+                        objectFit="cover"
+                        className="rounded"
+                      />
+                    </div>
+                  </div>
+                </td>
+                <td className="py-3 px-6 text-left">{product.name}</td>
+                <td className="py-3 px-6 text-left">${product.price}</td>
+                <td className="py-3 px-6 text-left">
+                  {product.stock_quantity}
+                </td>
+                <td className="py-3 px-6 text-center">
+                  <div className="flex item-center justify-center">
+                    <Link
+                      to={`${product.id}`}
+                      className="text-blue-500 hover:text-blue-600 mr-2"
+                    >
+                      <MdOutlineModeEdit className="text-xl" />
+                    </Link>
+                    <Link className="text-red-500 hover:text-red-600">
+                      <MdOutlineDeleteOutline className="text-xl" />
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex justify-center mt-6">
         <Pagination
           total={Math.ceil(products.length / productsPerPage)}
           page={currentPage}
           onChange={onPageChange}
+          size="lg"
+          rounded
+          color="primary"
         />
       </div>
     </div>

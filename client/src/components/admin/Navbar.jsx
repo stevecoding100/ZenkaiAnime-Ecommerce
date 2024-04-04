@@ -7,44 +7,71 @@ import { BiLogOut } from "react-icons/bi";
 
 const Navbar = () => {
   return (
-    <aside className="w-[300px] h-100vh text-white bg-[#343a40] border-r border-slate-500">
-      <main className="text-center">
-        <header className="my-2 text-3xl">
-          <h1 className=" decoration-indigo-200">Zenkai</h1>
-        </header>
-        <nav className="flex flex-col justify-between items-center text-white p-4 h-screen">
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <RxDashboard className="text-2xl" />
-              <Link to="/dashboard">Dashboard</Link>
-            </div>
-            <div className="flex items-center space-x-2">
-              <AiOutlineTag className="text-2xl" />
-              <Link to="/dashboard/products">Products</Link>
-            </div>
-            <div className="flex items-center space-x-2">
-              <MdOutlineReceiptLong className="text-2xl" />
-              <Link to="/dashboard/orders">Orders</Link>
-            </div>
-            <div className="flex items-center space-x-2">
-              <AiOutlineUser className="text-2xl" />
-              <Link to="/dashboard/users">Users</Link>
-            </div>
-          </div>
-          <div>
-            <div className="mt-auto">
-              <div className="flex items-center space-x-2">
-                <AiOutlineSetting className="text-2xl" />
-                <Link to="/dashboard/settings">Settings</Link>
-              </div>
-              <div className="flex items-center space-x-2 mt-4">
-                <BiLogOut className="text-2xl" />
-                <span>Log out</span>
-              </div>
-            </div>
-          </div>
+    <aside className="bg-gray-800 text-white w-64 min-h-screen">
+      <div className="flex flex-col h-full">
+        <div className="flex items-center justify-center py-6">
+          <h1 className="text-2xl font-bold">Zenkai</h1>
+        </div>
+        <nav className="flex-1 px-4 py-6">
+          <ul className="space-y-4">
+            <li>
+              <Link
+                to="/dashboard"
+                className="flex items-center space-x-2 hover:text-gray-300"
+              >
+                <RxDashboard className="text-xl" />
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/products"
+                className="flex items-center space-x-2 hover:text-gray-300"
+              >
+                <AiOutlineTag className="text-xl" />
+                <span>Products</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/orders"
+                className="flex items-center space-x-2 hover:text-gray-300"
+              >
+                <MdOutlineReceiptLong className="text-xl" />
+                <span>Orders</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/users"
+                className="flex items-center space-x-2 hover:text-gray-300"
+              >
+                <AiOutlineUser className="text-xl" />
+                <span>Users</span>
+              </Link>
+            </li>
+          </ul>
         </nav>
-      </main>
+        <div className="px-4 py-6">
+          <ul className="space-y-4">
+            <li>
+              <Link
+                to="/dashboard/settings"
+                className="flex items-center space-x-2 hover:text-gray-300"
+              >
+                <AiOutlineSetting className="text-xl" />
+                <span>Settings</span>
+              </Link>
+            </li>
+            <li>
+              <button className="flex items-center space-x-2 hover:text-gray-300">
+                <BiLogOut className="text-xl" />
+                <span>Log out</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
     </aside>
   );
 };
