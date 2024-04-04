@@ -52,6 +52,12 @@ const updateProduct = async (
   return response.rows[0];
 };
 
+const getProductById = async (id) => {
+  const SQL = `SELECT * FROM products WHERE id = $1`;
+  const response = await client.query(SQL, [id]);
+  return response.rows[0];
+};
+
 // <-------- Routes -------->
 
 //Base route /api/products
@@ -64,9 +70,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+// <!-- Get a single product
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await getProductById(req.params.id);
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 // <-- Admin Routes  -->
 
 // <!-- Create a new product
+
 router.post("/", isAdmin, async (req, res) => {
   try {
     const product = await createProduct(req.body);
