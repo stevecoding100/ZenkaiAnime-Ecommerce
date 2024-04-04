@@ -37,6 +37,14 @@ const ecomAPI = {
         throw new Error("Error getting products", error);
       }
     },
+    getProductById: async (id) => {
+      try {
+        const product = await axios.get(`${baseURL}/products/${id}`);
+        return product;
+      } catch (error) {
+        throw new Error("Error getting product", error);
+      }
+    },
     createProduct: async (formData) => {
       try {
         const product = await axios.post(`${baseURL}/products`, formData, {
