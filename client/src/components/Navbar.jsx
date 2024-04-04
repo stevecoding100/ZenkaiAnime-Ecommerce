@@ -5,8 +5,9 @@ import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegBell } from "react-icons/fa";
 
-const Navbar = ({ pageType, searchProducts, token, setShowCart, logouts }) => {
-  const [showMenu, setShowMenu] = useState(false);
+
+const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
+    const [showMenu, setShowMenu] = useState(false);
 
   const toggleCart = () => {
     setShowCart((prev) => !prev);
@@ -35,16 +36,20 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart, logouts }) => {
                 />
 
                 <FaRegBell size={32} className="mr-4" />
-
-                <div>
-                  <div className="w-[50px] h-[50px]">
-                    <img
-                      src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?cs=srgb&dl=pexels-stefan-stefancik-91227.jpg&fm=jpg"
-                      alt="profile picture"
-                      onClick={logouts}
-                      className="cursor-pointer w-full h-full rounded-full object-cover"
-                    />
-                  </div>
+                                <div>
+                                    <div className="w-[50px] h-[50px]">
+                                        <img
+                                            src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?cs=srgb&dl=pexels-stefan-stefancik-91227.jpg&fm=jpg"
+                                            alt="profile picture"
+                                            onClick={logout}
+                                            className="w-full h-full rounded-full cursor-pointer object-cover"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    {!token && <SignInSingnUpBtn pageType={pageType} />}
                 </div>
               </div>
             )}
