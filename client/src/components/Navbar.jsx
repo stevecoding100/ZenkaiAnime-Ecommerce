@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegBell } from "react-icons/fa";
 
-const Navbar = ({ pageType, searchProducts, token, setShowCart ,s\s[logouts}) => {
+const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const toggleCart = () => {
@@ -43,8 +43,8 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart ,s\s[logouts}) =>
                                         <img
                                             src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?cs=srgb&dl=pexels-stefan-stefancik-91227.jpg&fm=jpg"
                                             alt="profile picture"
-                                            onClick={logout} className="cursor-pointer",
-                                            className="w-full h-full rounded-full object-cover"
+                                            onClick={logout}
+                                            className="w-full h-full rounded-full cursor-pointer object-cover"
                                         />
                                     </div>
                                 </div>
