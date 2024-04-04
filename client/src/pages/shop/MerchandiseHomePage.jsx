@@ -3,10 +3,10 @@ import Navbar from "../../components/Navbar";
 import ShopCategories from "../../components/shop/ShopCategories";
 import ShopHeroSection from "../../components/shop/ShopHeroSection";
 import ShopMerchCard from "../../components/shop/ShopMerchCard";
-import ecomAPI from "../../../api/ecomAPI";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Cart from "../../components/shop/Cart";
+import { useNavigate } from "react-router-dom";
 
 const MerchandiseHomePage = () => {
     const token = localStorage.getItem("token");
@@ -14,6 +14,8 @@ const MerchandiseHomePage = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [showCart, setShowCart] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -84,10 +86,11 @@ const MerchandiseHomePage = () => {
     };
 
     const logout = () => {
+        console.log("Logout");
         // Remove token from localStorage
         localStorage.removeItem("token");
-        // Clear token state
-        setToken(null);
+        localStorage.removeItem("userID");
+        navigate("/");
     };
     const decreaseQuantity = async (product_id) => {
         try {
