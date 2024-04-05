@@ -4,6 +4,18 @@ const { client } = require("../database/db");
 const { isLoggedIn, isAdmin } = require("../middlewares/authMiddleware");
 
 // <--- Database Queries --->
+const getProduct = async (productId) => {
+  const SQL = `SELECT id, name, descriptions, price, image_url FROM products WHERE id = $1`;
+  const response = await client.query(SQL, [productId]);
+  return response.rows[0];
+};
+
+const getUser = async (userId) => {
+  const SQL = `SELECT id, first_name, last_name, email, billing_info FROM users WHERE id = $1`;
+  const response = await client.query(SQL, [userId]);
+  return response.rows[0];
+};
+
 const orderItemsQuery = {
   createOrderItem: async (order_id, product_id, quantity, price) => {
     console.log({ order_id, product_id, quantity, price });
@@ -16,7 +28,7 @@ const orderItemsQuery = {
     ]);
     return response.rows[0];
   },
-  getOrderItems: async ({ order_id }) => {
+  getOrderItems: async (order_id) => {
     const SQL = `SELECT * FROM order_items WHERE order_id = $1`;
     const response = await client.query(SQL, [order_id]);
     return response.rows;
@@ -27,7 +39,22 @@ const ordersQuery = {
     try {
       const SQL = `SELECT * FROM orders`;
       const response = await client.query(SQL);
-      return response.rows;
+
+      const orders = await Promise.all(
+        response.rows.map(async (order) => {
+          const orderItem = await orderItemsQuery.getOrderItems(order.id);
+          const product = await getProduct(orderItem[0].product_id);
+          const user = await getUser(order.user_id);
+
+          return {
+            order: order,
+            user: user,
+            product: product,
+          };
+        })
+      );
+
+      return orders;
     } catch (error) {
       throw new Error("Error getting orders", error);
     }
