@@ -103,6 +103,21 @@ const ecomAPI = {
       }
     },
   },
+  //ORDERS
+  orders: {
+    getOrder: async () => {
+      try {
+        const orders = await axios.get(`${baseURL}/orders`, {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        });
+        return orders;
+      } catch (error) {
+        throw new Error("Error getting orders", error);
+      }
+    },
+  },
 };
 
 export default ecomAPI;

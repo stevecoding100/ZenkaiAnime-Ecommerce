@@ -47,7 +47,10 @@ const ordersQuery = {
           const user = await getUser(order.user_id);
 
           return {
-            order: order,
+            id: order.id,
+            date: order.order_date,
+            status: order.status,
+            total_price: order.total_price,
             user: user,
             product: product,
           };
