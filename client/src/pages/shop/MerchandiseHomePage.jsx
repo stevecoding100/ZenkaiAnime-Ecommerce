@@ -90,7 +90,11 @@ const MerchandiseHomePage = () => {
         // Remove token from localStorage
         localStorage.removeItem("token");
         localStorage.removeItem("userID");
-        navigate("/");
+        // Reset cart and hide it
+        setCart([]);
+        setShowCart(false);
+        // Navigate to shop page
+        navigate("/shop");
     };
     const decreaseQuantity = async (product_id) => {
         try {
