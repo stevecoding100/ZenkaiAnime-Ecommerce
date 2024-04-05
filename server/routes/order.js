@@ -66,10 +66,8 @@ const ordersQuery = {
     try {
       const SQL = `SELECT * FROM orders WHERE id = $1`;
       const response = await client.query(SQL, [id]);
-      console.log(response.rows[0]);
       const order = response.rows[0];
       const orderItems = await orderItemsQuery.getOrderItems(id);
-      console.log(orderItems);
       const user = await getUser(order.user_id);
       const products = await Promise.all(
         orderItems.map(async (item) => {
@@ -77,7 +75,10 @@ const ordersQuery = {
         })
       );
       return {
-        ...order,
+        id: order.id,
+        date: order.order_date,
+        status: order.status,
+        total_price: order.total_price,
         user,
         orderItems: products.map((product, index) => ({
           ...product,
