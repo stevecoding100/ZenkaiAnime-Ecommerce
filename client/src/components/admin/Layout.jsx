@@ -15,6 +15,7 @@ const Layout = () => {
 
     return (
         <div className="flex flex-col md:flex-row ">
+            {/* Hamburger menu */}
             <div className="flex flex-col p-6" onClick={toggleMenu}>
                 <div
                     className={`h-1 w-8  bg-slate-800 rounded mb-2 transition-all duration-300 transform ${

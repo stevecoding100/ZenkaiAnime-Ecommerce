@@ -10,6 +10,9 @@ import Layout from "./components/admin/Layout";
 import Products from "./components/admin/Products";
 import Orders from "./components/admin/Orders";
 import ProductPage from "./pages/admin/ProductPage";
+import Users from "./components/admin/Users";
+import UserPage from "./pages/admin/UserPage";
+
 const App = () => {
     return (
         <>
@@ -25,6 +28,8 @@ const App = () => {
                     <Route path="products" element={<Products />}></Route>
                     <Route path="products/:id" element={<ProductPage />} />
                     <Route path="orders" element={<Orders />} />
+                    <Route path="users" element={<Users />} />
+                    <Route path="users/id" element={<UserPage />} />
                 </Route>
                 <Route path="/cart" element={<Cart />} />
             </Routes>
