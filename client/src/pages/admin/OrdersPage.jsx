@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ecomAPI from "../../../api/ecomAPI";
 import { Link } from "react-router-dom";
-const Orders = () => {
+const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -83,4 +83,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default OrdersPage;

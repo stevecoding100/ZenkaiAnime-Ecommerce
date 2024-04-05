@@ -5,7 +5,7 @@ import { MdOutlineReceiptLong } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 
-const Navbar = () => {
+const SideBar = () => {
   return (
     <aside className="bg-gray-800 text-white w-64 min-h-screen">
       <div className="flex flex-col h-full">
@@ -76,4 +76,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default SideBar;

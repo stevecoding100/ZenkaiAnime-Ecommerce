@@ -6,7 +6,7 @@ import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Products = () => {
+const ProductDetails = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;
@@ -20,7 +20,6 @@ const Products = () => {
         console.log("Error fetching products", error);
       }
     };
-
     fetchProducts();
   }, []);
 
@@ -62,7 +61,6 @@ const Products = () => {
                         alt={product.name}
                         width={50}
                         height={50}
-                        objectFit="cover"
                         className="rounded"
                       />
                     </div>
@@ -97,7 +95,7 @@ const Products = () => {
           page={currentPage}
           onChange={onPageChange}
           size="lg"
-          rounded
+          rounded="true"
           color="primary"
         />
       </div>
@@ -105,4 +103,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default ProductDetails;

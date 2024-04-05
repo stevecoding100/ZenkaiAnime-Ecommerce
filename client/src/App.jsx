@@ -7,10 +7,10 @@ import LoginPage from "./pages/auth/LoginPage";
 import Cart from "./components/shop/Cart";
 import AdminPage from "./pages/admin/AdminPage";
 import Layout from "./components/admin/Layout";
-import Products from "./components/admin/Products";
-import Orders from "./components/admin/Orders";
-import ProductPage from "./pages/admin/ProductPage";
-import OrderPage from "./pages/admin/OrderPage";
+import ProductDetails from "./components/admin/ProductDetails";
+import OrdersPage from "./pages/admin/OrdersPage";
+import ProductsPage from "./pages/admin/ProductPage";
+import OrderDetails from "./components/admin/OrderDetails";
 const App = () => {
   return (
     <>
@@ -23,10 +23,10 @@ const App = () => {
         {/* <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<AdminPage />} />
-          <Route path="products" element={<Products />}></Route>
-          <Route path="products/:id" element={<ProductPage />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="orders/:id" element={<OrderPage />} />
+          <Route path="products" element={<ProductDetails />}></Route>
+          <Route path="products/:id" element={<ProductsPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:id" element={<OrderDetails />} />
         </Route>
         <Route path="/cart" element={<Cart />} />
       </Routes>

@@ -7,7 +7,7 @@ import { Image } from "@nextui-org/react";
 import { Textarea, Input } from "@nextui-org/react";
 import { MdSystemUpdateAlt, MdDeleteOutline } from "react-icons/md";
 
-const ProductPage = () => {
+const ProductsPage = () => {
   const [product, setProduct] = useState({});
   const [productName, setProductName] = useState();
   const [productImage, setProductImage] = useState();
@@ -150,4 +150,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductsPage;
