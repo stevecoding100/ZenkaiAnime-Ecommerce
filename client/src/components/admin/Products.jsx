@@ -1,10 +1,8 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import ecomAPI from "../../../api/ecomAPI";
 import { Image, Pagination } from "@nextui-org/react";
 import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -36,8 +34,8 @@ const Products = () => {
     };
 
     return (
-        <div className="mt-20 bg-white shadow-lg rounded-lg p-6">
-            <table className="w-full h-full table-auto">
+        <div className="mt-20 bg-white shadow-lg rounded-lg p-6 overflow-y-auto">
+            <table className="w-full  table-auto">
                 <thead>
                     <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
                         <th className="py-3 px-6 text-left">Product</th>
@@ -53,7 +51,7 @@ const Products = () => {
                             key={product.id}
                             className="border-b border-gray-200 hover:bg-gray-100"
                         >
-                            <td className="py-3 px-6 text-left whitespace-nowrap">
+                            <td className="py-3 px-6 text-left">
                                 <div className="flex items-center">
                                     <div className="mr-2">
                                         <Image
@@ -67,9 +65,7 @@ const Products = () => {
                                     </div>
                                 </div>
                             </td>
-                            <td className="py-3 px-6 text-left">
-                                {product.name}
-                            </td>
+                            <td className="truncate">{product.name}</td>
                             <td className="py-3 px-6 text-left">
                                 ${product.price}
                             </td>
@@ -80,7 +76,7 @@ const Products = () => {
                                 <div className="flex item-center justify-center">
                                     <Link
                                         to={`${product.id}`}
-                                        className="text-blue-500 hover:text-blue-600 mr-2"
+                                        className="text-blue-500 hover:text-blue-600 mr-4"
                                     >
                                         <MdOutlineModeEdit className="text-xl" />
                                     </Link>
@@ -93,6 +89,7 @@ const Products = () => {
                     ))}
                 </tbody>
             </table>
+
             <div className="flex justify-center mt-6">
                 <Pagination
                     total={Math.ceil(products.length / productsPerPage)}
