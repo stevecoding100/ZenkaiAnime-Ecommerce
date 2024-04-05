@@ -25,20 +25,14 @@ const rows = [
     },
     {
         key: "5",
-        name: "William Howard",
-        role: "Community Manager",
+        name: "John Miguel",
+        role: "Software Engineer",
         status: "Vacation",
     },
     {
         key: "6",
-        name: "William Howard",
-        role: "Community Manager",
-        status: "Vacation",
-    },
-    {
-        key: "7",
-        name: "William Howard",
-        role: "Community Manager",
+        name: "Steve De La Rosa",
+        role: "Front-End Engineer",
         status: "Vacation",
     },
 ];
