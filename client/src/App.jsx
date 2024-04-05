@@ -10,26 +10,28 @@ import Layout from "./components/admin/Layout";
 import Products from "./components/admin/Products";
 import Orders from "./components/admin/Orders";
 import ProductPage from "./pages/admin/ProductPage";
+import OrderPage from "./pages/admin/OrderPage";
 const App = () => {
-    return (
-        <>
-            <Routes>
-                <Route path="/" element={<StreamingHomePage />} />
-                <Route path="/shop" element={<MerchandiseHomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignUpPage />} />
-                <Route path="/series/:animeId" element={<AnimeDetailsPage />} />
-                {/* <Route path="/admin" element={<AdminPage />} /> */}
-                <Route path="/dashboard" element={<Layout />}>
-                    <Route index element={<AdminPage />} />
-                    <Route path="products" element={<Products />}></Route>
-                    <Route path="products/:id" element={<ProductPage />} />
-                    <Route path="orders" element={<Orders />} />
-                </Route>
-                <Route path="/cart" element={<Cart />} />
-            </Routes>
-        </>
-    );
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<StreamingHomePage />} />
+        <Route path="/shop" element={<MerchandiseHomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/series/:animeId" element={<AnimeDetailsPage />} />
+        {/* <Route path="/admin" element={<AdminPage />} /> */}
+        <Route path="/dashboard" element={<Layout />}>
+          <Route index element={<AdminPage />} />
+          <Route path="products" element={<Products />}></Route>
+          <Route path="products/:id" element={<ProductPage />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="orders/:id" element={<OrderPage />} />
+        </Route>
+        <Route path="/cart" element={<Cart />} />
+      </Routes>
+    </>
+  );
 };
 
 export default App;

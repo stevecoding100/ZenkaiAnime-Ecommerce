@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ecomAPI from "../../../api/ecomAPI";
-
+import { Link } from "react-router-dom";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
 
@@ -44,12 +44,12 @@ const Orders = () => {
         <td className="px-6 py-4">${order.total_price.toFixed(2)}</td>
         <td className="px-6 py-4">{order.status}</td>
         <td className="px-6 py-4">
-          <a
-            href="#"
+          <Link
+            to={`${order.id}`}
             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           >
             Edit
-          </a>
+          </Link>
         </td>
       </tr>
     );
