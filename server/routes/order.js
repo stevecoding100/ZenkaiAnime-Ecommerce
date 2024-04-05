@@ -144,7 +144,7 @@ router.get("/", isAdmin, async (req, res) => {
   }
 });
 
-router.get("/:id", isLoggedIn, isAdmin, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const order = await ordersQuery.getSingleOrder(req.params);
     res.status(200).json(order);
