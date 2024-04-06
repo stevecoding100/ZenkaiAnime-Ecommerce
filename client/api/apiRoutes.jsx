@@ -1,9 +1,8 @@
-const baseURL = "https://zenkai-anime-ecommerce-zgi2.vercel.app//api/anime";
 const apiRoutes = {
-  searchAnime: (q) => `${baseURL}/${q}`,
-  getAnimeInfo: (id) => `${baseURL}/${id}`, // must provide gogoanime as provider [params]
-  getTrendingAnime: (page = 1) => `${baseURL}/trending`,
-  getPopularAnime: () => `${baseURL}/popular`,
-  getStreamingLink: (id) => `${baseURL}/api/anime/watch/${id}`,
+  searchAnime: (q) => `/api/anime/${q}`,
+  getAnimeInfo: (id) => `/api/anime/info/${id}`,
+  getTrendingAnime: (page = 1) => `/api/anime/trending`,
+  getPopularAnime: () => `/api/anime/popular`,
+  getStreamingLink: (id) => `/api/anime/watch/${id}`,
 };
 export default apiRoutes;

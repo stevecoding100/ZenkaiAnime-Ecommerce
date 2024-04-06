@@ -1,6 +1,7 @@
-// const baseURL = import.meta.env.VITE_ECOMMERCE_API_URL;
-const baseURL = "https://zenkai-anime-ecommerce-zgi2.vercel.app/api";
 import axios from "axios";
+
+const baseURL = "/api";
+
 const ecomAPI = {
   //AUTH
   auth: {
@@ -25,6 +26,7 @@ const ecomAPI = {
       }
     },
   },
+
   //PRODUCTS
   products: {
     getProducts: async () => {
@@ -80,6 +82,7 @@ const ecomAPI = {
       }
     },
   },
+
   //CART
   cart: {
     getCart: async (user_id) => {
@@ -103,6 +106,7 @@ const ecomAPI = {
       }
     },
   },
+
   //ORDERS
   orders: {
     getOrder: async () => {

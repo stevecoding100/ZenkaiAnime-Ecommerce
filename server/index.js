@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors = require("cors");
 const { client, seedData, createTable } = require("./database/db");
 
 app.use(express.json());
 
-//Routes
+// Routes
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
@@ -17,10 +16,6 @@ const animeRoutes = require("./routes/anime");
   try {
     await client.connect();
 
-    // -- Uncomment the following line to seed the database This will drop all tables and recreate them
-    // await createTable();
-    // console.log("Tables created!");
-
     app.use(express.static("dist"));
 
     app.use("/api/anime", animeRoutes);
@@ -28,6 +23,7 @@ const animeRoutes = require("./routes/anime");
     app.use("/api/products", productRoutes);
     app.use("/api/cart", cartRoutes);
     app.use("/api/orders", orderRoutes);
+
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
     });
@@ -35,3 +31,5 @@ const animeRoutes = require("./routes/anime");
     console.error("Error starting server!", error);
   }
 })();
+
+module.exports = app;
