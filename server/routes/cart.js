@@ -135,7 +135,7 @@ const updateCart = async (user_id, product_id, quantity) => {
 
 // <--- Routes --->
 // Add an item to a cart
-router.post("/add", isLoggedIn, async (req, res) => {
+router.post("/api/cart/add", isLoggedIn, async (req, res) => {
   try {
     const item = await addItemsToCart(req.body);
     res.status(201).json(item);
@@ -145,7 +145,7 @@ router.post("/add", isLoggedIn, async (req, res) => {
 });
 
 // Get a user's cart
-router.get("/:user_id", isLoggedIn, async (req, res) => {
+router.get("/api/cart/:user_id", isLoggedIn, async (req, res) => {
   try {
     const cart = await getCartItems(req.params.user_id);
     res.status(200).json(cart);
@@ -155,7 +155,7 @@ router.get("/:user_id", isLoggedIn, async (req, res) => {
 });
 
 // Update an item in a cart
-router.put("/update", isLoggedIn, async (req, res) => {
+router.put("/api/cart/update", isLoggedIn, async (req, res) => {
   try {
     const { product_id, quantity, user_id } = req.body;
     const item = await updateCart(user_id, product_id, quantity);
@@ -166,18 +166,22 @@ router.put("/update", isLoggedIn, async (req, res) => {
 });
 
 // Delete an item from a cart
-router.delete("/delete/:product_id/:user_id", isLoggedIn, async (req, res) => {
-  try {
-    const { product_id, user_id } = req.params;
-    await deleteItemFromCart(user_id, product_id);
-    res.status(200).json({ message: "Item deleted" });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+router.delete(
+  "/api/cart/delete/:product_id/:user_id",
+  isLoggedIn,
+  async (req, res) => {
+    try {
+      const { product_id, user_id } = req.params;
+      await deleteItemFromCart(user_id, product_id);
+      res.status(200).json({ message: "Item deleted" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
-});
+);
 
 // Update an item in a cart
-router.put("/update", isLoggedIn, async (req, res) => {
+router.put("/api/cart/update", isLoggedIn, async (req, res) => {
   try {
     const { product_id, quantity, user_id } = req.body;
     const item = await updateCart(user_id, product_id, quantity);
@@ -188,7 +192,7 @@ router.put("/update", isLoggedIn, async (req, res) => {
 });
 
 // Delete an item from a cart
-router.delete("/delete", isLoggedIn, async (req, res) => {
+router.delete("/api/cart/delete", isLoggedIn, async (req, res) => {
   try {
     const { product_id, user_id } = req.body;
     await deleteItemFromCart(user_id, product_id);

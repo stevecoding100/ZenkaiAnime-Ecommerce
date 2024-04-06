@@ -4,7 +4,7 @@ const router = express.Router();
 
 const baseURL = "https://zenkai-api.vercel.app/meta/anilist";
 
-router.get("/search/:q", async (req, res) => {
+router.get("/api/anime/search/:q", async (req, res) => {
   try {
     const q = req.params.q;
     const response = await axios.get(`${baseURL}/${q}`);
@@ -14,7 +14,7 @@ router.get("/search/:q", async (req, res) => {
   }
 });
 
-router.get("/trending", async (req, res) => {
+router.get("/api/anime/trending", async (req, res) => {
   try {
     const response = await axios.get(`${baseURL}/trending?perPage=15`);
     res.json(response.data);
@@ -23,7 +23,7 @@ router.get("/trending", async (req, res) => {
   }
 });
 
-router.get("/popular", async (req, res) => {
+router.get("/api/anime/popular", async (req, res) => {
   try {
     const response = await axios.get(`${baseURL}/popular`);
     res.json(response.data);
@@ -32,7 +32,7 @@ router.get("/popular", async (req, res) => {
   }
 });
 
-router.get("/info/:id", async (req, res) => {
+router.get("/api/anime/info/:id", async (req, res) => {
   const provider = ["gogoanime", "anify", "zoro"];
   try {
     const id = req.params.id;
@@ -52,7 +52,7 @@ router.get("/info/:id", async (req, res) => {
   }
 });
 
-router.get("/watch/:id", async (req, res) => {
+router.get("/api/anime/watch/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const response = await axios.get(`${baseURL}/watch/${id}`);
@@ -62,7 +62,7 @@ router.get("/watch/:id", async (req, res) => {
   }
 });
 
-router.get("/airing-schedule", async (req, res) => {
+router.get("/api/anime/airing-schedule", async (req, res) => {
   try {
     const response = await axios.get(`${baseURL}/airing-schedule`);
     res.json(response.data);
