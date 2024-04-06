@@ -31,7 +31,9 @@ const animeRoutes = require("./routes/anime");
     app.use("/", productRoutes);
     app.use("/", cartRoutes);
     app.use("/", orderRoutes);
-
+    app.use("/", (req, res) => {
+      res.json({ message: "Server is running!" });
+    });
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
     });
