@@ -16,7 +16,15 @@ const animeRoutes = require("./routes/anime");
   try {
     await client.connect();
 
-    app.use(express.static("dist"));
+    const cors = require("cors");
+    // Allow all origins
+    app.use(cors());
+    // Allow specific origin(s)
+    app.use(
+      cors({
+        origin: "https://yourdeployedsite.com",
+      })
+    );
 
     app.use("/", animeRoutes);
     app.use("/", authRoutes);
