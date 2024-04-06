@@ -20,7 +20,7 @@ const animeRoutes = require("./routes/anime");
     // Allow specific origin(s)
     app.use(
       cors({
-        origin: "https://yourdeployedsite.com",
+        origin: "https://zenkai-anime.vercel.app/",
       })
     );
 
