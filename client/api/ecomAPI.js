@@ -103,6 +103,33 @@ const ecomAPI = {
       }
     },
   },
+  //ORDERS
+  orders: {
+    getOrder: async () => {
+      try {
+        const orders = await axios.get(`${baseURL}/orders`, {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        });
+        return orders;
+      } catch (error) {
+        throw new Error("Error getting orders", error);
+      }
+    },
+    getOrderById: async (id) => {
+      try {
+        const order = await axios.get(`${baseURL}/orders/${id}`, {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        });
+        return order;
+      } catch (error) {
+        throw new Error("Error getting single order", error);
+      }
+    },
+  },
 };
 
 export default ecomAPI;
