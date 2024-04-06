@@ -26,14 +26,13 @@ const animeRoutes = require("./routes/anime");
       })
     );
 
+    app.use(express.static("dist"));
+
     app.use("/api/anime", animeRoutes);
     app.use("/api/auth", authRoutes);
     app.use("/api/products", productRoutes);
     app.use("/api/cart", cartRoutes);
     app.use("/api/orders", orderRoutes);
-    app.use("/", (req, res) => {
-      res.send("Welcome to the Ecommerce API");
-    });
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
     });
