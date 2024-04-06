@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://zenkai-anime-ecommerce.vercel.app/api";
+const baseURL = "https://zenkai-anime-ecommerce-zgi2.vercel.app//api";
 
 const adminRoutes = {
   users: {

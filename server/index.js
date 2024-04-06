@@ -20,11 +20,6 @@ const animeRoutes = require("./routes/anime");
     // -- Uncomment the following line to seed the database This will drop all tables and recreate them
     // await createTable();
     // console.log("Tables created!");
-    app.use(
-      cors({
-        origin: "http://localhost:5173",
-      })
-    );
 
     app.use(express.static("dist"));
 

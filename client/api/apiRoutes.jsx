@@ -1,4 +1,4 @@
-const baseURL = "https://zenkai-anime-ecommerce.vercel.app/api/anime";
+const baseURL = "https://zenkai-anime-ecommerce-zgi2.vercel.app//api/anime";
 const apiRoutes = {
   searchAnime: (q) => `${baseURL}/${q}`,
   getAnimeInfo: (id) => `${baseURL}/${id}`, // must provide gogoanime as provider [params]

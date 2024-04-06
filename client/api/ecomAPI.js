@@ -1,5 +1,5 @@
 // const baseURL = import.meta.env.VITE_ECOMMERCE_API_URL;
-const baseURL = "https://zenkai-anime-ecommerce.vercel.app/api";
+const baseURL = "https://zenkai-anime-ecommerce-zgi2.vercel.app/api";
 import axios from "axios";
 const ecomAPI = {
   //AUTH
