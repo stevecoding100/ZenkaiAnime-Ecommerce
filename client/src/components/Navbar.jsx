@@ -89,8 +89,9 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
     };
     return (
         <div>
-            <nav className="flex flex-col md:flex-row md:justify-between sticky top-0 ">
+            <nav className="flex flex-col md:flex-row md:justify-between">
                 <div className="flex justify-between items-center w-full p-6 md:w-auto">
+                    <HambugerMenu pageType={pageType} />
                     <Link
                         className={`text-xl md:text-2xl font-bold ${
                             pageType === "streaming"
@@ -102,21 +103,34 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
                         ZenKaiAnime
                     </Link>
                     <div>
-                        {token && pageType === "merchandise" && (
-                            <div className="text-black ml-4 cursor-pointer flex items-center mx-auto md:hidden">
-                                <FaShoppingCart
-                                    size={32}
-                                    className="mr-12"
-                                    onClick={toggleCart}
+                        {token && (
+                            <div className="text-black  cursor-pointer flex items-center md:hidden">
+                                {pageType === "merchandise" && (
+                                    <FaShoppingCart
+                                        size={28}
+                                        className="mr-12"
+                                        onClick={toggleCart}
+                                    />
+                                )}
+                                <FaRegBell
+                                    size={28}
+                                    className={`mr-6 ${
+                                        pageType === "streaming"
+                                            ? "text-slate-100"
+                                            : "text-slate-900"
+                                    } `}
                                 />
-                                <FaRegBell size={32} className="mr-4" />
                                 <div>
                                     <div className="w-[50px] h-[50px]">
                                         <img
                                             src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?cs=srgb&dl=pexels-stefan-stefancik-91227.jpg&fm=jpg"
                                             alt="profile picture"
+                                            className={`w-full cursor-pointer h-full rounded-full object-cover border-2 ${
+                                                pageType === "streaming"
+                                                    ? "border-slate-100"
+                                                    : "border-slate-900"
+                                            }`}
                                             onClick={logout}
-                                            className="cursor-pointer w-full h-full rounded-full object-cover"
                                         />
                                     </div>
                                 </div>
@@ -181,20 +195,33 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
                     </ul>
                 </div>
                 <div>
-                    {token && pageType === "merchandise" && (
+                    {token && (
                         <div className="text-black mt-4 cursor-pointer md:flex items-center mx-12 hidden">
-                            <FaShoppingCart
+                            {pageType === "merchandise" && (
+                                <FaShoppingCart
+                                    size={28}
+                                    className="mr-12"
+                                    onClick={toggleCart}
+                                />
+                            )}
+                            <FaRegBell
                                 size={28}
-                                className="mr-12"
-                                onClick={toggleCart}
+                                className={`mr-4 ${
+                                    pageType === "streaming"
+                                        ? "text-slate-100"
+                                        : "text-slate-900"
+                                } `}
                             />
-                            <FaRegBell size={28} className="mr-4" />
                             <div>
                                 <div className="w-[50px] h-[50px]">
                                     <img
                                         src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?cs=srgb&dl=pexels-stefan-stefancik-91227.jpg&fm=jpg"
                                         alt="profile picture"
-                                        className="w-full cursor-pointer h-full rounded-full object-cover"
+                                        className={`w-full cursor-pointer h-full rounded-full object-cover border-2 ${
+                                            pageType === "streaming"
+                                                ? "border-slate-100"
+                                                : "border-slate-900"
+                                        }`}
                                         onClick={logout}
                                     />
                                 </div>
@@ -202,6 +229,7 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
                         </div>
                     )}
                 </div>
+
                 {!token && (
                     <ul className="md:flex items-center  w-[280px] hidden">
                         <Link to="/login">

@@ -11,6 +11,9 @@ import ProductDetails from "./components/admin/ProductDetails";
 import OrdersPage from "./pages/admin/OrdersPage";
 import ProductsPage from "./pages/admin/ProductPage";
 import OrderDetails from "./components/admin/OrderDetails";
+import Users from "./components/admin/Users";
+import UserPage from "./pages/admin/UserPage";
+
 const App = () => {
   return (
     <>
@@ -23,10 +26,9 @@ const App = () => {
         {/* <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<AdminPage />} />
-          <Route path="products" element={<ProductDetails />}></Route>
-          <Route path="products/:id" element={<ProductsPage />} />
-          <Route path="orders" element={<OrdersPage />} />
-          <Route path="orders/:id" element={<OrderDetails />} />
+          <Route path="products" element={<Products />}></Route>
+          <Route path="products/:id" element={<ProductPage />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
         <Route path="/cart" element={<Cart />} />
       </Routes>
