@@ -17,8 +17,6 @@ const animeRoutes = require("./routes/anime");
     await client.connect();
 
     const cors = require("cors");
-    // Allow all origins
-    app.use(cors());
     // Allow specific origin(s)
     app.use(
       cors({

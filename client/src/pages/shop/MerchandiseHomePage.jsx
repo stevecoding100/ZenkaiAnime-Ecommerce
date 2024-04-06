@@ -14,18 +14,18 @@ const MerchandiseHomePage = () => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [showCart, setShowCart] = useState(false);
-
+  const baseURL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       try {
         // Fetch products
-        const productsResponse = await axios.get("/api/products");
+        const productsResponse = await axios.get(`${baseURL}/products`);
         setProducts(productsResponse.data);
 
         // Fetch cart
-        const cartResponse = await axios.get(`/api/cart/${userID}`, {
+        const cartResponse = await axios.get(`${baseURL}/cart/${userID}`, {
           headers: {
             Authorization: `${token}`,
           },
@@ -42,7 +42,7 @@ const MerchandiseHomePage = () => {
       const quantity = 1;
       const user_id = userID;
       const response = await axios.post(
-        "/api/cart/add",
+        `${baseURL}/cart/add`,
         {
           product_id,
           quantity,
@@ -92,7 +92,7 @@ const MerchandiseHomePage = () => {
   const decreaseQuantity = async (product_id) => {
     try {
       const response = await axios.delete(
-        `/api/cart/delete/${product_id}/${userID}`,
+        `${baseURL}/cart/delete/${product_id}/${userID}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -128,7 +128,7 @@ const MerchandiseHomePage = () => {
   const removeItem = async (product_id) => {
     try {
       const response = await axios.delete(
-        `/api/cart/delete/${product_id}/${userID}`,
+        `${baseURL}/cart/delete/${product_id}/${userID}`,
         {
           headers: {
             Authorization: `${token}`,
@@ -148,7 +148,7 @@ const MerchandiseHomePage = () => {
   const handleCheckOut = async () => {
     try {
       const response = await axios.post(
-        "/api/orders/add",
+        `${baseURL}/orders/add`,
         {
           user_id: userID,
           cart,
