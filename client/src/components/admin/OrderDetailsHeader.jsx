@@ -3,7 +3,7 @@ import { MdModeEdit } from "react-icons/md";
 
 const OrderDetailsHeader = ({ order, formatDate }) => {
   return (
-    <div className=" bg-white w-full px-2 py-4 flex items-center justify-between">
+    <div className="bg-stone-300/50 w-full px-2 py-4 flex items-center justify-between ">
       <div>
         <h2 className="border-slate-400/50">
           Order# <span className="text-blue-600 text-sm">{order.id}</span>

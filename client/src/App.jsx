@@ -7,9 +7,9 @@ import LoginPage from "./pages/auth/LoginPage";
 import Cart from "./components/shop/Cart";
 import AdminPage from "./pages/admin/AdminPage";
 import Layout from "./components/admin/Layout";
-import ProductDetails from "./components/admin/ProductDetails";
+import Products from "./components/admin/Products";
 import OrdersPage from "./pages/admin/OrdersPage";
-import ProductsPage from "./pages/admin/ProductPage";
+import ProductPage from "./pages/admin/ProductPage";
 import OrderDetails from "./components/admin/OrderDetails";
 import Users from "./components/admin/Users";
 import UserPage from "./pages/admin/UserPage";
@@ -28,7 +28,10 @@ const App = () => {
           <Route index element={<AdminPage />} />
           <Route path="products" element={<Products />}></Route>
           <Route path="products/:id" element={<ProductPage />} />
-          <Route path="orders" element={<Orders />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:id" element={<OrderDetails />} />
+          <Route path="users" element={<Users />} />
+          <Route path="users/:id" element={<UserPage />} />
         </Route>
         <Route path="/cart" element={<Cart />} />
       </Routes>

@@ -40,7 +40,7 @@ const OrderItemsContainer = ({ order }) => {
           <div className="mt-4 lg:mt-0 lg:w-[24rem] lg:ml-5">
             <h2 className="text-center text-2xl my-2">Order Summary</h2>
             <div className="flex justify-between text-slate-600">
-              <h2>Subtotal:</h2>wwwwwwwwwwwww
+              <h2>Subtotal:</h2>
               <p>${order.total_price.toFixed(2)}</p>
             </div>
             <div className="flex justify-between text-slate-600">
