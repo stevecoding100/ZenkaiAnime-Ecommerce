@@ -121,6 +121,18 @@ const deleteItemFromCart = async (user_id, product_id) => {
   }
 };
 
+const getCart = async (user_id) => {
+  const SQL = `SELECT * FROM cart_items WHERE user_id = $1`;
+  const response = await client.query(SQL, [user_id]);
+  return response.rows;
+};
+
+const updateCart = async (user_id, product_id, quantity) => {
+  const SQL = `UPDATE cart_items SET quantity = $1 WHERE user_id = $2 AND product_id = $3 RETURNING *`;
+  const response = await client.query(SQL, [quantity, user_id, product_id]);
+  return response.rows[0];
+};
+
 // <--- Routes --->
 // Add an item to a cart
 router.post("/add", isLoggedIn, async (req, res) => {
@@ -133,7 +145,7 @@ router.post("/add", isLoggedIn, async (req, res) => {
 });
 
 // Get a user's cart
-router.get("/:user_id", async (req, res) => {
+router.get("/:user_id", isLoggedIn, async (req, res) => {
   try {
     const cart = await getCartItems(req.params.user_id);
     res.status(200).json(cart);
@@ -157,6 +169,28 @@ router.put("/update", isLoggedIn, async (req, res) => {
 router.delete("/delete/:product_id/:user_id", isLoggedIn, async (req, res) => {
   try {
     const { product_id, user_id } = req.params;
+    await deleteItemFromCart(user_id, product_id);
+    res.status(200).json({ message: "Item deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Update an item in a cart
+router.put("/update", isLoggedIn, async (req, res) => {
+  try {
+    const { product_id, quantity, user_id } = req.body;
+    const item = await updateCart(user_id, product_id, quantity);
+    res.status(200).json(item);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Delete an item from a cart
+router.delete("/delete", isLoggedIn, async (req, res) => {
+  try {
+    const { product_id, user_id } = req.body;
     await deleteItemFromCart(user_id, product_id);
     res.status(200).json({ message: "Item deleted" });
   } catch (error) {
