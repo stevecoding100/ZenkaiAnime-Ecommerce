@@ -4,16 +4,8 @@ const PORT = process.env.PORT || 3000;
 const cors = require("cors");
 const apicache = require("apicache");
 let cache = apicache.middleware;
-
+app.use(cors());
 app.use(express.json());
-
-app.use(
-  cors({
-    origin: "https://zenkai-anime.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: "Content-Type,Authorization",
-  })
-);
 
 // Import routes
 const authRoutes = require("./routes/auth");
