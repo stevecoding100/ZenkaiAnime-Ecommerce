@@ -1,33 +1,46 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors = require("cors");
+const { client, seedData, createTable } = require("./database/db");
 const apicache = require("apicache");
 let cache = apicache.middleware;
-app.use(cors());
+const cors = require("cors");
 app.use(express.json());
 
-// Import routes
+// Routes
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
 const orderRoutes = require("./routes/order");
 const animeRoutes = require("./routes/anime");
 
-// Apply caching only to animeRoutes
-animeRoutes.use(cache("5 minutes"));
-// productRoutes.use(cache("2 minutes"));
+(async () => {
+  try {
+    await client.connect();
+    const corsOptions = {
+      origin: "https://zenkai-anime.vercel.app",
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: "Content-Type,Authorization",
+    };
 
-// Use routes
-app.use("/", cors(), animeRoutes);
-app.use("/", cors(), authRoutes);
-app.use("/", cors(), productRoutes);
-app.use("/", cors(), cartRoutes);
-app.use("/", cors(), orderRoutes);
-app.use("/", (req, res) => {
-  res.json({ message: "Server is running!" });
-});
+    app.use(cors(corsOptions));
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}!`);
-});
+    animeRoutes.use(cache("5 minutes"));
+
+    app.use("/", animeRoutes);
+    app.use("/", authRoutes);
+    app.use("/", productRoutes);
+    app.use("/", cartRoutes);
+    app.use("/", orderRoutes);
+    app.use("/", (req, res) => {
+      res.json({ message: "Server is running!" });
+    });
+    app.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}!`);
+    });
+  } catch (error) {
+    console.error("Error starting server!", error);
+  }
+})();
+
+module.exports = app;
