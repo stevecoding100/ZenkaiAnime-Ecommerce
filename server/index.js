@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const { client, seedData, createTable } = require("./database/db");
+const apicache = require("apicache");
 let cache = apicache.middleware;
 const cors = require("cors");
 app.use(express.json());
