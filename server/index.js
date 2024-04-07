@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors = require("cors");
 const { client, seedData, createTable } = require("./database/db");
 
 app.use(express.json());
 
-//Routes
+// Routes
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 const cartRoutes = require("./routes/cart");
@@ -17,22 +16,27 @@ const animeRoutes = require("./routes/anime");
   try {
     await client.connect();
 
-    // -- Uncomment the following line to seed the database This will drop all tables and recreate them
-    // await createTable();
-    // console.log("Tables created!");
+    const cors = require("cors");
+    // Allow specific origin(s)
     app.use(
       cors({
-        origin: "http://localhost:5173",
+        origin: "*",
+      })
+    );
+    app.use(
+      cors({
+        origin: "https://zenkai-anime.vercel.app",
+        optionsSuccessStatus: 200,
       })
     );
 
-    app.use("/api/anime", animeRoutes);
-    app.use("/api/auth", authRoutes);
-    app.use("/api/products", productRoutes);
-    app.use("/api/cart", cartRoutes);
-    app.use("/api/orders", orderRoutes);
+    app.use("/", animeRoutes);
+    app.use("/", authRoutes);
+    app.use("/", productRoutes);
+    app.use("/", cartRoutes);
+    app.use("/", orderRoutes);
     app.use("/", (req, res) => {
-      res.send("Welcome to the Ecommerce API");
+      res.json({ message: "Server is running!" });
     });
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}!`);
@@ -41,3 +45,5 @@ const animeRoutes = require("./routes/anime");
     console.error("Error starting server!", error);
   }
 })();
+
+module.exports = app;

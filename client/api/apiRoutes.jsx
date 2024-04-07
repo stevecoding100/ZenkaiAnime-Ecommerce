@@ -1,9 +1,9 @@
-const baseURL = "http://localhost:3000/api/anime";
+const baseURL = import.meta.env.VITE_API_URL;
 const apiRoutes = {
-  searchAnime: (q) => `${baseURL}/${q}`,
-  getAnimeInfo: (id) => `${baseURL}/info/${id}`, // must provide gogoanime as provider [params]
-  getTrendingAnime: (page = 1) => `${baseURL}/trending`,
-  getPopularAnime: () => `${baseURL}/popular`,
-  getStreamingLink: (id) => `${baseURL}/watch/${id}`,
+  searchAnime: (q) => `${baseURL}/anime/${q}`,
+  getAnimeInfo: (id) => `${baseURL}/anime/info/${id}`,
+  getTrendingAnime: (page = 1) => `${baseURL}/anime/trending`,
+  getPopularAnime: () => `${baseURL}/anime/popular`,
+  getStreamingLink: (id) => `${baseURL}/anime/watch/${id}`,
 };
 export default apiRoutes;
