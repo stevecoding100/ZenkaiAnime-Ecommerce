@@ -19,7 +19,7 @@ const animeRoutes = require("./routes/anime");
 
     const corsOptions = {
       origin: "https://zenkai-anime.vercel.app",
-      methods: "GET,POST,PUT,DELETE",
+      methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: "Content-Type,Authorization",
     };
 
