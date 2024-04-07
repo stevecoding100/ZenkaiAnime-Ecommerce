@@ -8,24 +8,8 @@
   ],
   "routes": [
     {
-      "src": "/api/auth/(.*)",
-      "dest": "/auth/$1"
-    },
-    {
-      "src": "/api/products/(.*)",
-      "dest": "/product/$1"
-    },
-    {
-      "src": "/api/cart/(.*)",
-      "dest": "/cart/$1"
-    },
-    {
-      "src": "/api/orders/(.*)",
-      "dest": "/order/$1"
-    },
-    {
-      "src": "/api/anime/(.*)",
-      "dest": "/anime/$1"
+      "src": "/api/(.*)",
+      "dest": "/index.js"
     }
   ]
 }

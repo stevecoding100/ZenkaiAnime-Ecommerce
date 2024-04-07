@@ -21,10 +21,8 @@ const animeRoutes = require("./routes/anime");
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: "Content-Type,Authorization",
   };
-
-  app.use(cors(corsOptions));
-
   animeRoutes.use(cache("5 minutes"));
+  app.use(cors(corsOptions));
 
   app.use("/", animeRoutes);
   app.use("/", authRoutes);
