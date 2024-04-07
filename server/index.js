@@ -23,7 +23,8 @@ const orderRoutes = require("./routes/order");
 const animeRoutes = require("./routes/anime");
 
 // Apply caching only to animeRoutes
-animeRoutes.use(cache("10 minutes"));
+animeRoutes.use(cache("5 minutes"));
+productRoutes.use(cache("5 minutes"));
 
 // Use routes
 app.use("/", animeRoutes);
