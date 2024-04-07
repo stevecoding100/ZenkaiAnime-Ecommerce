@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const { client, seedData, createTable } = require("./database/db");
 
+const cors = require("cors");
 app.use(express.json());
 
 // Routes
@@ -16,22 +17,13 @@ const animeRoutes = require("./routes/anime");
   try {
     await client.connect();
 
-    const cors = require("cors");
-    app.use(
-      cors({
-        origin: "https://zenkai-anime.vercel.app",
-      })
-    );
+    const corsOptions = {
+      origin: "https://zenkai-anime.vercel.app",
+      methods: "GET,POST,PUT,DELETE",
+      allowedHeaders: "Content-Type,Authorization",
+    };
 
-    app.use((req, res, next) => {
-      res.header(
-        "Access-Control-Allow-Origin",
-        "https://zenkai-anime.vercel.app"
-      );
-      res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-      res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-      next();
-    });
+    app.use(cors(corsOptions));
 
     app.use("/", animeRoutes);
     app.use("/", authRoutes);
