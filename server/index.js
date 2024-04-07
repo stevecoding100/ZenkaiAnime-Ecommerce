@@ -15,32 +15,28 @@ const orderRoutes = require("./routes/order");
 const animeRoutes = require("./routes/anime");
 
 (async () => {
-  try {
-    await client.connect();
-    const corsOptions = {
-      origin: "https://zenkai-anime.vercel.app",
-      methods: ["GET", "POST", "PUT", "DELETE"],
-      allowedHeaders: "Content-Type,Authorization",
-    };
+  await client.connect();
+  const corsOptions = {
+    origin: "https://zenkai-anime.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: "Content-Type,Authorization",
+  };
 
-    app.use(cors(corsOptions));
+  app.use(cors(corsOptions));
 
-    animeRoutes.use(cache("5 minutes"));
+  animeRoutes.use(cache("5 minutes"));
 
-    app.use("/", animeRoutes);
-    app.use("/", authRoutes);
-    app.use("/", productRoutes);
-    app.use("/", cartRoutes);
-    app.use("/", orderRoutes);
-    app.use("/", (req, res) => {
-      res.json({ message: "Server is running!" });
-    });
-    app.listen(PORT, () => {
-      console.log(`Server is listening on port ${PORT}!`);
-    });
-  } catch (error) {
-    console.error("Error starting server!", error);
-  }
+  app.use("/", animeRoutes);
+  app.use("/", authRoutes);
+  app.use("/", productRoutes);
+  app.use("/", cartRoutes);
+  app.use("/", orderRoutes);
+  app.use("/", (req, res) => {
+    res.json({ message: "Server is running!" });
+  });
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}!`);
+  });
 })();
 
 module.exports = app;
