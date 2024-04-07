@@ -16,7 +16,7 @@ const animeRoutes = require("./routes/anime");
 (async () => {
   try {
     await client.connect();
-    app.use(cache("10 minutes"));
+
     const corsOptions = {
       origin: "https://zenkai-anime.vercel.app",
       methods: ["GET", "POST", "PUT", "DELETE"],
@@ -24,7 +24,7 @@ const animeRoutes = require("./routes/anime");
     };
 
     app.use(cors(corsOptions));
-
+    app.use(cache("10 minutes"));
     app.use("/", animeRoutes);
     app.use("/", authRoutes);
     app.use("/", productRoutes);
