@@ -2,14 +2,30 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.js",
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/"
+      "src": "/api/auth/(.*)",
+      "dest": "/auth/$1"
+    },
+    {
+      "src": "/api/products/(.*)",
+      "dest": "/product/$1"
+    },
+    {
+      "src": "/api/cart/(.*)",
+      "dest": "/cart/$1"
+    },
+    {
+      "src": "/api/orders/(.*)",
+      "dest": "/order/$1"
+    },
+    {
+      "src": "/api/anime/(.*)",
+      "dest": "/anime/$1"
     }
   ]
 }
