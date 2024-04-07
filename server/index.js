@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const { client, seedData, createTable } = require("./database/db");
-
+let cache = apicache.middleware;
 const cors = require("cors");
 app.use(express.json());
 
@@ -16,7 +16,7 @@ const animeRoutes = require("./routes/anime");
 (async () => {
   try {
     await client.connect();
-
+    app.use(cache("10 minutes"));
     const corsOptions = {
       origin: "https://zenkai-anime.vercel.app",
       methods: ["GET", "POST", "PUT", "DELETE"],
