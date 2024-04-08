@@ -85,6 +85,7 @@ const StreamingHomePage = () => {
             <Footer pageType="streaming" />
         </div>
     );
+
 };
 
 export default StreamingHomePage;
