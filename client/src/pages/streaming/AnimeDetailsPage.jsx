@@ -11,6 +11,7 @@ import Footer from "../../components/Footer.jsx";
 import apiRoutes from "../../../utils/apiRoutes.jsx";
 import useAnimeStore from "../../../store/store.jsx";
 import AnimeEpisode from "../../components/streaming/AnimeEpisode.jsx";
+import { Avatar, Tooltip } from "@nextui-org/react";
 
 const AnimeDetailsPage = () => {
   const { addAnimeList, animeList } = useAnimeStore();
@@ -20,6 +21,7 @@ const AnimeDetailsPage = () => {
   const { animeId } = useParams();
   const [loading, setLoading] = useState(true);
   const [recommendationList, setRecommendationList] = useState([]);
+  const [selectedCharacter, setSelectedCharacter] = useState(false);
 
   const getAnimeDetails = async () => {
     try {
@@ -69,6 +71,49 @@ const AnimeDetailsPage = () => {
                     __html: animeDetails.description,
                   }}
                 ></h4>
+
+                <p className="text-xs mb-2">
+                  Click the character to show voice actors.
+                </p>
+                <div className="space-x-4 w-1/2 mx-auto"></div>
+                <div className="flex flex-row gap-3">
+                  <div className="flex flex-row overflow-auto">
+                    <div className="flex flex-row gap-3 ">
+                      {animeDetails.characters.map((character) => {
+                        const isSelected = selectedCharacter === character.id;
+                        const avatarImage = isSelected
+                          ? character.voiceActors[0].image
+                          : character.image;
+                        const avatarName = isSelected
+                          ? character.voiceActors[0].name.userPreferred
+                          : character.name.userPreferred;
+
+                        return (
+                          <Tooltip
+                            key={
+                              isSelected
+                                ? character.voiceActors[0].id
+                                : character.id
+                            }
+                            content={avatarName}
+                            placement="bottom"
+                          >
+                            <Avatar
+                              src={avatarImage}
+                              name={avatarName}
+                              size="md"
+                              onClick={() =>
+                                setSelectedCharacter(
+                                  isSelected ? null : character.id
+                                )
+                              }
+                            />
+                          </Tooltip>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between w-[80%] md:w-[60%] lg:w-[45%] mt-6">
                   <h4 className="text-sm md:text-lg ">Genres:</h4>
                   {animeDetails.genres.map((genre) => (
