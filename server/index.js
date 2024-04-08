@@ -32,6 +32,9 @@ const orderRoutes = require("./routes/order");
 const animeRoutes = require("./routes/anime");
 
 // Use routes
+app.get("/", (req, res) => {
+  res.send("Hello, World!");
+});
 app.use("/api/anime", cache("5 minutes"), animeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
