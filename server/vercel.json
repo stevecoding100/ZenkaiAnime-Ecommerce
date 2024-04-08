@@ -1,16 +1,15 @@
 {
   "version": 2,
-  "name": "Zenkai-Anime-API",
   "builds": [
     {
-      "src": "index.js",
+      "src": "app.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "index.js"
+      "src": "/api/(.*)",
+      "dest": "/app.js"
     }
   ]
 }

@@ -3,10 +3,10 @@ const app = express();
 const cors = require("cors");
 const apicache = require("apicache");
 const { client, seedData, createTable } = require("./database/db");
+
 let cache = apicache.middleware;
 
 app.use(express.json());
-
 app.use(
   cors({
     origin: "https://zenkai-anime.vercel.app",
@@ -32,18 +32,16 @@ const orderRoutes = require("./routes/order");
 const animeRoutes = require("./routes/anime");
 
 // Use routes
-app.use("/api/anime", animeRoutes);
+app.use("/api/anime", cache("5 minutes"), animeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+
 app.use("/", (req, res) => {
   res.json({ message: "Server is running!" });
 });
 
 init();
 
-// const PORT = process.env.PORT || 3000;
-// // app.listen(PORT, () => {
-// //   console.log(`Server is listening on port ${PORT}!`);
-// // });
+module.exports = app;
