@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Footer = ({ pageType }) => {
     return (
         <footer
-            className={`absolute w-full ${
+            className={`w-full ${
                 pageType === "streaming"
                     ? "bg-gradient-to-r from-neutral-900 to-zinc-700"
                     : "bg-gray-500"
