@@ -60,7 +60,7 @@ const updateUser = async (
 // Base route /api/auth
 
 // Register a new user
-router.post("/api/auth/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const user = await createUser(req.body);
     const { token } = await authenticateUser(user.username, req.body.password);
@@ -72,7 +72,7 @@ router.post("/api/auth/register", async (req, res) => {
 });
 
 // Login a user
-router.post("/api/auth/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await authenticateUser(username, password);
@@ -87,7 +87,7 @@ router.post("/api/auth/login", async (req, res) => {
 // <--- ADMIN ONLY ROUTES --->
 
 // Get user information
-router.get("/api/auth/users", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     res.status(200).json(await getAllUsers());
   } catch (error) {
@@ -95,7 +95,7 @@ router.get("/api/auth/users", async (req, res) => {
   }
 });
 // Delete a user
-router.delete("/api/auth/delete/:id", isAdmin, async (req, res) => {
+router.delete("/delete/:id", isAdmin, async (req, res) => {
   try {
     await deleteUser(req.params.id);
     res.status(200).json({ message: "User deleted" });
@@ -105,7 +105,7 @@ router.delete("/api/auth/delete/:id", isAdmin, async (req, res) => {
 });
 
 // Update a user
-router.put("/api/auth/update/:id", isLoggedIn, async (req, res) => {
+router.put("/update/:id", isLoggedIn, async (req, res) => {
   try {
     const user = await updateUser(req.params.id, req.body);
     res.status(200).json(user);

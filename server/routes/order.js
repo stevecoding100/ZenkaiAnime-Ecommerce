@@ -135,7 +135,7 @@ const ordersQuery = {
 // Get all orders
 
 // ORDERS
-router.get("/api/orders/", isAdmin, async (req, res) => {
+router.get("/", isAdmin, async (req, res) => {
   try {
     const orders = await ordersQuery.getAllOrders();
     res.status(200).json(orders);
@@ -144,7 +144,7 @@ router.get("/api/orders/", isAdmin, async (req, res) => {
   }
 });
 
-router.get("/api/orders/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const order = await ordersQuery.getSingleOrder(req.params);
     res.status(200).json(order);
@@ -154,7 +154,7 @@ router.get("/api/orders/:id", async (req, res) => {
 });
 
 // Create a new order
-router.post("/api/orders/add", isLoggedIn, async (req, res) => {
+router.post("/add", isLoggedIn, async (req, res) => {
   try {
     const order = await ordersQuery.createOrder(req.body);
     res.status(201).json(order);
@@ -164,7 +164,7 @@ router.post("/api/orders/add", isLoggedIn, async (req, res) => {
 });
 
 //Delete an order
-router.delete("/api/orders/delete", isAdmin, async (req, res) => {
+router.delete("/delete", isAdmin, async (req, res) => {
   try {
     await ordersQuery.deleteOrder(req.body);
     res.status(204).json({ message: "Order deleted" });
@@ -176,7 +176,7 @@ router.delete("/api/orders/delete", isAdmin, async (req, res) => {
 // ORDER ITEMS
 // Create a new order item
 //Base route /api/orders
-router.get("/api/orders/:order_id/item", isAdmin, async (req, res) => {
+router.get("/:order_id/item", isAdmin, async (req, res) => {
   try {
     const orderItems = await orderItemsQuery.getOrderItems(req.params);
     res.status(200).json(orderItems);
@@ -185,7 +185,7 @@ router.get("/api/orders/:order_id/item", isAdmin, async (req, res) => {
   }
 });
 
-router.post("/api/orders/:order_id/item", async (req, res) => {
+router.post("/:order_id/item", async (req, res) => {
   const { product_id, quantity, price } = req.body;
   const { order_id } = req.params;
   console.log({ product_id, quantity, price, order_id });

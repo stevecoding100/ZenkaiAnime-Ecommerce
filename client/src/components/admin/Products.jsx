@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import ecomAPI from "../../../api/ecomAPI";
 import { Image, Pagination } from "@nextui-org/react";
 import { MdOutlineDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import ecomAPI from "../../../utils/ecomAPI";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
