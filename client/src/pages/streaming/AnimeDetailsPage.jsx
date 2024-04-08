@@ -73,7 +73,7 @@ const AnimeDetailsPage = () => {
                 ></h4>
 
                 <p className="text-xs mb-2">
-                  Click the character to show voice actors.
+                  Click the character to show voice actor.
                 </p>
                 <div className="space-x-4 w-1/2 mx-auto"></div>
                 <div className="flex flex-row gap-3">
