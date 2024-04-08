@@ -21,7 +21,7 @@ const AnimeDetailsPage = () => {
   const { animeId } = useParams();
   const [loading, setLoading] = useState(true);
   const [recommendationList, setRecommendationList] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [selectedCharacter, setSelectedCharacter] = useState("");
 
   const getAnimeDetails = async () => {
     try {
