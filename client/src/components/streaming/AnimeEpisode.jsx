@@ -6,11 +6,15 @@ const AnimeEpisode = ({ data }) => {
 
   return (
     <div className="relative  flex w-full h-full items-center justify-center mb-6 lg:p-14">
-      {trailer === data.trailer ? (
-        <video src={data.trailer.thumbnail} />
+      {data?.trailer ? (
+        <iframe
+          className="w-1/2 aspect-video rounded-xl"
+          src={`https://www.youtube.com/embed/${data.trailer.id}`}
+          style={{ pointerEvents: "auto" }}
+        ></iframe>
       ) : (
         <img
-          src={data.episodes[0].image}
+          src={data.image}
           alt="#"
           className=" w-[360px] h-[400px]   md:w-[600px] md:h-[600px] lg:h-[650px]  object-center object-cover rounded-md"
         />

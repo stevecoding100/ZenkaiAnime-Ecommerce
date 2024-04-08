@@ -11,6 +11,7 @@ import Footer from "../../components/Footer.jsx";
 import apiRoutes from "../../../utils/apiRoutes.jsx";
 import useAnimeStore from "../../../store/store.jsx";
 import AnimeEpisode from "../../components/streaming/AnimeEpisode.jsx";
+import { Avatar, Tooltip } from "@nextui-org/react";
 
 const AnimeDetailsPage = () => {
   const { addAnimeList, animeList } = useAnimeStore();
@@ -20,6 +21,7 @@ const AnimeDetailsPage = () => {
   const { animeId } = useParams();
   const [loading, setLoading] = useState(true);
   const [recommendationList, setRecommendationList] = useState([]);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   const getAnimeDetails = async () => {
     try {
@@ -52,13 +54,13 @@ const AnimeDetailsPage = () => {
       </div>
       <div>
         {loading ? (
-          <div className="container mx-auto min-h-screen flex items-center justify-center">
+          <div className="container mx-auto min-h-screen flex items-center justify-center ">
             <Spinner />
           </div>
         ) : (
-          <div className="text-white pt-[12rem] md:pt-[8rem] flex flex-col w-full h-full">
+          <div className="text-white pt-[12rem] md:pt-[8rem] flex flex-col w-full h-full ">
             <AnimeEpisode data={animeDetails} />
-            <div className="flex lg:items-center">
+            <div className="flex lg:items-center ">
               <div className="w-[85%] md:w-[90%] lg:w-[60%] mx-auto lg:text-start">
                 <h1 className="text-2xl md:text-4xl text-center mb-4 m-2">
                   {animeDetails.title.english}
@@ -69,6 +71,49 @@ const AnimeDetailsPage = () => {
                     __html: animeDetails.description,
                   }}
                 ></h4>
+
+                <p className="text-xs mb-2">
+                  Click the character to show voice actor.
+                </p>
+                <div className="space-x-4 w-1/2 mx-auto"></div>
+                <div className="flex flex-row gap-3">
+                  <div className="flex flex-row scrollbarX">
+                    <div className="flex flex-row gap-3 ">
+                      {animeDetails.characters.map((character) => {
+                        const isSelected = selectedCharacter === character.id;
+                        const avatarImage = isSelected
+                          ? character.voiceActors[0].image
+                          : character.image;
+                        const avatarName = isSelected
+                          ? character.voiceActors[0].name.userPreferred
+                          : character.name.userPreferred;
+
+                        return (
+                          <Tooltip
+                            key={
+                              isSelected
+                                ? character.voiceActors[0].id
+                                : character.id
+                            }
+                            content={avatarName}
+                            placement="bottom"
+                          >
+                            <Avatar
+                              src={avatarImage}
+                              name={avatarName}
+                              size="md"
+                              onClick={() =>
+                                setSelectedCharacter(
+                                  isSelected ? null : character.id
+                                )
+                              }
+                            />
+                          </Tooltip>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
                 <div className="flex items-center justify-between w-[80%] md:w-[60%] lg:w-[45%] mt-6">
                   <h4 className="text-sm md:text-lg ">Genres:</h4>
                   {animeDetails.genres.map((genre) => (
@@ -118,10 +163,10 @@ const AnimeDetailsPage = () => {
             <h2 className="text-center text-xl md:text-2xl mt-24 mb-6">
               Watch Episodes
             </h2>
-            <div className="h-[50vh] overflow-scroll w-full md:w-[65%] lg:w-[50%] mx-auto">
+            <div className="h-[50vh] scrollbarY w-full md:w-[65%] lg:w-[50%] mx-auto ">
               {episodeList.map((episode) => (
                 <>
-                  <Link to={episode.url}>
+                  <Link to={episode.url} key={episode.id}>
                     <EpisodeCard
                       key={episode.id}
                       animeId={animeId}
