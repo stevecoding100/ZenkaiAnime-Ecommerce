@@ -1,102 +1,26 @@
-// import React from "react";
-// import { RxDashboard } from "react-icons/rx";
-// import { AiOutlineTag, AiOutlineUser, AiOutlineSetting } from "react-icons/ai";
-// import { MdOutlineReceiptLong } from "react-icons/md";
-// import { Link } from "react-router-dom";
-// import { BiLogOut } from "react-icons/bi";
-// const Navbar = () => {
-//   return (
-//     <aside className="bg-gray-800 text-white w-64 min-h-screen">
-//       <div className="flex flex-col h-full">
-//         <div className="flex items-center justify-center py-6">
-//           <h1 className="text-2xl font-bold">Zenkai</h1>
-//         </div>
-//         <nav className="flex-1 px-4 py-6">
-//           <ul className="space-y-4">
-//             <li>
-//               <Link
-//                 to="/dashboard"
-//                 className="flex items-center space-x-2 hover:text-gray-300"
-//               >
-//                 <RxDashboard className="text-xl" />
-//                 <span>Dashboard</span>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link
-//                 to="/dashboard/products"
-//                 className="flex items-center space-x-2 hover:text-gray-300"
-//               >
-//                 <AiOutlineTag className="text-xl" />
-//                 <span>Products</span>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link
-//                 to="/dashboard/orders"
-//                 className="flex items-center space-x-2 hover:text-gray-300"
-//               >
-//                 <MdOutlineReceiptLong className="text-xl" />
-//                 <span>Orders</span>
-//               </Link>
-//             </li>
-//             <li>
-//               <Link
-//                 to="/dashboard/users"
-//                 className="flex items-center space-x-2 hover:text-gray-300"
-//               >
-//                 <AiOutlineUser className="text-xl" />
-//                 <span>Users</span>
-//               </Link>
-//             </li>
-//           </ul>
-//         </nav>
-//         <div className="px-4 py-6">
-//           <ul className="space-y-4">
-//             <li>
-//               <Link
-//                 to="/dashboard/settings"
-//                 className="flex items-center space-x-2 hover:text-gray-300"
-//               >
-//                 <AiOutlineSetting className="text-xl" />
-//                 <span>Settings</span>
-//               </Link>
-//             </li>
-//             <li>
-//               <button className="flex items-center space-x-2 hover:text-gray-300">
-//                 <BiLogOut className="text-xl" />
-//                 <span>Log out</span>
-//               </button>
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//     </aside>
-//   );
-// };
-// export default Navbar; (edited)
-
 import { Link } from "react-router-dom";
 import HambugerMenu from "./HambugerMenu";
 import SignInSingnUpBtn from "./SignInSingnUpBtn";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegBell } from "react-icons/fa";
-const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
+const Navbar = ({ pageType, token, setShowCart, logout }) => {
     const [showMenu, setShowMenu] = useState(false);
+
     const toggleCart = () => {
         setShowCart((prev) => !prev);
     };
+
     return (
         <div>
             <nav className="flex flex-col md:flex-row md:justify-between">
-                <div className="flex justify-between items-center w-full p-6 md:w-auto">
+                <div className="flex justify-between items-center w-full p-5 md:w-auto">
                     <HambugerMenu pageType={pageType} />
                     <Link
-                        className={`text-xl md:text-2xl font-bold ${
+                        className={`text-xl md:text-2xl  font-bold ${
                             pageType === "streaming"
                                 ? "text-white"
-                                : "text-black"
+                                : "text-black md:mr-28"
                         }`}
                         to={pageType === "streaming" ? "/" : "/shop"}
                     >
@@ -140,20 +64,22 @@ const Navbar = ({ pageType, searchProducts, token, setShowCart, logout }) => {
                     {!token && <SignInSingnUpBtn pageType={pageType} />}
                 </div>
                 <div
-                    className={`md:flex md:flex-row justify-between md:items-center md:w-full ${
-                        showMenu ? "block" : "hidden"
-                    }`}
+                    className={`flex md:flex-row w-full items-center justify-center mb-4 md:mb-0`}
                 >
-                    <input
-                        onChange={searchProducts}
-                        type="text"
-                        className="w-[220px] px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
-                        placeholder={`${
-                            pageType === "streaming"
-                                ? "Search movies..."
-                                : "Search products..."
-                        }`}
-                    />
+                    {pageType === "streaming" ? (
+                        <input
+                            type="text"
+                            className="w-[280px] px-4 py-2 md:mr-28 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                            placeholder={`${
+                                pageType === "streaming"
+                                    ? "Search movies..."
+                                    : "Search products..."
+                            }`}
+                        />
+                    ) : (
+                        ""
+                    )}
+
                     <ul
                         className={`md:flex items-center space-x-4 md:pr-6 lg:pr-32 ${
                             pageType === "streaming"
