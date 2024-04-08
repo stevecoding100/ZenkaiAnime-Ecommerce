@@ -9,7 +9,7 @@ const HambugerMenu = ({ pageType }) => {
     };
 
     return (
-        <div className="md:hidden z-50 mt-2" onClick={toggleMenu}>
+        <div className="md:hidden z-50" onClick={toggleMenu}>
             {/* Hamburger menu bars start */}
             <div
                 className={`h-1 w-8 ${
@@ -28,7 +28,7 @@ const HambugerMenu = ({ pageType }) => {
             <div
                 className={`h-1 w-8 ${
                     pageType === "streaming" ? "bg-white" : "bg-slate-900"
-                } rounded mb-2 transition-all duration-300 transform ${
+                } rounded  transition-all duration-300 transform ${
                     isOpen ? "-rotate-180 -translate-y-1" : ""
                 }`}
             ></div>
