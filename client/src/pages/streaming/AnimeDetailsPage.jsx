@@ -163,10 +163,10 @@ const AnimeDetailsPage = () => {
             <h2 className="text-center text-xl md:text-2xl mt-24 mb-6">
               Watch Episodes
             </h2>
-            <div className="h-[50vh] overflow-scroll w-full md:w-[65%] lg:w-[50%] mx-auto">
+            <div className="h-[50vh] overflow-y-scroll w-full md:w-[65%] lg:w-[50%] mx-auto ">
               {episodeList.map((episode) => (
                 <>
-                  <Link to={episode.url}>
+                  <Link to={episode.url} key={episode.id}>
                     <EpisodeCard
                       key={episode.id}
                       animeId={animeId}

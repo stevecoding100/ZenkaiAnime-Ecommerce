@@ -6,10 +6,9 @@ const AnimeEpisode = ({ data }) => {
 
   return (
     <div className="relative  flex w-full h-full items-center justify-center mb-6 lg:p-14">
-      {console.log(data)}
       {data?.trailer ? (
         <iframe
-          className="w-1/2 aspect-video"
+          className="w-1/2 aspect-video rounded-xl"
           src={`https://www.youtube.com/embed/${data.trailer.id}`}
           style={{ pointerEvents: "auto" }}
         ></iframe>
