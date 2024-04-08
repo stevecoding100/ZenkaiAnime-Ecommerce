@@ -9,12 +9,11 @@ let cache = apicache.middleware;
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://zenkai-anime.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "*", // Allow all origins
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow all methods
     allowedHeaders: "Content-Type,Authorization",
   })
 );
-
 const init = async () => {
   try {
     await client.connect();
@@ -35,7 +34,7 @@ const animeRoutes = require("./routes/anime");
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
-app.use("/api/anime", cache("5 minutes"), animeRoutes);
+app.use("/api/anime", animeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
@@ -46,5 +45,7 @@ app.use("/", (req, res) => {
 });
 
 init();
-
-module.exports = app;
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 5000}`);
+});
+// module.exports = app;

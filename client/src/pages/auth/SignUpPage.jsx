@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import ecomAPI from "../../../api/ecomAPI";
+import ecomAPI from "../../../utils/ecomAPI";
 const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");

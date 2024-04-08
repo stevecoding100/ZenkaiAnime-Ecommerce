@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ecomAPI from "../../../api/ecomAPI";
+import ecomAPI from "../../../utils/ecomAPI";
 import OrderDetailsHeader from "./OrderDetailsHeader";
 import OrderItemsContainer from "./OrderItems";
 import CustomerOrderDetails from "./CustomerOrderDetails";

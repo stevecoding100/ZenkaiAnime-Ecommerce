@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import ecomAPI from "../../../api/ecomAPI";
 import { Link } from "react-router-dom";
+import ecomAPI from "../../../utils/ecomAPI";
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
 

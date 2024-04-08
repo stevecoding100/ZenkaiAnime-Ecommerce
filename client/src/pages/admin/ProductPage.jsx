@@ -2,11 +2,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ecomAPI from "../../../api/ecomAPI";
 import { Image } from "@nextui-org/react";
 import { Textarea, Input } from "@nextui-org/react";
 import { MdSystemUpdateAlt, MdDeleteOutline } from "react-icons/md";
-
+import ecomAPI from "../../../utils/ecomAPI";
 const ProductsPage = () => {
   const [product, setProduct] = useState({});
   const [productName, setProductName] = useState();

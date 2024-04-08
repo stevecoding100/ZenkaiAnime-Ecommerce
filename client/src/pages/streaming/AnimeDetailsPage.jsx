@@ -8,7 +8,7 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import EpisodeCard from "../../components/streaming/EpisodeCard.jsx";
 import AnimeRow from "../../components/streaming/AnimeRow.jsx";
 import Footer from "../../components/Footer.jsx";
-import apiRoutes from "../../../api/apiRoutes.jsx";
+import apiRoutes from "../../../utils/apiRoutes.jsx";
 import useAnimeStore from "../../../store/store.jsx";
 import AnimeEpisode from "../../components/streaming/AnimeEpisode.jsx";
 
