@@ -7,7 +7,7 @@ const adminRoutes = {
     // Get all users (admin only)
     getAllUsers: async () => {
       try {
-        const response = await axios.get(`/api/auth/users`);
+        const response = await axios.get(`${baseURL}/auth/users`);
         return response.data;
       } catch (error) {
         throw new Error("Error fetching users", error);
@@ -17,7 +17,7 @@ const adminRoutes = {
     // Delete a user by ID (admin only)
     deleteUserById: async (userId) => {
       try {
-        const response = await axios.delete(`/api/auth/delete/${userId}`);
+        const response = await axios.delete(`${baseURL}/auth/delete/${userId}`);
         return response.data;
       } catch (error) {
         throw new Error("Error deleting user", error);
