@@ -61,7 +61,7 @@ const getProductById = async (id) => {
 // <-------- Routes -------->
 
 //Base route /api/products
-router.get("/api/products/", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await getAllProducts();
     res.status(200).json(products);
@@ -71,7 +71,7 @@ router.get("/api/products/", async (req, res) => {
 });
 
 // <!-- Get a single product
-router.get("/api/products/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const product = await getProductById(req.params.id);
     res.status(200).json(product);
@@ -84,7 +84,7 @@ router.get("/api/products/:id", async (req, res) => {
 
 // <!-- Create a new product
 
-router.post("/api/products/", isAdmin, async (req, res) => {
+router.post("/", isAdmin, async (req, res) => {
   try {
     const product = await createProduct(req.body);
     res.status(201).json(product);
@@ -95,7 +95,7 @@ router.post("/api/products/", isAdmin, async (req, res) => {
 
 // <!-- Delete a product
 
-router.delete("/api/products/:id", isAdmin, async (req, res) => {
+router.delete("/:id", isAdmin, async (req, res) => {
   try {
     await deleteProduct(req.params.id);
     res.status(204).json({ message: "Product deleted successfully" });
@@ -105,7 +105,7 @@ router.delete("/api/products/:id", isAdmin, async (req, res) => {
 });
 
 // <!-- Update a product
-router.put("/api/products/:id", isAdmin, async (req, res) => {
+router.put("/:id", isAdmin, async (req, res) => {
   try {
     const product = await updateProduct(req.params.id, req.body);
     res.status(200).json(product);
