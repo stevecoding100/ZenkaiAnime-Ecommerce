@@ -36,7 +36,7 @@ const AnimeRow = ({ title, rowID, data }) => {
         />
         <div
           id={"slider" + rowID}
-          className="w-full h-full overflow-auto whitespace-nowrap scroll scroll-smooth srollbar-hide relative"
+          className="w-full h-full scrollbarX whitespace-nowrap scroll scroll-smooth  relative"
         >
           {data.map((anime, id) => (
             <div

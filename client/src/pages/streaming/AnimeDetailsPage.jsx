@@ -21,7 +21,7 @@ const AnimeDetailsPage = () => {
   const { animeId } = useParams();
   const [loading, setLoading] = useState(true);
   const [recommendationList, setRecommendationList] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(false);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
 
   const getAnimeDetails = async () => {
     try {
@@ -54,13 +54,13 @@ const AnimeDetailsPage = () => {
       </div>
       <div>
         {loading ? (
-          <div className="container mx-auto min-h-screen flex items-center justify-center">
+          <div className="container mx-auto min-h-screen flex items-center justify-center ">
             <Spinner />
           </div>
         ) : (
-          <div className="text-white pt-[12rem] md:pt-[8rem] flex flex-col w-full h-full">
+          <div className="text-white pt-[12rem] md:pt-[8rem] flex flex-col w-full h-full ">
             <AnimeEpisode data={animeDetails} />
-            <div className="flex lg:items-center">
+            <div className="flex lg:items-center ">
               <div className="w-[85%] md:w-[90%] lg:w-[60%] mx-auto lg:text-start">
                 <h1 className="text-2xl md:text-4xl text-center mb-4 m-2">
                   {animeDetails.title.english}
@@ -77,7 +77,7 @@ const AnimeDetailsPage = () => {
                 </p>
                 <div className="space-x-4 w-1/2 mx-auto"></div>
                 <div className="flex flex-row gap-3">
-                  <div className="flex flex-row overflow-auto">
+                  <div className="flex flex-row scrollbarX">
                     <div className="flex flex-row gap-3 ">
                       {animeDetails.characters.map((character) => {
                         const isSelected = selectedCharacter === character.id;
@@ -163,7 +163,7 @@ const AnimeDetailsPage = () => {
             <h2 className="text-center text-xl md:text-2xl mt-24 mb-6">
               Watch Episodes
             </h2>
-            <div className="h-[50vh] overflow-y-scroll w-full md:w-[65%] lg:w-[50%] mx-auto ">
+            <div className="h-[50vh] scrollbarY w-full md:w-[65%] lg:w-[50%] mx-auto ">
               {episodeList.map((episode) => (
                 <>
                   <Link to={episode.url} key={episode.id}>
