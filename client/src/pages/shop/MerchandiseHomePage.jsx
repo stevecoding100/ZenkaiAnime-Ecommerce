@@ -146,6 +146,7 @@ const MerchandiseHomePage = () => {
   };
 
   const handleCheckOut = async () => {
+    console.log("Im rnning");
     try {
       const response = await axios.post(
         `${baseURL}/orders/add`,
@@ -183,7 +184,7 @@ const MerchandiseHomePage = () => {
               cart={cart}
               removeItem={removeItem}
               addToCart={addToCart}
-              handleCheckOut={handleCheckOut}
+              checkOut={handleCheckOut}
               decreaseQuantity={decreaseQuantity}
               token={token}
             />

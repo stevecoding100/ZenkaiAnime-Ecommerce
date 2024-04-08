@@ -24,17 +24,18 @@ const StreamingHomePage = () => {
   };
 
   useEffect(() => {
-    const popularList = axios.get(apiRoutes.getPopularAnime());
-    const trendingList = axios.get(apiRoutes.getTrendingAnime());
-    Promise.all([popularList, trendingList])
-      .then((res) => {
-        setPopularList(res[0].data.results);
-        setTrendingList(res[1].data.results);
+    const fetchData = async () => {
+      try {
+        const popularList = await axios.get(apiRoutes.getPopularAnime());
+        const trendingList = await axios.get(apiRoutes.getTrendingAnime());
+        setPopularList(popularList.data.results);
+        setTrendingList(trendingList.data.results);
         setIsLoading(false);
-      })
-      .catch((err) => {
-        throw new Error(err.message);
-      });
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    };
+    fetchData();
   }, []);
 
   return (

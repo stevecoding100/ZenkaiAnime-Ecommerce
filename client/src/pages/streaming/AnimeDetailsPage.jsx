@@ -24,7 +24,6 @@ const AnimeDetailsPage = () => {
   const getAnimeDetails = async () => {
     try {
       const { data } = await axios.get(apiRoutes.getAnimeInfo(animeId), {});
-      console.log("line 30:", data);
       setAnimeDetails(data);
       setEpisodeList(data.episodes);
       addAnimeList(data); // Pass the data object to addAnimeList

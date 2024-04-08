@@ -7,7 +7,7 @@ const ecomAPI = {
   auth: {
     register: async (formData) => {
       try {
-        const user = await axios.post(`${baseURL}/auth/register`, formData);
+        const user = await axios.post(`/api/auth/register`, formData);
         localStorage.setItem("token", user.token);
         localStorage.setItem("userID", user.id);
         return user;
@@ -17,7 +17,7 @@ const ecomAPI = {
     },
     login: async (formData) => {
       try {
-        const user = await axios.post(`${baseURL}/auth/login`, formData);
+        const user = await axios.post(`/api/auth/login`, formData);
         localStorage.setItem("token", user.data.token);
         localStorage.setItem("userID", user.data.id);
         return user;
@@ -31,7 +31,7 @@ const ecomAPI = {
   products: {
     getProducts: async () => {
       try {
-        const products = await axios.get(`${baseURL}/products`);
+        const products = await axios.get(`/api/products`);
         return products;
       } catch (error) {
         throw new Error("Error getting products", error);
@@ -39,7 +39,7 @@ const ecomAPI = {
     },
     getProductById: async (id) => {
       try {
-        const product = await axios.get(`${baseURL}/products/${id}`);
+        const product = await axios.get(`/api/products/${id}`);
         return product;
       } catch (error) {
         throw new Error("Error getting product", error);
@@ -47,7 +47,7 @@ const ecomAPI = {
     },
     createProduct: async (formData) => {
       try {
-        const product = await axios.post(`${baseURL}/products`, formData, {
+        const product = await axios.post(`/api/products`, formData, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
@@ -59,7 +59,7 @@ const ecomAPI = {
     },
     deleteProduct: async (id) => {
       try {
-        const product = await axios.delete(`${baseURL}/products/${id}`, {
+        const product = await axios.delete(`/api/products/${id}`, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
@@ -71,7 +71,7 @@ const ecomAPI = {
     },
     updateProduct: async (id, formData) => {
       try {
-        const product = await axios.put(`${baseURL}/products/${id}`, formData, {
+        const product = await axios.put(`/api/products/${id}`, formData, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
@@ -87,7 +87,7 @@ const ecomAPI = {
   cart: {
     getCart: async (user_id) => {
       try {
-        const cart = await axios.get(`${baseURL}/cart/add${user_id}`, {
+        const cart = await axios.get(`/api/cart/add${user_id}`, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
@@ -99,7 +99,7 @@ const ecomAPI = {
     },
     addToCart: async (formData) => {
       try {
-        const cart = await axios.post(`${baseURL}/cart`, formData);
+        const cart = await axios.post(`/api/cart`, formData);
         return cart;
       } catch (error) {
         throw new Error("Error adding to cart", error);
@@ -111,7 +111,7 @@ const ecomAPI = {
   orders: {
     getOrder: async () => {
       try {
-        const orders = await axios.get(`${baseURL}/orders`, {
+        const orders = await axios.get(`/api/orders`, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
@@ -123,7 +123,7 @@ const ecomAPI = {
     },
     getOrderById: async (id) => {
       try {
-        const order = await axios.get(`${baseURL}/orders/${id}`, {
+        const order = await axios.get(`/api/orders/${id}`, {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
           },
