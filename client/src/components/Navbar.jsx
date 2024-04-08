@@ -4,7 +4,13 @@ import SignInSingnUpBtn from "./SignInSingnUpBtn";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaRegBell } from "react-icons/fa";
-const Navbar = ({ pageType, token, setShowCart, logout }) => {
+const Navbar = ({
+    pageType,
+    token,
+    setShowCart,
+    logout,
+    handleSearchAnime,
+}) => {
     const [showMenu, setShowMenu] = useState(false);
 
     const toggleCart = () => {
@@ -14,7 +20,7 @@ const Navbar = ({ pageType, token, setShowCart, logout }) => {
     return (
         <div>
             <nav className="flex flex-col md:flex-row md:justify-between">
-                <div className="flex justify-between items-center w-full p-5 md:w-auto">
+                <div className="flex justify-between items-center w-full p-6 md:w-auto">
                     <HambugerMenu pageType={pageType} />
                     <Link
                         className={`text-xl md:text-2xl  font-bold ${
@@ -68,6 +74,7 @@ const Navbar = ({ pageType, token, setShowCart, logout }) => {
                 >
                     {pageType === "streaming" ? (
                         <input
+                            onChange={handleSearchAnime}
                             type="text"
                             className="w-[280px] px-4 py-2 md:mr-28 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
                             placeholder={`${
