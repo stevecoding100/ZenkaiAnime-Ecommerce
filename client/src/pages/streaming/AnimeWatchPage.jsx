@@ -11,8 +11,7 @@ import { GrFormPreviousLink, GrFormNextLink } from "react-icons/gr";
 import { FaBookmark } from "react-icons/fa";
 import Spinner from "../../components/Spinner";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import EpisodeCard from "../../components/streaming/EpisodeCard";
+
 const AnimeWatchPage = () => {
   const { animeId, episodeId } = useParams();
   const { currentAnime } = useAnimeStore();
@@ -20,6 +19,21 @@ const AnimeWatchPage = () => {
   const [episodes, setEpisodes] = useState({});
   const [nextEpisode, setNextEpisode] = useState();
   const [lastEpisode, setLastEpisode] = useState();
+  const [currentEpisode, setCurrentEpisode] = useState();
+
+  const truncateString = (str, num) => {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
+    }
+  };
+  const episodesHandler = (episodes, cEpisode) => {
+    const cIdx = episodes.indexOf(cEpisode);
+    setCurrentEpisode(cEpisode);
+    setLastEpisode(episodes[cIdx - 1]);
+    setNextEpisode(episodes[cIdx + 1]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,9 +44,8 @@ const AnimeWatchPage = () => {
         setEpisodes(anime.data.episodes);
 
         const cEpisode = anime.data.episodes.find((e) => e.id === episodeId);
-        const cIdx = anime.data.episodes.indexOf(cEpisode);
-        setLastEpisode(anime.data.episodes[cIdx - 1]);
-        setNextEpisode(anime.data.episodes[cIdx + 1]);
+
+        episodesHandler(anime.data.episodes, cEpisode);
       } catch (error) {
         throw new Error(error.message);
       }
@@ -41,16 +54,11 @@ const AnimeWatchPage = () => {
       fetchData();
     } else {
       setAnime(currentAnime);
+      setEpisodes(currentAnime.episodes);
+      const cEpisode = currentAnime.episodes.find((e) => e.id === episodeId);
+      episodesHandler(currentAnime.episodes, cEpisode);
     }
   }, [animeId, episodeId, currentAnime]);
-
-  const truncateString = (str, num) => {
-    if (str.length > num) {
-      return str.slice(0, num) + "...";
-    } else {
-      return str;
-    }
-  };
 
   return (
     <>
@@ -65,14 +73,18 @@ const AnimeWatchPage = () => {
                 <div className="w-screen">
                   <VideoPlayer episodeId={episodeId} />
                   <div className="flex flex-row text-slate-300 justify-between w-1/2 mx-auto mt-4">
-                    <Link
-                      to={`/series/${animeId}/watch/${lastEpisode.id}`}
-                      className="border border-slate-400 rounded-xl px-3 py-3 text-slate-300"
-                    >
-                      <GrFormPreviousLink className="inline-block text-xl mr-1" />
-                      <span className="text-sm text-slate-500 mr-1">Prev:</span>{" "}
-                      Episode {lastEpisode?.number || "N/A"}
-                    </Link>
+                    {lastEpisode && (
+                      <Link
+                        to={`/series/${animeId}/watch/${lastEpisode.id}`}
+                        className="border border-slate-400 rounded-xl px-3 py-3 text-slate-300"
+                      >
+                        <GrFormPreviousLink className="inline-block text-xl mr-1" />
+                        <span className="text-sm text-slate-500 mr-1">
+                          Prev:
+                        </span>{" "}
+                        Episode {lastEpisode.number}
+                      </Link>
+                    )}
                     <button className="border border-slate-400 rounded-xl px-3 py-3">
                       <FaBookmark className="inline-block text-xl mr-1" />
                       Bookmark
@@ -80,14 +92,18 @@ const AnimeWatchPage = () => {
                     <button className="border border-slate-400 rounded-xl px-3 py-3">
                       View Details
                     </button>
-                    <Link
-                      to={`/series/${animeId}/watch/${nextEpisode.id}`}
-                      className="border border-slate-400 rounded-xl px-3 py-3 text-slate-300"
-                    >
-                      <span className="text-sm text-slate-500 mr-1">Next:</span>
-                      Episode {nextEpisode?.number || "N/A"}
-                      <GrFormNextLink className="inline-block text-xl" />
-                    </Link>
+                    {nextEpisode && (
+                      <Link
+                        to={`/series/${animeId}/watch/${nextEpisode.id}`}
+                        className="border border-slate-400 rounded-xl px-3 py-3 text-slate-300"
+                      >
+                        <span className="text-sm text-slate-500 mr-1">
+                          Next:
+                        </span>{" "}
+                        Episode {nextEpisode.number}
+                        <GrFormNextLink className="inline-block text-xl" />
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <div className="w-full md:w-1/4 mt-4 md:mt-0 md:ml-4 h-screen overflow-x-hidden scrollbarY mr-10">
@@ -123,7 +139,8 @@ const AnimeWatchPage = () => {
                       </div>
                       <div className="md:w-2/3">
                         <h1 className="text-4xl font-bold mb-4">
-                          <span className="text-orange-400">Episode</span>
+                          <span className="text-orange-400">Episode</span>{" "}
+                          {currentEpisode.number}
                         </h1>
                         <div className="text-slate-200">
                           <p className="text-lg mb-2">{anime.releaseDate}</p>
