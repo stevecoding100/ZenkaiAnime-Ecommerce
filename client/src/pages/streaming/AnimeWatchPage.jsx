@@ -109,12 +109,13 @@ const AnimeWatchPage = () => {
                 <div className="w-full md:w-1/4 mt-4 md:mt-0 md:ml-4 h-screen overflow-x-hidden scrollbarY mr-10">
                   <div className="grid grid-cols-4 gap-2 text-slate-400">
                     {episodes.map((episode) => (
-                      <button
+                      <Link
+                        to={`/series/${animeId}/watch/${episode.id}`}
                         key={episode.id}
                         className="rounded-md bg-slate-800 p-2 hover:bg-slate-700"
                       >
                         {episode.number}
-                      </button>
+                      </Link>
                     ))}
                   </div>
                 </div>
