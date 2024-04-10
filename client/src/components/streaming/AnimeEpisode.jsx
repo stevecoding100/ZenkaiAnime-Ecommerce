@@ -11,6 +11,7 @@ const AnimeEpisode = ({ data }) => {
           className="w-full md:w-5/6 lg:w-1/2 aspect-video rounded-xl "
           src={`https://www.youtube.com/embed/${data.trailer.id}`}
           style={{ pointerEvents: "auto" }}
+          allowFullScreen
         ></iframe>
       ) : (
         <img
