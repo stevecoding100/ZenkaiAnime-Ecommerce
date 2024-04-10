@@ -14,7 +14,7 @@ import AnimeEpisode from "../../components/streaming/AnimeEpisode.jsx";
 import { Avatar, Tooltip } from "@nextui-org/react";
 
 const AnimeDetailsPage = () => {
-  const { addAnimeList, animeList } = useAnimeStore();
+  const { addAnimeList, animeList, setCurrentAnime } = useAnimeStore();
   const [animeDetails, setAnimeDetails] = useState([]);
   const [episodeList, setEpisodeList] = useState([]);
   const [like, setLike] = useState(false);
@@ -26,6 +26,7 @@ const AnimeDetailsPage = () => {
   const getAnimeDetails = async () => {
     try {
       const { data } = await axios.get(apiRoutes.getAnimeInfo(animeId), {});
+      setCurrentAnime(data);
       setAnimeDetails(data);
       setEpisodeList(data.episodes);
       addAnimeList(data); // Pass the data object to addAnimeList
@@ -165,15 +166,17 @@ const AnimeDetailsPage = () => {
             </h2>
             <div className="h-[50vh] scrollbarY w-full md:w-[65%] lg:w-[50%] mx-auto ">
               {episodeList.map((episode) => (
-                <>
-                  <Link to={episode.url} key={episode.id}>
-                    <EpisodeCard
-                      key={episode.id}
-                      animeId={animeId}
-                      episode={episode}
-                    />
-                  </Link>
-                </>
+                <Link
+                  to={`/series/${animeId}/watch/${episode.id}`}
+                  key={episode.id}
+                >
+                  <EpisodeCard
+                    key={episode.id}
+                    type="details"
+                    animeId={animeId}
+                    episode={episode}
+                  />
+                </Link>
               ))}
             </div>
             <div className=" w-full h-auto mb-6">
