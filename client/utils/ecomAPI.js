@@ -12,7 +12,7 @@ const ecomAPI = {
         localStorage.setItem("userID", user.id);
         return user;
       } catch (error) {
-        throw new Error("Error registering user", error);
+        return error;
       }
     },
     login: async (formData) => {
