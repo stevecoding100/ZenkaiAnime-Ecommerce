@@ -13,6 +13,7 @@ import ProductPage from "./pages/admin/ProductPage";
 import OrderDetails from "./components/admin/OrderDetails";
 import Users from "./components/admin/Users";
 import UserPage from "./pages/admin/UserPage";
+import AnimeWatchPage from "./pages/streaming/AnimeWatchPage";
 
 const App = () => {
   return (
@@ -23,7 +24,10 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/series/:animeId" element={<AnimeDetailsPage />} />
-        {/* <Route path="/admin" element={<AdminPage />} /> */}
+        <Route
+          path="/series/:animeId/watch/:episodeId"
+          element={<AnimeWatchPage />}
+        />
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<AdminPage />} />
           <Route path="products" element={<Products />}></Route>

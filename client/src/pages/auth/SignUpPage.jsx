@@ -13,20 +13,28 @@ const SignUpPage = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    const result = await ecomAPI.auth.register({
-      email,
-      first_name: firstName,
-      last_name: lastName,
-      password,
-      username,
-    });
-    if (result.status === 201) {
-      console.log("User registered", result);
-      navigate("/");
-    } else {
-      console.error("Error signing up", result);
-      setError("Error during sign-up. Please try again.");
+    try {
+      const result = await ecomAPI.auth.register({
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        password,
+        username,
+      });
+      if (result.status === 201) {
+        console.log("User registered", result);
+        navigate("/");
+      } else {
+        throw new Error(result.response.data.error);
+      }
+    } catch (err) {
+      if (err.message.includes("users_email_key")) {
+        setError("Email already in use. Please try again.");
+      } else if (err.message.includes("users_username_key")) {
+        setError("Username already in use. Please try again.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
     }
   };
 

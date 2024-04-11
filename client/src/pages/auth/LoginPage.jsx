@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import ecomAPI from "../../../utils/ecomAPI";
@@ -12,13 +12,12 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     const result = await ecomAPI.auth.login({ username, password });
+
     if (result.status === 200) {
       navigate("/");
     } else {
-      console.error("Error logging in", result);
-      setError("Error during sign-in. Please try again.");
+      setError("Invalid username or password");
     }
   };
   return (
@@ -60,6 +59,9 @@ const LoginPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                {error && (
+                  <p className="text-red-500 font-sans text-sm">{error}</p>
+                )}
                 <button
                   className="bg-blue-700 py-3 my-6 rounded font-bold"
                   type="submit"
@@ -78,9 +80,6 @@ const LoginPage = () => {
                   <Link to="/signup"> Sign Up</Link>
                 </p>
               </form>
-              {error && (
-                <p className="text-red-500 font-sans text-sm">{error}</p>
-              )}
             </div>
           </div>
         </div>

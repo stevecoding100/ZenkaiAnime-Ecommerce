@@ -1,6 +1,6 @@
 const EpisodeCard = ({ episode }) => {
   const { number, image } = episode;
-  console.log(episode);
+
   return (
     <div className="flex flex-row justify-between  mx-6 lg:mx-12 items-center border-b-2">
       <img
