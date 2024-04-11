@@ -28,7 +28,6 @@ const App = () => {
           path="/series/:animeId/watch/:episodeId"
           element={<AnimeWatchPage />}
         />
-        {/* <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<AdminPage />} />
           <Route path="products" element={<Products />}></Route>
