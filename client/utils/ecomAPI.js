@@ -22,7 +22,7 @@ const ecomAPI = {
         localStorage.setItem("userID", user.data.id);
         return user;
       } catch (error) {
-        throw new Error("Error logging in user", error);
+        return error;
       }
     },
   },
