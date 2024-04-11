@@ -13,7 +13,12 @@ const VideoPlayer = ({ episodeId }) => {
       try {
         setLoading(true);
         const response = await axios.get(apiRoutes.getStreamingLink(episodeId));
-        setQuality(response.data[0].url);
+        setQuality(
+          response.data[3].url ||
+            response.data[2].url ||
+            response.data[1].url ||
+            response.data[0].url
+        );
         setEpisode(response.data);
         setLoading(false);
       } catch (error) {
@@ -31,11 +36,13 @@ const VideoPlayer = ({ episodeId }) => {
   return (
     <section className="w-full">
       {loading ? (
-        <p>Loading...</p>
+        <div className="w-full h-64 md:h-96 flex items-center justify-center bg-slate-800">
+          <p className="text-slate-400">Loading...</p>
+        </div>
       ) : (
         <>
           {quality && (
-            <div className="w-full max-w-8xl mx-auto">
+            <div className="w-full">
               <div className="relative pt-[56.25%]">
                 <ReactPlayer
                   url={quality}
@@ -52,7 +59,7 @@ const VideoPlayer = ({ episodeId }) => {
               <>
                 {episode.map((e) => (
                   <button
-                    className="text-sm rounded-md hover:text-gray-400 bg-slate-800 text-white px-4 py-2 m-2"
+                    className="text-xs md:text-sm rounded-md hover:text-gray-400 bg-slate-800 text-white px-2 md:px-4 py-1 md:py-2 m-1 md:m-2"
                     onClick={() => changeQuality(e.url)}
                     key={e.quality}
                   >
