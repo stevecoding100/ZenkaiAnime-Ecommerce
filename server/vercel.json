@@ -9,8 +9,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/server/index.js",
-            "test": "/s"
+            "dest": "/server/index.js"
         }
     ]
 }
